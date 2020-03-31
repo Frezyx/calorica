@@ -7,7 +7,7 @@ require_once "./simplehtmldom_1_9_1/simple_html_dom.php";
 require 'connect.php';
 require 'sqlHelper.php';
 
-//Получаем обьект страницы для дальнейшей страницы
+//Получаем обьект страницы для дальнейшей работы с ней
 $data = file_get_html('ссылка на сайт');
 
 $srcs = array();

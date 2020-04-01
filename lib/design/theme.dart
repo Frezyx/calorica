@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+
+
+class DesignTheme {
+  DesignTheme._();
+
+  static const String fontMain = 'Montserrat';
+  static const Color bgColor = Color.fromRGBO(246, 246, 246, 1);
+  static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
+  static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
+  static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
+  static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
+  static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
+  static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
+  static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
+
+  static const TextStyle bigText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 36,
+    color: blackColor,
+  );
+
+  static const TextStyle bigWhiteText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.w600,
+    fontSize: 36,
+    color: whiteColor,
+  );
+
+  static const TextStyle buttonText = TextStyle( // h5 -> headline
+    fontFamily: fontMain,
+    fontWeight: FontWeight.w800,
+    fontSize: 22,
+    color: whiteColor,
+  );
+
+  static const TextStyle label = TextStyle( // h5 -> headline
+    fontFamily: fontMain,
+    fontWeight: FontWeight.w400,
+    fontSize: 20,
+    color: blackColor,
+  );
+
+  static const LinearGradient 
+    gradient = LinearGradient(
+      colors: [
+        DesignTheme.secondColor,
+        DesignTheme.mainColor
+      ],
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      stops: [0.0,1.0],
+      tileMode: TileMode.clamp
+    );
+  }

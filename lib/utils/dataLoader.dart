@@ -11167,7 +11167,9 @@ List<String> productData = [
 "Яшкино;Яшкинская Картошка [Яшкино];537;6,3;31,7;56,7",
 ];
 
-startLoadData(){
+startLoadData() async{
+  await DBProductProvider.db.firstCreateTable();
+  
   for (var i = 0; i < productData.length; i++) {
     var data = productData[i].split(";");
     for (var y = 2; y < data.length; y++) {
@@ -11183,8 +11185,10 @@ startLoadData(){
       carboh: double.parse(data[5]),
       // date: DateTime.now(),
     );
-    DBProductProvider.db.addProduct(product).then((res){
-      print(res);
-    });
+      DBProductProvider.db.addProduct(product).then((id){
+        DBProductProvider.db.getProductById(id).then((idFromBD){
+          print("Записали на id : " + idFromBD.id.toString() + "Название: " + idFromBD.name);
+        });
+      });
   }
 }

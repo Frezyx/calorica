@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
@@ -65,12 +67,24 @@ class DBProductProvider {
   static final DBProductProvider db = DBProductProvider._();
 
   Database _database;
-
+  var rng = new Random();
   Future<Database> get database async {
     if (_database != null) return _database;
     // if _database is null we instantiate it
     _database = await initDB();
     return _database;
+  }
+  
+  firstCreateTable() async{
+    final db = await database;
+    int id = 0;
+    var raw = await db.rawInsert(
+        "INSERT Into Products (id, name, category, calory, squi, fat, carboh)"
+        " VALUES (?,?,?,?,?,?,?)",
+        [id,'Говядина отборная', 'Говядина и телятина', 218, 18.6, 16, 0]
+        );
+    print("Первая запись");
+    return(raw);
   }
 
   initDB() async {
@@ -78,23 +92,24 @@ class DBProductProvider {
     String path = join(documentsDirectory.path, "Products.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
+          print("БД создана");
       await db.execute("CREATE TABLE Products ("
           "id INTEGER PRIMARY KEY,"
           "name TEXT,"
           "category TEXT,"
-          "calory TEXT,"
-          "squi TEXT,"
-          "fat TEXT,"
-          "carboh TEXT,"
-          "date TEXT"
+          "calory DOUBLE,"
+          "squi DOUBLE,"
+          "fat DOUBLE,"
+          "carboh DOUBLE"
           ")");
     });
   }
 
   Future<int>addProduct(Product product) async{
     final db = await database;
-    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
-    int id = table.first["id"];
+    // var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
+    // int id = table.first["id"];
+    int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
     var raw = await db.rawInsert(
         "INSERT Into Products (id, name, category, calory, squi, fat, carboh)"
         " VALUES (?,?,?,?,?,?,?)",
@@ -107,8 +122,8 @@ class DBProductProvider {
         product.carboh,
         // product.date,
         ]);
-      print(raw);
-    return raw;
+      print(id.toString() + product.name + product.category + product.carboh.toString());
+    return id;
   }
 
   Future<Product> getProductById(int id) async {
@@ -130,12 +145,26 @@ class DBProductProvider {
   }
 
       Future<List<Product>> getAllProductsSearch(String text) async {
+        print(1);
         final db = await database;
-        var res = await db.query("Products", where: "name LIKE ?", whereArgs: [0, "%$text%"], orderBy: "calory DESC");
+        var res = await db.query("Products", where: "name LIKE ?", whereArgs: ["%$text%"]);
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
             for (int i = 0; i <list.length; i++){
-              // print(i.toString() + list[i].is_archived.toString());
+              print(i.toString() + list[i].name.toString());
+            }
+        print(list.length.toString() + "Кол-во ссаных заметок");
+        return list;
+      }
+
+      Future<List<Product>> getAllProducts() async {
+        print("Я зашёл в поиск");
+        final db = await database;
+        var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 1000");
+        List<Product> list =
+            res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
+            for (int i = 0; i <list.length; i++){
+              print(i.toString() + list[i].name.toString());
             }
         print(list.length.toString() + "Кол-во ссаных заметок");
         return list;

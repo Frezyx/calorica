@@ -171,13 +171,13 @@ class _HomeState extends State<Home> {
               Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
               Padding(
                 child:
-                  Icon(FontAwesomeIcons.userAlt, size: 30, color: DesignTheme.whiteColor),
+                  Icon(FontAwesomeIcons.userAlt, size: 26, color: DesignTheme.whiteColor),
                   padding: EdgeInsets.all(7.0),
               ),
               Icon(Icons.add, size: 30, color: Colors.black54,),
             ],
             index: 1,
-            animationCurve: Curves.easeInCirc,
+            animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
                 Navigator.pushNamed(context, '/');
@@ -186,7 +186,7 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/add');
               }
             },
           ),

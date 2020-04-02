@@ -1,3 +1,5 @@
+import 'package:calory_calc/pages/add.dart';
+import 'package:calory_calc/pages/product.dart';
 import 'package:flutter/material.dart';
 import 'package:calory_calc/design/theme.dart';
 
@@ -43,6 +45,9 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         backgroundColor: DesignTheme.bgColor,
         fontFamily: 'Montserrat',
+        accentColor: DesignTheme.mainColor,
+        primaryColorDark: DesignTheme.secondColor,
+        primaryColorLight: DesignTheme.mainColor,
         primaryColor: DesignTheme.mainColor,
       ),
       debugShowCheckedModeBanner: false,
@@ -50,7 +55,16 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/auth': (BuildContext context) => AuthPage(prefs: prefs,),
         '/' : (BuildContext context) => Home(),
+        '/add' : (BuildContext context) => AddPage(),
       },
+      onGenerateRoute: (RouteSettings){
+        var path = RouteSettings.name.split('/');
+
+        if(path[1] == 'product'){
+          return new MaterialPageRoute(builder: (context) => new ProductPage(id:path[2]),
+          settings: RouteSettings);
+        }
+      }
     );
   }
 }

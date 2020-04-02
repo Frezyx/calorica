@@ -22,6 +22,30 @@ class DesignTheme {
     color: blackColor,
   );
 
+  static const TextStyle bigText24 = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: blackColor,
+  );
+
+  static const TextStyle bigText20 = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+    color: blackColor,
+  );
+
+  static const TextStyle bigMainText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 36,
+    color: mainColor,
+  );
+
   static const TextStyle bigWhiteText = TextStyle( // h5 -> headline
     fontFamily:
     'Montserrat',
@@ -63,6 +87,33 @@ class DesignTheme {
       fontSize: 18,
       letterSpacing: -0.2,
       color: DesignTheme.gray36Color,
+  );
+
+  static const TextStyle lilGrayText = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      letterSpacing: 0.2,
+      color: Colors.black54,
+  );
+
+  static const TextStyle inputText = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    color: DesignTheme.mainColor,
+  );
+
+  static const TextStyle labelSearchText = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 16,
+    letterSpacing: 0.2,
+    color: Colors.black54,
+  );
+
+  static const TextStyle labelSearchTextBigger = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 20,
+    letterSpacing: 0.2,
+    color: gray170Color,
   );
 
   static const LinearGradient 

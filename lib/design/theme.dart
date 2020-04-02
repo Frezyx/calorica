@@ -88,6 +88,12 @@ class DesignTheme {
       letterSpacing: -0.2,
       color: DesignTheme.gray36Color,
   );
+  static const TextStyle primeText16 = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      letterSpacing: -0.3,
+      color: DesignTheme.gray36Color,
+  );
 
   static const TextStyle lilGrayText = TextStyle( // h5 -> headline
       fontWeight: FontWeight.w400,

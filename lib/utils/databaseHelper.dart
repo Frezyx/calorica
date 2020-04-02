@@ -150,23 +150,133 @@ class DBProductProvider {
         var res = await db.query("Products", where: "name LIKE ?", whereArgs: ["%$text%"]);
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
-            for (int i = 0; i <list.length; i++){
-              print(i.toString() + list[i].name.toString());
-            }
-        print(list.length.toString() + "Кол-во ссаных заметок");
+        //     for (int i = 0; i <list.length; i++){
+        //       print(i.toString() + list[i].name.toString());
+        //     }
+        // print(list.length.toString() + "Кол-во ссаных заметок");
         return list;
       }
 
       Future<List<Product>> getAllProducts() async {
         print("Я зашёл в поиск");
         final db = await database;
-        var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 1000");
+        var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 0");
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
-            for (int i = 0; i <list.length; i++){
-              print(i.toString() + list[i].name.toString());
-            }
-        print(list.length.toString() + "Кол-во ссаных заметок");
+        //     for (int i = 0; i <list.length; i++){
+        //       // print(i.toString() + list[i].name.toString());
+        //     }
+        // print(list.length.toString() + "Кол-во ссаных заметок");
+        return list;
+      }
+
+}
+
+class DBUserProductsProvider {
+  DBUserProductsProvider._();
+
+  static final DBUserProductsProvider db = DBUserProductsProvider._();
+
+  Database _database;
+  var rng = new Random();
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database;
+  }
+  
+  firstCreateTable() async{
+    final db = await database;
+    int now = epochFromDate(DateTime.now());
+    int id = 0;
+    var raw = await db.rawInsert(
+        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        [id,'Говядина отборная', 'Говядина и телятина', 218, 18.6, 16, 0, now]
+        );
+    print("Первая запись");
+    return(raw);
+  }
+
+  int epochFromDate(DateTime dt) {  
+    return dt.millisecondsSinceEpoch ~/ 1000;
+  }
+
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "UserProducts.db");
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+          print("БД создана");
+      await db.execute("CREATE TABLE UserProducts ("
+          "id INTEGER PRIMARY KEY,"
+          "name TEXT,"
+          "category TEXT,"
+          "calory DOUBLE,"
+          "squi DOUBLE,"
+          "fat DOUBLE,"
+          "carboh DOUBLE,"
+          "date INTEGER" 
+          ")");
+    });
+  }
+
+  Future<int>addProduct(UserProduct product) async{
+    final db = await database;
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM UserProducts");
+    int id = table.first["id"];
+    int now = epochFromDate(DateTime.now());
+    // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
+    var raw = await db.rawInsert(
+        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        [id, 
+        product.name,
+        product.category,
+        product.calory,
+        product.squi,
+        product.fat,
+        product.carboh,
+        now
+        ]);
+        print(raw);
+      // print(id.toString() + product.name + now.toString() +"        " +product.fat.toString());
+    return id;
+  }
+
+  Future<UserProduct> getProductById(int id) async {
+    final db = await database;
+    var res = await db.rawQuery("SELECT * FROM UserProducts WHERE id = $id");
+      var item = res.first;
+      UserProduct product = UserProduct(
+        id: item["id"],
+        name: item["name"],
+        category: item["category"],
+        calory: item["calory"],
+        squi: item["squi"],
+        fat: item["fat"],
+        carboh: item["carboh"],
+        date: DateTime.fromMillisecondsSinceEpoch(item["date"]),
+      );
+
+    return product;
+  }
+
+  deleteAll() async {
+    final db = await database;
+    db.rawQuery("DELETE FROM UserProducts");
+  }
+
+      Future<List<UserProduct>> getAllProducts() async {
+        final db = await database;
+        var res = await db.rawQuery("SELECT * FROM UserProducts");
+        List<UserProduct> list =
+            res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
+        //     for (int i = 0; i <list.length; i++){
+        //       print(i.toString() + list[i].name.toString());
+        //     }
+        // print(list.length.toString() + "Кол-во ссаных заметок");
         return list;
       }
 

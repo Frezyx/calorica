@@ -101,41 +101,6 @@ class _AddPageState extends State<AddPage> {
             child: 
               Text("Результаты поиска:", style: DesignTheme.lilGrayText,),
           ),
-
-          // Padding(
-          //     padding: EdgeInsets.only(right: 5, left: 5,),
-          //     child:
-          //     FutureBuilder<List<Product>>(
-          //       initialData: prod,
-          //       future: DBProductProvider.db.getAllProducts(),
-          //       builder:
-          //       (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
-          //       if (snapshot.hasData) 
-          //         {
-          //           return StaggeredGridView.countBuilder(
-          //             controller: scrollController,
-          //             padding: const EdgeInsets.all(7.0),
-          //             mainAxisSpacing: 7,
-          //             crossAxisSpacing: 7,
-          //             crossAxisCount: 4,
-          //             itemCount: snapshot.data.length,
-          //             itemBuilder: (context, i){
-          //               return Card(child: Text("data"),);
-          //             },
-          //             staggeredTileBuilder: (int i) => 
-          //               StaggeredTile.count(2,1));
-          //         }
-          //         else 
-          //         {
-          //           return Center(
-          //             child: 
-          //               // Text('Не можем найти')
-          //           CircularProgressIndicator()
-          //           );
-          //         }
-          //       }
-          //     ),
-          //   ),            
           Flexible(
               child:
           Container(
@@ -232,7 +197,7 @@ class _AddPageState extends State<AddPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
-                                  Text(splitText(data.name), style: DesignTheme.primeText,),
+                                  Text(splitText(data.name), style: DesignTheme.primeText16,),
                                   Text(data.calory.toString() + " кКал     " +
                                       data.squi.toString() + " Б     " +
                                       data.fat.toString() + " Ж     " +

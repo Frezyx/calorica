@@ -16,31 +16,30 @@ class RangeGraphData{
 
 }
 
-getColor(RangeGraphData range){
-  if (range.percent <= 30){
-    range.gradient = LinearGradient(colors: [
+getColor(double percent){
+  if (percent <= 30){
+    return LinearGradient(colors: [
             Colors.red[500],
             Colors.red[800],
           ]);
   }
-  else if(range.percent <= 60){
-    range.gradient = LinearGradient(colors: [
+  else if(percent <= 60){
+    return LinearGradient(colors: [
             Colors.yellow,
             Colors.yellow[800],
           ]);
   }
-  else if(range.percent <= 100){
-        range.gradient = LinearGradient(colors: [
+  else if(percent <= 100){
+        return LinearGradient(colors: [
             Colors.green,
             Colors.green[800],
           ]);
   }
   else{
-    range.gradient = LinearGradient(colors: [
+    return LinearGradient(colors: [
             Colors.red[500],
             Colors.red[800],
           ]);
   }
-  return range;
 }
 

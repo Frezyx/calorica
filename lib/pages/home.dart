@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/widgets/range.dart';
 
 import 'package:flutter/material.dart';
@@ -22,23 +23,62 @@ class Home extends StatefulWidget{
 
 class _HomeState extends State<Home> {
   ScrollController scrollController;
+  List<UserProduct> userProducts;
+  double caloryNow = 0.0;
+  double squiNow = 0.0;
+  double fatNow = 0.0;
+  double carbohNow = 0.0;
+
+  double caloryLimit = 2900.0;
+  double squiLimit = 100.0;
+  double fatLimit = 100.0;
+  double carbohLimit = 400.0;
+
+  double caloryPercent = 0.0;
+  double squiPercent = 0.0;
+  double fatPercent = 0.0;
+  double carbohPercent = 0.0;
 
   String name = "";
   String surname = "";
   List<Data> data = [];
 
-  RangeGraphData calory = getColor(RangeGraphData( name: "кКалории",percent: 45.67,weigth: 1245));
-  RangeGraphData fat = getColor(RangeGraphData( name: "Жиры",percent: 65.67,weigth: 13.5));
-  RangeGraphData squi = getColor(RangeGraphData( name: "Белки",percent: 65.67,weigth: 24.2));
-  RangeGraphData carboh = getColor(RangeGraphData( name: "Углеводы",percent: 65.67,weigth: 35.0));
+
+
+  RangeGraphData calory = RangeGraphData( name: "кКалории",percent: 0.0,weigth: 0);
+  RangeGraphData fat = RangeGraphData( name: "Жиры",percent: 0.0,weigth: 0);
+  RangeGraphData squi = RangeGraphData( name: "Белки",percent: 0.0 ,weigth: 0);
+  RangeGraphData carboh = RangeGraphData( name: "Углеводы",percent: 0.0,weigth: 0);
 
   @override
   void initState() {
     super.initState();
       DBUserProvider.db.getUser().then((res){
-        setState(() {
-          name = res.name;
-          surname = res.surname;
+        DBUserProductsProvider.db.getAllProducts().then((products){
+          setState(() {
+            name = res.name;
+            surname = res.surname;
+          });
+          for (var i = 0; i < products.length; i++) {
+              caloryNow += products[i].calory;
+              squiNow += products[i].squi;
+              fatNow += products[i].fat;
+              carbohNow += products[i].carboh;
+          }
+          setState(() {
+            calory.weigth = caloryNow;
+            fat.weigth = fatNow;
+            squi.weigth = squiNow;
+            carboh.weigth = carbohNow;
+            calory.percent = (caloryNow/caloryLimit)*100 <= 100? (caloryNow/caloryLimit)*100 : 100;
+            fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
+            squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;
+            carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
+            // calory.gradient = getColor(calory);
+            // fat.gradient = getColor(fat);
+            // squi.gradient = getColor(squi);
+            // carboh.gradient = getColor(carboh);
+          });
         });
       });
     for (var i = 0; i < 6; i++) {
@@ -114,19 +154,31 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.only(top:280, left: 30, right: 30),
                   constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height-280),
                   child: 
-                    FutureBuilder<List<Data>>(
-                      initialData: data,
-                      // future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
+                    FutureBuilder<List<UserProduct>>(
+                      // initialData: data,
+                      future: DBUserProductsProvider.db.getAllProducts(),
                       builder:
-                      (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
-                      if (snapshot.hasData) 
-                        {
+                      (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                      switch (snapshot.connectionState) {
+                                      case ConnectionState.none:
+                                        return new Text('Input a URL to start');
+                                      case ConnectionState.waiting:
+                                        return new Center(child: new CircularProgressIndicator());
+                                      case ConnectionState.active:
+                                        return new Text('');
+                                      case ConnectionState.done:
+                                        if (snapshot.hasError) {
+                                          return new Text(
+                                            '${snapshot.error}',
+                                            style: TextStyle(color: Colors.red),
+                                          );
+                                        } else{
                           return StaggeredGridView.countBuilder(
                             controller: scrollController,
                             padding: const EdgeInsets.all(7.0),
-                            mainAxisSpacing: 7.0,
-                            crossAxisSpacing: 7.0,
-                            crossAxisCount: 4,
+                            mainAxisSpacing: 3.0,
+                            crossAxisSpacing: 3.0,
+                            crossAxisCount: 6,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, i){
                               return Card(
@@ -142,20 +194,21 @@ class _HomeState extends State<Home> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Text("Aнтилопа", style: DesignTheme.primeText,),
-                                          Text("1140 кКал 100 Грамм", style: DesignTheme.secondaryText,)
+                                          Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
+                                          Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[0].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
                                         ],
                                       ),
                                   ),
                                 );
                             },
                             staggeredTileBuilder: (int i) => 
-                              StaggeredTile.count(2,1));
+                              StaggeredTile.count(3,2));
                         }
-                        else 
-                        {
-                          return Center(child: CircularProgressIndicator());
                         }
+                        // else 
+                        // {
+                        //   return Center(child: CircularProgressIndicator());
+                        // }
                       }
                     ),
                   ),
@@ -180,7 +233,8 @@ class _HomeState extends State<Home> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
-                Navigator.pushNamed(context, '/');
+                DBUserProductsProvider.db.deleteAll();
+                // Navigator.pushNamed(context, '/');
               }
               if(index == 1){
                 Navigator.pushNamed(context, '/');
@@ -192,6 +246,10 @@ class _HomeState extends State<Home> {
           ),
 
             );
+  }
+  splitText(String text){
+    if(text.length <= 20) return text;
+    else return text.substring(0,20);
   }
 
   getRangeWidget(RangeGraphData range) {
@@ -221,7 +279,7 @@ class _HomeState extends State<Home> {
                                               width: (range.percent * 0.01)*80,
                                               height: 6,
                                               decoration: BoxDecoration(
-                                                gradient:range.gradient,
+                                                gradient:getColor(range.percent),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(4.0)),
                                               ),
@@ -297,7 +355,7 @@ class _HomeState extends State<Home> {
                                               width: (MediaQuery.of(context).size.width-122)*range.percent*0.01,
                                               height: 10,
                                               decoration: BoxDecoration(
-                                                gradient:range.gradient,
+                                                gradient:getColor(range.percent),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0)),
                                               ),

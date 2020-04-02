@@ -164,10 +164,15 @@ class _ProductPageState extends State<ProductPage> {
                           ), padding: EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
                         ),
                         callback: () {
-                              Product product = Product(
-
+                              UserProduct productSend = UserProduct(
+                                name: product.name,
+                                category: product.category,
+                                calory: calory,
+                                carboh: carboh,
+                                squi: squi,
+                                fat: fat,
                               );
-                              addProduct(product).then((res){
+                              addProduct(productSend).then((res){
                                 if(res){
                                     Navigator.pushNamed(context, '/');
                                 }
@@ -187,9 +192,9 @@ class _ProductPageState extends State<ProductPage> {
       );
   }
 
-  Future<bool> addProduct(Product nowClient) async{
+  Future<bool> addProduct(UserProduct nowClient) async{
       // print(nowClient.name + " --- " + nowClient.surname);
-      int res = await DBProductProvider.db.addProduct(nowClient);
+      int res = await DBUserProductsProvider.db.addProduct(nowClient);
       return(res == 0);
   }
 
@@ -212,7 +217,7 @@ class _ProductPageState extends State<ProductPage> {
                                     return text.substring(0, 20)+'...';
                                   }
                                   bool isStringOverSize(String text) {
-                                    if(text.length <= 60){
+                                    if(text.length <= 50){
                                       return false;
                                     }
                                     return true;

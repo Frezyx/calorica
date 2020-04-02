@@ -11169,6 +11169,7 @@ List<String> productData = [
 
 startLoadData() async{
   await DBProductProvider.db.firstCreateTable();
+  await DBUserProductsProvider.db.firstCreateTable();
   
   for (var i = 0; i < productData.length; i++) {
     var data = productData[i].split(";");
@@ -11186,9 +11187,10 @@ startLoadData() async{
       // date: DateTime.now(),
     );
       DBProductProvider.db.addProduct(product).then((id){
-        DBProductProvider.db.getProductById(id).then((idFromBD){
-          print("Записали на id : " + idFromBD.id.toString() + "Название: " + idFromBD.name);
-        });
+        print(id);
+        // DBProductProvider.db.getProductById(id).then((idFromBD){
+        //   print("Записали на id : " + idFromBD.id.toString() + "Название: " + idFromBD.name);
+        // });
       });
   }
 }

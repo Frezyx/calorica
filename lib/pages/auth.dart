@@ -61,8 +61,7 @@ class _AuthPageState extends State<AuthPage> {
           body: Container(
             padding: EdgeInsets.only(left: 40.0, right: 40.0, 
             top:MediaQuery.of(context).size.height/3.5, 
-            // bottom: MediaQuery.of(context).size.height/3
-            ),// color: Colors.transparent,
+            ),
               child: new Form(key: _formKey, child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +141,7 @@ class _AuthPageState extends State<AuthPage> {
                       registrationAtLocalDB(user).then((res){
                         if(res){
                           prefs.setBool('banner', false); 
-                          Navigator.pushNamed(context, '/');
+                            Navigator.pushNamed(context, '/');
                         }
                       });
                     }

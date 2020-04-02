@@ -5,7 +5,7 @@ class DesignTheme {
   DesignTheme._();
 
   static const String fontMain = 'Montserrat';
-  static const Color bgColor = Color.fromRGBO(246, 246, 246, 1);
+  static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
   static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
@@ -42,6 +42,27 @@ class DesignTheme {
     fontWeight: FontWeight.w400,
     fontSize: 20,
     color: blackColor,
+  );
+
+  static const TextStyle lilWhiteText = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+      letterSpacing: -0.2,
+      color: DesignTheme.whiteColor,
+  );
+
+  static const TextStyle secondaryText = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w400,
+      fontSize: 12,
+      letterSpacing: -0.2,
+      color: DesignTheme.gray170Color,
+  );
+
+  static const TextStyle primeText = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w400,
+      fontSize: 18,
+      letterSpacing: -0.2,
+      color: DesignTheme.gray36Color,
   );
 
   static const LinearGradient 

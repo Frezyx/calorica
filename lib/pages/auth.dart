@@ -3,6 +3,7 @@ import 'package:calory_calc/design/theme.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/utils/dataLoader.dart';
 
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
     void initState() {
       super.initState();
+      startLoadData();
     }
 
   void setStateBg() {

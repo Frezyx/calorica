@@ -22,50 +22,50 @@ class User {
       };
 }
 
-class Products {
+class Product {
   int id;
   String name;
   String category;
-  double calories;
+  double calory;
   double squi;
-  double fats;
+  double fat;
   double carboh;
-  DateTime date;
+  // DateTime date;
 
-  Products({
+  Product({
 		this.id,
     this.name,
     this.category,
-    this.calories,
+    this.calory,
     this.squi,
-    this.fats,
+    this.fat,
     this.carboh,
-    this.date,
+    // this.date,
   });
 
-  factory Products.fromMap(Map<String, dynamic> json) => new Products(
+  factory Product.fromMap(Map<String, dynamic> json) => new Product(
         id: json["id"],
         name: json["name"],
         category: json["category"],
-        calories: json["calories"],
+        calory: json["calory"],
         squi: json["squi"],
-        fats: json["fats"],
+        fat: json["fat"],
         carboh: json["carboh"],
-        date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
+        // date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
       );
       
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
         "category": category,
-        "calories": calories,
+        "calory": calory,
         "squi": squi,
-        "fats": fats,
+        "fat": fat,
         "carboh": carboh,
-        "date": epochFromDate( date ),
+        // "date": epochFromDate( date ),
       };
 
-      epochFromDate(DateTime dt) {  
-        return dt.millisecondsSinceEpoch ~/ 1000;
-      }
+      // epochFromDate(DateTime dt) {  
+      //   return dt.millisecondsSinceEpoch ~/ 1000;
+      // }
 }

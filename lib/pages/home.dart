@@ -233,7 +233,8 @@ class _HomeState extends State<Home> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
-                DBUserProductsProvider.db.deleteAll();
+                Navigator.pushNamed(context, '/stats');
+                // DBUserProductsProvider.db.deleteAll();
                 // Navigator.pushNamed(context, '/');
               }
               if(index == 1){

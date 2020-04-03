@@ -169,7 +169,7 @@ class _AddPageState extends State<AddPage> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/stats');
               }
               if(index == 1){
                 Navigator.pushNamed(context, '/');

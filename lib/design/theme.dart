@@ -5,14 +5,20 @@ class DesignTheme {
   DesignTheme._();
 
   static const String fontMain = 'Montserrat';
+
   static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
+
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
   static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
+
   static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
   static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
   static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
+
+  static const Color secondChartsGreen = Color.fromRGBO(162, 229, 184, 1);
+
 
   static const TextStyle bigText = TextStyle( // h5 -> headline
     fontFamily:
@@ -82,12 +88,27 @@ class DesignTheme {
       color: DesignTheme.gray170Color,
   );
 
+  static const TextStyle secondaryTextBig = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w300,
+      fontSize: 14,
+      letterSpacing: -0.2,
+      color: DesignTheme.gray170Color,
+  );
+
   static const TextStyle primeText = TextStyle( // h5 -> headline
       fontWeight: FontWeight.w400,
       fontSize: 18,
       letterSpacing: -0.2,
       color: DesignTheme.gray36Color,
   );
+
+  static const TextStyle primeTextBig = TextStyle( // h5 -> headline
+      fontWeight: FontWeight.w600,
+      fontSize: 20,
+      letterSpacing: -0.2,
+      color: DesignTheme.gray36Color,
+  );
+
   static const TextStyle primeText16 = TextStyle( // h5 -> headline
       fontWeight: FontWeight.w400,
       fontSize: 16,

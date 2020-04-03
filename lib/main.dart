@@ -1,5 +1,6 @@
 import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/product.dart';
+import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:flutter/material.dart';
 import 'package:calory_calc/design/theme.dart';
 
@@ -41,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CALORY CALC',
       theme: ThemeData(
         backgroundColor: DesignTheme.bgColor,
         fontFamily: 'Montserrat',
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         '/auth': (BuildContext context) => AuthPage(prefs: prefs,),
         '/' : (BuildContext context) => Home(),
         '/add' : (BuildContext context) => AddPage(),
+        '/stats' : (BuildContext context) => MainStats(),
       },
       onGenerateRoute: (RouteSettings){
         var path = RouteSettings.name.split('/');

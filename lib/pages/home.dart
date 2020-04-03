@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(top: 30),
                                 child:
                                 Text("Сегодня " + DateFormat('dd.MM.yyyy').format(DateTime.now()),
                                   textAlign: TextAlign.start,
@@ -217,7 +217,7 @@ class _HomeState extends State<Home> {
 
             bottomNavigationBar: CurvedNavigationBar(
             buttonBackgroundColor:DesignTheme.mainColor,
-                height: 55.0,
+                height: 50.0,
             backgroundColor: Colors.transparent,
             animationDuration: Duration(microseconds: 1000),
             items: <Widget>[

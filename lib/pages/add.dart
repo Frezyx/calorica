@@ -35,24 +35,28 @@ class _AddPageState extends State<AddPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
   },child:          
      Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.arrow_back, size: 24,),
-        elevation: 5.0,
-        backgroundColor: DesignTheme.whiteColor,
-        title: Text("Добавление приема пищи", style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
-      ),
+      // appBar: AppBar(
+      //   leading: Icon(Icons.arrow_back, size: 24,),
+      //   elevation: 5.0,
+      //   backgroundColor: DesignTheme.whiteColor,
+      //   title: Text("Добавление приема пищи", style: TextStyle(fontWeight: FontWeight.w700),),
+      //   automaticallyImplyLeading: false,
+      // ),
 
 
       body: 
       Padding(
-            padding: EdgeInsets.only(left: 20,right: 20,),
+            padding: EdgeInsets.only(top: 45, left: 20,right: 20,),
             child: 
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 15,right: 15,),
+            child:
+          Text("Добавление приема пищи", style: DesignTheme.bigText20),),
               Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
+            padding: EdgeInsets.only(top: 15, bottom: 20),
             child: 
             Container(
               // padding: build(),

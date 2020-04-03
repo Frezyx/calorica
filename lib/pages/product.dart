@@ -63,7 +63,12 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back, size: 24,),
+        leading: IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, "/add");
+            },
+            icon:Icon(Icons.arrow_back, size: 24,)
+          ),
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text(product.name == null? 'Загрузка...' : splitText(product.name), style: TextStyle(fontWeight: FontWeight.w700),),

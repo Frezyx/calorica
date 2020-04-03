@@ -79,7 +79,7 @@ class UserProduct {
   double squi;
   double fat;
   double carboh;
-  DateTime date;
+  String date;
 
   UserProduct({
 		this.id,
@@ -100,7 +100,7 @@ class UserProduct {
         squi: json["squi"],
         fat: json["fat"],
         carboh: json["carboh"],
-        date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
+        date: json["date"],
       );
       
   Map<String, dynamic> toMap() => {
@@ -111,10 +111,10 @@ class UserProduct {
         "squi": squi,
         "fat": fat,
         "carboh": carboh,
-        "date": epochFromDate( date ),
+        "date": date ,
       };
 
-      epochFromDate(DateTime dt) {  
-        return dt.millisecondsSinceEpoch ~/ 1000;
-      }
+      // epochFromDate(DateTime dt) {  
+      //   return dt.millisecondsSinceEpoch ~/ 1000;
+      // }
 }

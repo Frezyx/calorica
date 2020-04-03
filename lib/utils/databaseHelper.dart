@@ -158,7 +158,7 @@ class DBProductProvider {
       }
 
       Future<List<Product>> getAllProducts() async {
-        print("Я зашёл в поиск");
+        // print("Я зашёл в поиск");
         final db = await database;
         var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 0");
         List<Product> list =
@@ -188,8 +188,8 @@ class DBUserProductsProvider {
   
   firstCreateTable() async{
     final db = await database;
-    int now = epochFromDate(DateTime.now());
     int id = 0;
+    var now = toStrDate(DateTime.now());
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
         " VALUES (?,?,?,?,?,?,?,?)",
@@ -199,9 +199,6 @@ class DBUserProductsProvider {
     return(raw);
   }
 
-  int epochFromDate(DateTime dt) {  
-    return dt.millisecondsSinceEpoch ~/ 1000;
-  }
 
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -217,16 +214,21 @@ class DBUserProductsProvider {
           "squi DOUBLE,"
           "fat DOUBLE,"
           "carboh DOUBLE,"
-          "date INTEGER" 
+          "date TEXT" 
           ")");
     });
+  }
+
+  toStrDate(DateTime date){
+    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
   }
 
   Future<int>addProduct(UserProduct product) async{
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM UserProducts");
     int id = table.first["id"];
-    int now = epochFromDate(DateTime.now());
+    var now = DateTime.now();
+    var strNow = toStrDate(now);
     // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
@@ -238,10 +240,10 @@ class DBUserProductsProvider {
         product.squi,
         product.fat,
         product.carboh,
-        now
+        strNow,
         ]);
         print(raw);
-      // print(id.toString() + product.name + now.toString() +"        " +product.fat.toString());
+      print(strNow);
     return id;
   }
 
@@ -257,7 +259,7 @@ class DBUserProductsProvider {
         squi: item["squi"],
         fat: item["fat"],
         carboh: item["carboh"],
-        date: DateTime.fromMillisecondsSinceEpoch(item["date"]),
+        date: item["date"],
       );
 
     return product;
@@ -267,16 +269,19 @@ class DBUserProductsProvider {
     final db = await database;
     db.rawQuery("DELETE FROM UserProducts");
   }
-
       Future<List<UserProduct>> getAllProducts() async {
         final db = await database;
-        var res = await db.rawQuery("SELECT * FROM UserProducts");
+
+        var now = toStrDate(DateTime.now());
+        var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$now'");
         List<UserProduct> list =
             res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
-        //     for (int i = 0; i <list.length; i++){
-        //       print(i.toString() + list[i].name.toString());
-        //     }
-        // print(list.length.toString() + "Кол-во ссаных заметок");
+              // for (int i = 0; i <list.length; i++){
+              //   if(list[i].date == now){
+
+              //   }
+              //   // print("Дата из БД " + list[i].date.toString() + " Дата сейчас " + now.toString());
+              // }
         return list;
       }
 

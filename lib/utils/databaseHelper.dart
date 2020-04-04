@@ -196,7 +196,7 @@ class DBUserProductsProvider {
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
         " VALUES (?,?,?,?,?,?,?,?)",
-        [id,'Говядина отборная', 'Говядина и телятина', 218, 18.6, 16, 0, now]
+        [id,'Говядина отборная', 'Говядина и телятина', 0, 0.0, 0, 0, now]
         );
     print("Первая запись");
     return(raw);
@@ -385,7 +385,7 @@ class DBDateProductsProvider {
     var ids = item['ids'];
     var mass = ids.split(";");
     List<int> result = []; 
-    for (var i = 0; i < mass.length; i++) {
+    for (var i = 1; i < mass.length; i++) {
       result.add(int.parse(mass[i]));
     }
     return result;

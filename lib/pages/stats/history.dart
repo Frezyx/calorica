@@ -38,7 +38,7 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){
-              Navigator.pushNamed(context, "/add");
+              Navigator.pushNamed(context, "/stats");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -141,7 +141,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                           onTap: (){
-                            Navigator.pushNamed(context, '/daydata/${snapshot.data[i].id}');
+                            Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
                           },
                         );
                       },
@@ -214,8 +214,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: () {
-                                      print(data.id);
-                                      Navigator.pushNamed(context, '/daydata/${data.id}');
+                                      // print("Id:" + data.id.toString());
+                                      Navigator.pushNamed(context, '/daydata/${data.date.toString()}');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,

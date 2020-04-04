@@ -17,7 +17,10 @@ class DesignTheme {
   static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
   static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
 
+  static const Color redColor = Color.fromRGBO(220, 92, 92, 1);
+
   static const Color secondChartsGreen = Color.fromRGBO(162, 229, 184, 1);
+  static const Color secondChartRed = Color.fromRGBO(229, 162, 162, 1);
 
 
   static const TextStyle bigText = TextStyle( // h5 -> headline
@@ -25,6 +28,14 @@ class DesignTheme {
     'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
+    color: blackColor,
+  );
+
+  static const TextStyle blackText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 44,
     color: blackColor,
   );
 
@@ -49,6 +60,14 @@ class DesignTheme {
     'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
+    color: mainColor,
+  );
+
+  static const TextStyle midleMainText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
     color: mainColor,
   );
 
@@ -89,7 +108,7 @@ class DesignTheme {
   );
 
   static const TextStyle secondaryTextBig = TextStyle( // h5 -> headline
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w400,
       fontSize: 14,
       letterSpacing: -0.2,
       color: DesignTheme.gray170Color,

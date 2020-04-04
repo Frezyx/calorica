@@ -190,11 +190,14 @@ class _HomeState extends State<Home> {
                             crossAxisCount: 6,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, i){
-                              return Card(
+                              return 
+                              InkWell(
+                          child: 
+                              Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)
                                 ),
-                                elevation: 2.0,
+                                elevation: 1.0,
                                 child:
                                   Padding(
                                     padding: EdgeInsets.only(left: 10),
@@ -208,7 +211,11 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                   ),
-                                );
+                                ),
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}');
+                                },
+                              );
                             },
                             staggeredTileBuilder: (int i) => 
                               StaggeredTile.count(3,2));

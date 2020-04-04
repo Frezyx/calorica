@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/textMonth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -13,26 +14,45 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 
 
 class DayDatePage extends StatefulWidget{
-  String _id;
-  DayDatePage({String id}): _id = id;
+  String _date;
+  DayDatePage({String date}): _date = date;
 
   @override
-  _DayDatePageState createState() => _DayDatePageState(_id);
+  _DayDatePageState createState() => _DayDatePageState(_date);
 }
 
 class _DayDatePageState extends State<DayDatePage> {
-  String id;
-  _DayDatePageState(this.id);
+  String date;
+  _DayDatePageState(this.date);
+
+  ScrollController scrollController;
   
-  Product product = new Product();
-  double calory = -1.0; double caloryConst = -1.0;
-  double squi = -1.0; double squiConst = -1.0;
-  double fat = -1.0; double fatConst = -1.0;
-  double carboh = -1.0; double carbohConst = -1.0;
+  // Product product = new Product();
+  double calory = -1.0; 
+  double squi = -1.0; 
+  double fat = -1.0; 
+  double carboh = -1.0; 
+
+  double roundDouble(double value, int places){ 
+    double mod = pow(10.0, places); 
+    return ((value * mod).round().toDouble() / mod); 
+  }
 
 @override
   void initState() {
     super.initState();
+    DBDateProductsProvider.db.getPoductsIDsByDate(date).then((idList){
+      for (var i = 0; i < idList.length; i++) {
+        DBUserProductsProvider.db.getProductById(idList[i]).then((product){
+          setState(() {
+            calory += product.calory;
+            squi += product.squi;
+            fat += product.fat;
+            carboh += product.carboh;
+          });
+        });
+      }
+    });
   }
 
 
@@ -42,13 +62,15 @@ class _DayDatePageState extends State<DayDatePage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){
-              Navigator.pushNamed(context, "/add");
+              Navigator.pushNamed(context, "/history");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
-        title: Text(product.name == null? 'Загрузка...' : splitText(product.name), style: TextStyle(fontWeight: FontWeight.w700),),
+        title: Text("История дня",
+          // product.name == null? 'Загрузка...' : splitText(product.name),
+           style: TextStyle(fontWeight: FontWeight.w700),),
         // automaticallyImplyLeading: false,
       ),
       body:
@@ -62,7 +84,8 @@ class _DayDatePageState extends State<DayDatePage> {
           child: 
               // Flexible(
               //       child:
-                Container(
+            Container(
+
               padding: const EdgeInsets.all(0.0),
               constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
               //   shape: RoundedRectangleBorder(
@@ -74,110 +97,121 @@ class _DayDatePageState extends State<DayDatePage> {
                 padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
                 child: 
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   
                   children: <Widget>[
-                    Card(
+                    Container(
+                      decoration: BoxDecoration(
+                        color: DesignTheme.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 20.0, // has the effect of softening the shadow
+                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            offset: Offset(
+                              10.0, // horizontal, move right 10
+                              10.0, // vertical, move down 10
+                            ),
+                          )
+                        ],
+                      ),
                       child:                    
                       Padding(
                         padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
                         child:
                         
-                        Column(children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
                           
-                          Text(product == null? 'Загрузка...' : product.name,
-                            style: isStringOverSize(product.name)? DesignTheme.bigText20: DesignTheme.bigText24,
+                          Text(getTextMonth(date),
+                            // product == null? 'Загрузка...' : product.name,
+                            style: isStringOverSize("Привет")? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),
 
-                          SizedBox(height:10),
+                          SizedBox(height:30),
 
-                        // Padding(
-                        //   padding: EdgeInsets.only(left:15, right: 15, bottom: 3, top: 3),
-                          // child:
-                          //   TextFormField(
-                          //     onChanged: (text){
-                          //       multiData(int.parse(text));
-                          //     },
-                          //     style: DesignTheme.inputText,
-                          //     cursorColor: DesignTheme.mainColor,
-                          //     decoration: InputDecoration(
-                                
-                          //       labelText: 'Введите вес...',
-                          //       labelStyle: DesignTheme.labelSearchTextBigger,
-                          //       suffixIcon: Icon(
-                          //           Icons.people,
-                          //           // color: DesignTheme.blackColor,
-                          //         )
-                          //   ),
-                          // ),
-
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children:<Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children:<Widget>[
+                                getParamText(roundDouble(calory,2)," кКал"),
+                                getParamText(roundDouble(squi,2), " Белки г."),
+                            ]),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children:<Widget>[
+                                getParamText(roundDouble(fat,2), " Жир г."),
+                                getParamText(roundDouble(carboh,2), " Углеводы г."),
+                            ])
+                          ]),
                         ]),
                       ),
                     ),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0, bottom: 0.0, left: 20),
+                    child: 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                      Text("В этот день вы съели:", style: DesignTheme.lilGrayText,),
+                    ],),
+                  ),
                   // ),
-
-                    SizedBox(height:10),
-
-                    Column(children:<Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children:<Widget>[
-                          getParamText(calory,"кКал"),
-                          getParamText(squi, "Белки г."),
-                      ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children:<Widget>[
-                          getParamText(fat, "Жир г."),
-                          getParamText(carboh, "Углеводы г."),
-                      ])
-                    ]),
-                    Padding(
-                      child: GradientButton(
-                        increaseWidthBy: 60,
-                        increaseHeightBy: 5,
-                        child: 
-                        Padding(
-                          child:Text(
-                          'Добавить',
-                          textAlign: TextAlign.center,
-                          style: DesignTheme.buttonText,
-                          ), padding: EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
-                        ),
-                        callback: () {
-
-                              UserProduct productSend = UserProduct(
-                                name: product.name,
-                                category: product.category,
-                                calory: calory,
-                                carboh: carboh,
-                                squi: squi,
-                                fat: fat,
-                              );
-
-                              print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
-
-                              addProduct(productSend).then((res){
-                                DBDateProductsProvider.db.getPoductsByDate(res.date).then((products){
-                                  products.ids += ";" + res.id.toString();
-                                  DBDateProductsProvider.db.updateDateProducts(products);
-                                });
-
-                                var now = DateTime.now();
-                                var strNow = toStrDate(now);
-                                
-                                if(res.date == strNow){
-                                    Navigator.pushNamed(context, '/');
-                                }
-
-                              });
-                        },
-                        shapeRadius: BorderRadius.circular(50.0),
-                        gradient: DesignTheme.gradient,
-                        shadowColor: Gradients.backToFuture.colors.last.withOpacity(0.25),
+                    Flexible(
+                      child:
+                    Container(
+                      padding: const EdgeInsets.all(0.0),
+                      constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
+                      child: FutureBuilder(
+                        future: DBUserProductsProvider.db.getProductsByDate(date),
+                        builder: (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return new Text('Input a URL to start');
+                            case ConnectionState.waiting:
+                              return new Center(child: new CircularProgressIndicator());
+                            case ConnectionState.active:
+                              return new Text('');
+                            case ConnectionState.done:
+                              if (snapshot.hasError) {
+                                return new Text(
+                                  '${snapshot.error}',
+                                  style: TextStyle(color: Colors.red),
+                                );
+                              } else {
+                                return StaggeredGridView.countBuilder(
+                                  controller: scrollController,
+                                  padding: const EdgeInsets.all(7.0),
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 0,
+                                  crossAxisCount: 4,
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, i){
+                                    return 
+                                    //Изменить
+                                    InkWell(
+                                      child: getCard(snapshot.data[i]) ,
+                                      onTap: (){
+                                        Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
+                                      },
+                                    );
+                                  },
+                                  staggeredTileBuilder: (int i) => 
+                                    StaggeredTile.count(4,1));
+                              }
+                          }
+                        })
                       ),
-                    padding: EdgeInsets.only(left:15, right: 15, bottom: 10, top: 10)),
+                    ),
                   ],
                 ) 
               ),
@@ -185,6 +219,54 @@ class _DayDatePageState extends State<DayDatePage> {
           ),
         // ),
       );
+  }
+
+    getCard(UserProduct data){
+                    return  
+                    Padding(
+                    padding: EdgeInsets.only(top: 0.0, bottom: 5.0),
+                    child: 
+                    Container(
+                      decoration: BoxDecoration(
+                        color: DesignTheme.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12.withOpacity(0.05),
+                            blurRadius: 5.0, // has the effect of softening the shadow
+                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            offset: Offset(
+                              0.0, // horizontal, move right 10
+                              5.0, // vertical, move down 10
+                            ),
+                          )
+                        ],
+                      ),
+                      child:
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5, left: 15),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment:  CrossAxisAlignment.center,
+                              children:<Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children:<Widget>[
+                                Text(splitText(data.name), style: DesignTheme.primeText16,),
+                                Text(data.calory.toString() + " кКал     " +
+                                      data.squi.toString() + " Б     " +
+                                      data.fat.toString() + " Ж     " +
+                                      data.carboh.toString() + " У" ,
+                                  
+                                  style: DesignTheme.secondaryText,),
+                              ]),
+                            ]),
+                          ),
+                          ),
+                        );
   }
 
   toStrDate(DateTime date){
@@ -200,12 +282,12 @@ class _DayDatePageState extends State<DayDatePage> {
   getParamText(double value, String name){
     return 
     Padding(
-      padding: EdgeInsets.only(left:30, right: 30, bottom: 3, top: 3),
+      padding: EdgeInsets.only(left:5, bottom: 5, top: 5),
       child:
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children:<Widget>[
-      Text(value.toString(), style: DesignTheme.bigMainText,),
+      Text(value.toString(), style: DesignTheme.midleMainText,),
       Text(name, style: DesignTheme.labelSearchText,),
       ]));
   }

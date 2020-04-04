@@ -69,12 +69,14 @@ class _MyAppState extends State<MyApp> {
           return new MaterialPageRoute(builder: (context) => new ProductPage(id:path[2]),
           settings: RouteSettings);
         }
+
         if(path[1] == 'daydata'){
-          return new MaterialPageRoute(builder: (context) => new DayDatePage(id:path[2]),
+          return new MaterialPageRoute(builder: (context) => new DayDatePage(date:path[2]),
           settings: RouteSettings);
         }
+
       }
-      
+
     );
   }
 }

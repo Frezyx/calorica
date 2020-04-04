@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
@@ -21,10 +23,17 @@ class _MainStatsState extends State<MainStats> {
   var fatT = 0.0;
   var squiT = 0.0;
   var carbohT = 0.0;
+  var caloryT = 0.0;
 
   var fatY = 0.0;
   var squiY = 0.0;
   var carbohY = 0.0;
+  var caloryY = 0.0;
+
+  double roundDouble(double value, int places){ 
+    double mod = pow(10.0, places); 
+    return ((value * mod).round().toDouble() / mod); 
+  }
   
   
 
@@ -52,7 +61,9 @@ class _MainStatsState extends State<MainStats> {
                 data: data2,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
-                    charts.ColorUtil.fromDartColor(DesignTheme.secondChartsGreen),
+                    charts.ColorUtil.fromDartColor(
+                        caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
+                      ),
               ), 
             // );
 
@@ -64,7 +75,9 @@ class _MainStatsState extends State<MainStats> {
                 data: data1,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
-                    charts.ColorUtil.fromDartColor(DesignTheme.secondColor),
+                    charts.ColorUtil.fromDartColor(
+                        caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor
+                      ),
               ), 
             // );
             ];
@@ -84,6 +97,7 @@ class _MainStatsState extends State<MainStats> {
             fatT += todayProd[i].fat;
             squiT += todayProd[i].squi;
             carbohT += todayProd[i].carboh;
+            caloryT += todayProd[i].calory;
           });
         }
         for (var i = 0; i < yesterdayProd.length; i++) {
@@ -91,6 +105,7 @@ class _MainStatsState extends State<MainStats> {
             fatY += yesterdayProd[i].fat;
             squiY += yesterdayProd[i].squi;
             carbohY += yesterdayProd[i].carboh;
+            caloryY += yesterdayProd[i].calory;
           });
         }
         _generateData(  );
@@ -107,9 +122,9 @@ class _MainStatsState extends State<MainStats> {
             children:<Widget>[
               
               Padding(
-                padding: EdgeInsets.only(bottom: 10, top: 40, left: 20, right: 20),
+                padding: EdgeInsets.only(bottom: 10, top: 50, left: 20, right: 20),
                 child:Text(
-                  "Сегодня вы - молодец! " ,style: DesignTheme.bigText,
+                  caloryT < caloryY? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
                 )
               ),
 
@@ -182,14 +197,17 @@ class _MainStatsState extends State<MainStats> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:<Widget>[
 
-                    Text('-557',
+                    Text(caloryT < caloryY? "-" + checkThousands((caloryT - caloryY).abs()).toString()
+                     : "+" + checkThousands((caloryT - caloryY).abs()).toString(),
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, color: DesignTheme.secondColor),
+                      style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
+                        color: caloryT < caloryY ? DesignTheme.secondColor : DesignTheme.redColor,
+                      ),
                     ),
 
-                    Text(' калорий',
+                    Text(' кКалорий',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 28.0,fontWeight: FontWeight.w600, color: DesignTheme.gray170Color),
+                      style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.w600, color: DesignTheme.gray170Color),
                     ),
                 ])
               ),
@@ -249,10 +267,10 @@ class _MainStatsState extends State<MainStats> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children:<Widget>[
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: DesignTheme.secondColor,),
+                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor,),
                                     Text("Сегодня"),]),
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: DesignTheme.secondChartsGreen,),
+                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
                                     Text("Вчера"),]),
                                 ]),
                               ),
@@ -296,6 +314,18 @@ class _MainStatsState extends State<MainStats> {
     );
   }
 }
+
+checkThousands(double value) {
+  if(value > 1000){
+    return roundDouble(value/1000, 1).toString() + "К";
+  }
+  return value;
+}
+
+  double roundDouble(double value, int places){ 
+    double mod = pow(10.0, places); 
+    return ((value * mod).round().toDouble() / mod); 
+  }
 
 class Pollution {
   String place;

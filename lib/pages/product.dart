@@ -101,7 +101,23 @@ class _ProductPageState extends State<ProductPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   
                   children: <Widget>[
-                    Card(
+                    Container(
+                      decoration: BoxDecoration(
+                        color: DesignTheme.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12.withOpacity(0.1),
+                            blurRadius: 20.0, // has the effect of softening the shadow
+                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            offset: Offset(
+                              10.0, // horizontal, move right 10
+                              10.0, // vertical, move down 10
+                            ),
+                          )
+                        ],
+                      ),
                       child:                    
                       Padding(
                         padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
@@ -143,15 +159,19 @@ class _ProductPageState extends State<ProductPage> {
 
                     SizedBox(height:10),
 
-                    Column(children:<Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:<Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children:<Widget>[
                           getParamText(calory,"кКал"),
                           getParamText(squi, "Белки г."),
                       ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children:<Widget>[
                           getParamText(fat, "Жир г."),
                           getParamText(carboh, "Углеводы г."),

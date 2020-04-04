@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class User {
   int id;
   String name;
@@ -117,4 +119,38 @@ class UserProduct {
       // epochFromDate(DateTime dt) {  
       //   return dt.millisecondsSinceEpoch ~/ 1000;
       // }
+}
+
+class DateProducts {
+  String ids;
+  String date;
+  int id;
+
+  DateProducts({
+    this.date,
+    this.id,
+    this.ids,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'date': date,
+      'id': id,
+      'ids' : ids,
+    };
+  }
+
+  static DateProducts fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return DateProducts(
+      date: map['date'],
+      id: map['id'],
+      ids: map['ids'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static DateProducts fromJson(String source) => fromMap(json.decode(source));
 }

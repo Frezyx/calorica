@@ -1,4 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -13,54 +15,88 @@ class MainStats extends StatefulWidget {
 }
 
 class _MainStatsState extends State<MainStats> {
-  List<charts.Series<Pollution, String>> _seriesData;
+  List<charts.Series<Pollution, String>> _seriesData = List<charts.Series<Pollution, String>>();
+  List<UserProduct> userTodayProducts;
+  List<UserProduct> userYesterdayProducts;
+  var fatT = 0.0;
+  var squiT = 0.0;
+  var carbohT = 0.0;
 
-  _generateData() {
-    var data1 = [
-      new Pollution(1980, 'Белки', 30),
-      new Pollution(1980, 'Жиры', 40),
-      new Pollution(1980, 'Углеводы', 10),
-    ];
+  var fatY = 0.0;
+  var squiY = 0.0;
+  var carbohY = 0.0;
+  
+  
+
+  _generateData( ) {
+    
 
     var data2 = [
-      new Pollution(1980, 'Белки', 30),
-      new Pollution(1980, 'Жиры', 40),
-      new Pollution(1980, 'Углеводы', 10),
+      Pollution(1980, 'Белки', squiY.round() ),
+      Pollution(1980, 'Жиры', fatY.round() ),
+      Pollution(1980, 'Углеводы', carbohY.round() ),
     ];
 
-    _seriesData.add(
-      charts.Series(
-        domainFn: (Pollution pollution, _) => pollution.place,
-        measureFn: (Pollution pollution, _) => pollution.quantity,
-        id: '2.4.2020',
-        data: data2,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (Pollution pollution, _) =>
-            charts.ColorUtil.fromDartColor(DesignTheme.secondChartsGreen),
-      ), 
-    );
+    var data1 = [
+      Pollution(1980, 'Белки', squiT.round() ),
+      Pollution(1980, 'Жиры', fatT.round() ),
+      Pollution(1980, 'Углеводы', carbohT.round() ),
+    ];
+    setState(() {
+          _seriesData = [
+            // _seriesData.add(
+              charts.Series(
+                domainFn: (Pollution pollution, _) => pollution.place,
+                measureFn: (Pollution pollution, _) => pollution.quantity,
+                id: '2.4.2020',
+                data: data2,
+                fillPatternFn: (_, __) => charts.FillPatternType.solid,
+                fillColorFn: (Pollution pollution, _) =>
+                    charts.ColorUtil.fromDartColor(DesignTheme.secondChartsGreen),
+              ), 
+            // );
 
-    _seriesData.add(
-      charts.Series(
-        domainFn: (Pollution pollution, _) => pollution.place,
-        measureFn: (Pollution pollution, _) => pollution.quantity,
-        id: '3.4.2020',
-        data: data1,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (Pollution pollution, _) =>
-            charts.ColorUtil.fromDartColor(DesignTheme.secondColor),
-      ), 
-    );
-
-
+            // _seriesData.add(
+              charts.Series(
+                domainFn: (Pollution pollution, _) => pollution.place,
+                measureFn: (Pollution pollution, _) => pollution.quantity,
+                id: '3.4.2020',
+                data: data1,
+                fillPatternFn: (_, __) => charts.FillPatternType.solid,
+                fillColorFn: (Pollution pollution, _) =>
+                    charts.ColorUtil.fromDartColor(DesignTheme.secondColor),
+              ), 
+            // );
+            ];
+    });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _seriesData = List<charts.Series<Pollution, String>>();
-    _generateData();
+
+    // _seriesData = List<charts.Series<Pollution, String>>();
+    DBUserProductsProvider.db.getTodayProducts().then((todayProd){
+      DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
+        print(yesterdayProd[0].date);
+        for (var i = 0; i < todayProd.length; i++) {
+          setState(() {
+            fatT += todayProd[i].fat;
+            squiT += todayProd[i].squi;
+            carbohT += todayProd[i].carboh;
+          });
+        }
+        for (var i = 0; i < yesterdayProd.length; i++) {
+          setState(() {
+            fatY += yesterdayProd[i].fat;
+            squiY += yesterdayProd[i].squi;
+            carbohY += yesterdayProd[i].carboh;
+          });
+        }
+        _generateData(  );
+      });
+    });
+    print("ok");
   }
 
   @override
@@ -73,7 +109,7 @@ class _MainStatsState extends State<MainStats> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10, top: 40, left: 20, right: 20),
                 child:Text(
-                  "Сегодня вы - молодец!",style: DesignTheme.bigText,
+                  "Сегодня вы - молодец! " ,style: DesignTheme.bigText,
                 )
               ),
 
@@ -124,7 +160,7 @@ class _MainStatsState extends State<MainStats> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/historyEat');
+                                      Navigator.pushNamed(context, '/history');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,
@@ -240,7 +276,7 @@ class _MainStatsState extends State<MainStats> {
                   Icon(Icons.pie_chart_outlined, size: 26, color: DesignTheme.whiteColor),
                   padding: EdgeInsets.all(7.0),
               ),
-              Icon(FontAwesomeIcons.userAlt, size: 30, color: Colors.black54,),
+              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
               Icon(Icons.add, size: 30, color: Colors.black54,),
             ],
             index: 0,
@@ -248,8 +284,6 @@ class _MainStatsState extends State<MainStats> {
             onTap: (index) {
               if(index == 0){
                 Navigator.pushNamed(context, '/stats');
-                // DBUserProductsProvider.db.deleteAll();
-                // Navigator.pushNamed(context, '/');
               }
               if(index == 1){
                 Navigator.pushNamed(context, '/');
@@ -270,3 +304,60 @@ class Pollution {
 
   Pollution(this.year, this.place, this.quantity);
 }
+
+                    //   // initialData: data,
+                    //   future: DBUserProductsProvider.db.getAllProducts(),
+                    //   builder:
+                    //   (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                    //   switch (snapshot.connectionState) {
+                    //                   case ConnectionState.none:
+                    //                     return new Text('Input a URL to start');
+                    //                   case ConnectionState.waiting:
+                    //                     return new Center(child: new CircularProgressIndicator());
+                    //                   case ConnectionState.active:
+                    //                     return new Text('');
+                    //                   case ConnectionState.done:
+                    //                     if (snapshot.hasError) {
+                    //                       return new Text(
+                    //                         '${snapshot.error}',
+                    //                         style: TextStyle(color: Colors.red),
+                    //                       );
+                    //                     } else{
+                    //       return StaggeredGridView.countBuilder(
+                    //         controller: scrollController,
+                    //         padding: const EdgeInsets.all(7.0),
+                    //         mainAxisSpacing: 3.0,
+                    //         crossAxisSpacing: 3.0,
+                    //         crossAxisCount: 6,
+                    //         itemCount: snapshot.data.length,
+                    //         itemBuilder: (context, i){
+                    //           return Card(
+                    //             shape: RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(10.0)
+                    //             ),
+                    //             elevation: 2.0,
+                    //             child:
+                    //               Padding(
+                    //                 padding: EdgeInsets.only(left: 10),
+                    //                 child:
+                    //                   Column(
+                    //                     crossAxisAlignment: CrossAxisAlignment.start,
+                    //                     mainAxisAlignment: MainAxisAlignment.center,
+                    //                     children: <Widget>[
+                    //                       Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
+                    //                       Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[0].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
+                    //                     ],
+                    //                   ),
+                    //               ),
+                    //             );
+                    //         },
+                    //         staggeredTileBuilder: (int i) => 
+                    //           StaggeredTile.count(3,2));
+                    //     }
+                    //     }
+                    //     // else 
+                    //     // {
+                    //     //   return Center(child: CircularProgressIndicator());
+                    //     // }
+                    //   }
+                    // ),

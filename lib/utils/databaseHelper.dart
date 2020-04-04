@@ -1,11 +1,14 @@
-import 'dart:math';
-
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
+
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'package:calory_calc/models/dbModels.dart';
+
+import 'dateHalper.dart';
 
 class DBUserProvider {
   DBUserProvider._();
@@ -189,7 +192,7 @@ class DBUserProductsProvider {
   firstCreateTable() async{
     final db = await database;
     int id = 0;
-    var now = toStrDate(DateTime.now());
+    var now = getDateDayAgo(toStrDate(DateTime.now()));
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
         " VALUES (?,?,?,?,?,?,?,?)",
@@ -223,7 +226,7 @@ class DBUserProductsProvider {
     return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
   }
 
-  Future<int>addProduct(UserProduct product) async{
+  Future<DateAndCalory>addProduct(UserProduct product) async{
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM UserProducts");
     int id = table.first["id"];
@@ -242,9 +245,8 @@ class DBUserProductsProvider {
         product.carboh,
         strNow,
         ]);
-        print(raw);
       print(strNow);
-    return id;
+    return DateAndCalory(id:id,date:strNow);
   }
 
   Future<UserProduct> getProductById(int id) async {
@@ -265,24 +267,165 @@ class DBUserProductsProvider {
     return product;
   }
 
+  
+  Future<List<UserProduct>> getTodayProducts() async{
+    var now = toStrDate(DateTime.now());
+    return await getProductsByDate(now);
+  }
+
+  Future<List<UserProduct>> getYesterdayProducts() async{
+    var yesterday = getDateDayAgo(toStrDate(DateTime.now()));
+    return await getProductsByDate(yesterday);
+  }
+
+  Future<List<UserProduct>> getProductsByDate(String date) async {
+        final db = await database;
+        var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$date'");
+        List<UserProduct> list =
+            res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
+        return list;
+      }
+
   deleteAll() async {
     final db = await database;
     db.rawQuery("DELETE FROM UserProducts");
   }
-      Future<List<UserProduct>> getAllProducts() async {
+
+  Future<List<UserProduct>> getAllProducts() async {
         final db = await database;
 
         var now = toStrDate(DateTime.now());
         var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$now'");
         List<UserProduct> list =
             res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
-              // for (int i = 0; i <list.length; i++){
-              //   if(list[i].date == now){
-
-              //   }
-              //   // print("Дата из БД " + list[i].date.toString() + " Дата сейчас " + now.toString());
-              // }
         return list;
       }
 
+    Future<List<DateAndCalory>> getAllProductsDateSplit() async {
+        final db = await database;
+
+        var result = List<DateAndCalory>();
+        var count = 0;
+        var res = await db.rawQuery("SELECT * FROM UserProducts");
+
+        List<UserProduct> list =
+          res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
+
+        for (var i = 0; i < list.length; i++) {
+          result.add(DateAndCalory(id: list[i].id,date: list[i].date,calory: list[i].calory));
+        }
+
+        return result;
+      }
+}
+
+class DateAndCalory {
+  int id;
+  String date;
+  double calory;
+
+  DateAndCalory({
+    this.id,
+    this.date,
+    this.calory,
+  });
+  
+}
+
+class DBDateProductsProvider {
+  DBDateProductsProvider._();
+
+  static final DBDateProductsProvider db = DBDateProductsProvider._();
+
+  Database _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database;
+  }
+
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "DateProducts.db");
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db.execute("CREATE TABLE DateProducts ("
+          "id INTEGER PRIMARY KEY,"
+          "date TEXT,"
+          "ids TEXT"
+          ")");
+    });
+  }
+
+  Future<DateProducts>addDateProducts(DateProducts dateProducts) async{
+    final db = await database;
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
+    int id = table.first["id"];
+    var raw = await db.rawInsert(
+        "INSERT Into DateProducts (id, date, ids)"
+        " VALUES (?,?,?)",
+        [id, 
+        dateProducts.date,
+        dateProducts.ids,
+        ]);
+    var respons = DateProducts(
+      id: id,
+      date: dateProducts.date,
+      ids: dateProducts.ids,
+    );
+    return respons;
+  }
+
+  Future<List<int>> getPoductsIDsByDate(String date) async {
+    final db = await database;
+    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+    var item = res.first;
+    var ids = item['ids'];
+    var mass = ids.split(";");
+    List<int> result = []; 
+    for (var i = 0; i < mass.length; i++) {
+      result.add(int.parse(mass[i]));
+    }
+    return result;
+  }
+
+  Future<DateProducts> getPoductsByDate(String date) async {
+    final db = await database;
+    DateProducts respons;
+    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+    if(res.length == 0){
+      var newDP = DateProducts(ids: "", date: toStrDate(DateTime.now()));
+      addDateProducts(newDP).then((response){
+        var item = res.first;
+        respons = DateProducts(id:item['id'], ids: item['ids'], date: item['date']);
+      });
+    }
+    else{
+      var item = res.first;
+      respons = DateProducts(id:item['id'], ids: item['ids'], date: item['date']);
+    }
+    return respons;
+  }
+  
+  updateDateProducts(DateProducts products) async{
+    final db = await database;
+    int count = await db.rawUpdate(
+      'UPDATE DateProducts SET ids = ? WHERE id = ?',
+      ['${products.ids}', '${products.id}']);
+    print('updated: $count');
+  }
+
+    Future<List<DateProducts>> getDates() async {
+    final db = await database;
+    var res = await db.rawQuery("SELECT * FROM DateProducts");
+      List<DateProducts> list =
+          res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  toStrDate(DateTime date){
+    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
+  }
 }

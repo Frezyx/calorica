@@ -8,16 +8,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
 
-class AddPage extends StatefulWidget{
+class HistoryPage extends StatefulWidget{
   @override
-  _AddPageState createState() => _AddPageState();
+  _HistoryPageState createState() => _HistoryPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _HistoryPageState extends State<HistoryPage> {
   bool isSaerching = false;
   ScrollController scrollController;
   String searchText;
-  List<Product> prod = [Product(name: "asas"),Product(name: "asas"),Product(name: "asas"),Product(name: "asas"),];
+  List<UserProduct> prod = [UserProduct(name: "asas"),UserProduct(name: "asas"),UserProduct(name: "asas"),UserProduct(name: "asas"),];
 
   void startSearch(String text){
     setState(() {
@@ -35,26 +35,27 @@ class _AddPageState extends State<AddPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
   },child:          
      Scaffold(
-      // appBar: AppBar(
-      //   leading: Icon(Icons.arrow_back, size: 24,),
-      //   elevation: 5.0,
-      //   backgroundColor: DesignTheme.whiteColor,
-      //   title: Text("Добавление приема пищи", style: TextStyle(fontWeight: FontWeight.w700),),
-      //   automaticallyImplyLeading: false,
-      // ),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, "/add");
+            },
+            icon:Icon(Icons.arrow_back, size: 24,)
+          ),
+        elevation: 5.0,
+        backgroundColor: DesignTheme.whiteColor,
+        title: Text("История питания", style: TextStyle(fontWeight: FontWeight.w700),),
+        // automaticallyImplyLeading: false,
+      ),
 
 
       body: 
       Padding(
-            padding: EdgeInsets.only(top: 45, left: 20,right: 20,),
+            padding: EdgeInsets.only(top: 15, left: 20,right: 20,),
             child: 
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 15,right: 15,),
-            child:
-          Text("Добавление приема пищи", style: DesignTheme.bigText20),),
               Padding(
             padding: EdgeInsets.only(top: 15, bottom: 20),
             child: 
@@ -92,7 +93,7 @@ class _AddPageState extends State<AddPage> {
                                 Icon(Icons.search, color: DesignTheme.mainColor,),
                             ),
                             contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                            labelText: 'Поиск по заметкам...',
+                            labelText: 'Поиск по дате...',
                             border: InputBorder.none,
                             labelStyle: DesignTheme.labelSearchText,
                           ),
@@ -103,7 +104,7 @@ class _AddPageState extends State<AddPage> {
           Padding(
             padding: EdgeInsets.only(left: 15,),
             child: 
-              Text("Результаты поиска:", style: DesignTheme.lilGrayText,),
+              Text("Итория приема пищи в днях:", style: DesignTheme.lilGrayText,),
           ),
           Flexible(
               child:
@@ -111,8 +112,8 @@ class _AddPageState extends State<AddPage> {
         padding: const EdgeInsets.all(0.0),
         constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
         child: FutureBuilder(
-            future: isSaerching? DBProductProvider.db.getAllProductsSearch(searchText): DBProductProvider.db.getAllProducts(),
-            builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
+            future: DBDateProductsProvider.db.getDates(),
+            builder: (BuildContext context, AsyncSnapshot<List<DateProducts>> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                   return new Text('Input a URL to start');
@@ -136,10 +137,11 @@ class _AddPageState extends State<AddPage> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
                         return 
+                        //Изменить
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                           onTap: (){
-                            Navigator.pushNamed(context, '/product/'+snapshot.data[i].id.toString());
+                            Navigator.pushNamed(context, '/daydata/${snapshot.data[i].id}');
                           },
                         );
                       },
@@ -151,39 +153,39 @@ class _AddPageState extends State<AddPage> {
 
       ]),),
 
-      bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.mainColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
-              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-              Padding(
-                child:
-                  Icon(Icons.add, size: 30, color: DesignTheme.whiteColor),
-                  padding: EdgeInsets.all(3.0),
-              ),
-            ],
-            index: 2,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                Navigator.pushNamed(context, '/stats');
-              }
-              if(index == 1){
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //       buttonBackgroundColor:DesignTheme.mainColor,
+      //           height: 50.0,
+      //       backgroundColor: Colors.transparent,
+      //       animationDuration: Duration(microseconds: 1000),
+      //       items: <Widget>[
+      //         Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
+      //         Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
+      //         Padding(
+      //           child:
+      //             Icon(Icons.add, size: 30, color: DesignTheme.whiteColor),
+      //             padding: EdgeInsets.all(3.0),
+      //         ),
+      //       ],
+      //       index: 2,
+      //       animationCurve: Curves.easeInExpo,
+      //       onTap: (index) {
+      //         if(index == 0){
+      //           Navigator.pushNamed(context, '/stats');
+      //         }
+      //         if(index == 1){
+      //           Navigator.pushNamed(context, '/');
+      //         }
+      //         if(index == 2){
+      //           Navigator.pushNamed(context, '/add');
+      //         }
+      //       },
+      //     ),
         ),
     );
   }
 
-  getCard(Product data){
+  getCard(DateProducts data){
                     return Card(
                            shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)
@@ -201,13 +203,9 @@ class _AddPageState extends State<AddPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
-                                  Text(splitText(data.name), style: DesignTheme.primeText16,),
-                                  Text(data.calory.toString() + " кКал     " +
-                                      data.squi.toString() + " Б     " +
-                                      data.fat.toString() + " Ж     " +
-                                      data.carboh.toString() + " У" ,
-                                  
-                                  style: DesignTheme.secondaryText,),
+                                  Text(splitText(data.date), style: DesignTheme.primeText16,),
+                                  // Text(data.calory.toString() + " кКал",
+                                  // style: DesignTheme.secondaryText,),
                               ]),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -216,10 +214,11 @@ class _AddPageState extends State<AddPage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/product/'+data.id.toString());
+                                      print(data.id);
+                                      Navigator.pushNamed(context, '/daydata/${data.id}');
                                     }, 
                                   icon: Icon(
-                                    Icons.add,
+                                    Icons.arrow_forward,
                                     color: DesignTheme.mainColor,
                                     size: 28,
                                     ),

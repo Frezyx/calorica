@@ -1,13 +1,14 @@
-import 'package:calory_calc/pages/add.dart';
-import 'package:calory_calc/pages/product.dart';
-import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:flutter/material.dart';
-import 'package:calory_calc/design/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/auth.dart';
 import 'package:calory_calc/pages/home.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:calory_calc/pages/product.dart';
+import 'package:calory_calc/pages/stats/daydata.dart';
+import 'package:calory_calc/pages/stats/history.dart';
+import 'package:calory_calc/pages/stats/mainStats.dart';
 
 StatefulWidget getRegisterPage(SharedPreferences prefs){
   return AuthPage(prefs: prefs);
@@ -58,7 +59,9 @@ class _MyAppState extends State<MyApp> {
         '/' : (BuildContext context) => Home(),
         '/add' : (BuildContext context) => AddPage(),
         '/stats' : (BuildContext context) => MainStats(),
+        '/history' : (BuildContext context) => HistoryPage(),
       },
+
       onGenerateRoute: (RouteSettings){
         var path = RouteSettings.name.split('/');
 
@@ -66,7 +69,12 @@ class _MyAppState extends State<MyApp> {
           return new MaterialPageRoute(builder: (context) => new ProductPage(id:path[2]),
           settings: RouteSettings);
         }
+        if(path[1] == 'daydata'){
+          return new MaterialPageRoute(builder: (context) => new DayDatePage(id:path[2]),
+          settings: RouteSettings);
+        }
       }
+      
     );
   }
 }

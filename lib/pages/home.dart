@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/widgets/range.dart';
@@ -50,6 +52,11 @@ class _HomeState extends State<Home> {
   RangeGraphData squi = RangeGraphData( name: "Белки",percent: 0.0 ,weigth: 0);
   RangeGraphData carboh = RangeGraphData( name: "Углеводы",percent: 0.0,weigth: 0);
 
+  double roundDouble(double value, int places){ 
+    double mod = pow(10.0, places); 
+    return ((value * mod).round().toDouble() / mod); 
+  }
+
   @override
   void initState() {
     super.initState();
@@ -60,16 +67,18 @@ class _HomeState extends State<Home> {
             surname = res.surname;
           });
           for (var i = 0; i < products.length; i++) {
-              caloryNow += products[i].calory;
-              squiNow += products[i].squi;
-              fatNow += products[i].fat;
-              carbohNow += products[i].carboh;
+              caloryNow = roundDouble(caloryNow + products[i].calory, 2);
+              squiNow = roundDouble(squiNow + products[i].squi, 2);
+              fatNow = roundDouble(fatNow + products[i].fat, 2);
+              carbohNow = roundDouble(carbohNow + products[i].carboh, 2);
           }
           setState(() {
+            
             calory.weigth = caloryNow;
             fat.weigth = fatNow;
             squi.weigth = squiNow;
             carboh.weigth = carbohNow;
+
             calory.percent = (caloryNow/caloryLimit)*100 <= 100? (caloryNow/caloryLimit)*100 : 100;
             fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
             squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;

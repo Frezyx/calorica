@@ -12,18 +12,18 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
 
-class ProductPage extends StatefulWidget{
-    String _id;
-
-  ProductPage({String id}): _id = id;
+class DayDatePage extends StatefulWidget{
+  String _id;
+  DayDatePage({String id}): _id = id;
 
   @override
-  _ProductPageState createState() => _ProductPageState(_id);
+  _DayDatePageState createState() => _DayDatePageState(_id);
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _DayDatePageState extends State<DayDatePage> {
   String id;
-  _ProductPageState(this.id);
+  _DayDatePageState(this.id);
+  
   Product product = new Product();
   double calory = -1.0; double caloryConst = -1.0;
   double squi = -1.0; double squiConst = -1.0;
@@ -33,32 +33,8 @@ class _ProductPageState extends State<ProductPage> {
 @override
   void initState() {
     super.initState();
-      DBProductProvider.db.getProductById(int.parse(id)).then((res){
-        setState(() {
-          product = res;
-          calory = res.calory;
-          squi = res.squi;
-          fat = res.fat;
-          carboh = res.carboh;
-        });
-      });
   }
 
-  void multiData(int grams){
-    double multiplier = grams / 100;
-     setState(() {
-       calory = roundDouble(product.calory * multiplier,2);
-       squi = roundDouble(product.squi * multiplier, 2);
-       fat = roundDouble(product.fat * multiplier, 2);
-       carboh = roundDouble(product.carboh * multiplier, 2);
-     });
-     print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
-  }
-
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,22 +95,22 @@ class _ProductPageState extends State<ProductPage> {
                         // Padding(
                         //   padding: EdgeInsets.only(left:15, right: 15, bottom: 3, top: 3),
                           // child:
-                            TextFormField(
-                              onChanged: (text){
-                                multiData(int.parse(text));
-                              },
-                              style: DesignTheme.inputText,
-                              cursorColor: DesignTheme.mainColor,
-                              decoration: InputDecoration(
+                          //   TextFormField(
+                          //     onChanged: (text){
+                          //       multiData(int.parse(text));
+                          //     },
+                          //     style: DesignTheme.inputText,
+                          //     cursorColor: DesignTheme.mainColor,
+                          //     decoration: InputDecoration(
                                 
-                                labelText: 'Введите вес...',
-                                labelStyle: DesignTheme.labelSearchTextBigger,
-                                suffixIcon: Icon(
-                                    Icons.people,
-                                    // color: DesignTheme.blackColor,
-                                  )
-                            ),
-                          ),
+                          //       labelText: 'Введите вес...',
+                          //       labelStyle: DesignTheme.labelSearchTextBigger,
+                          //       suffixIcon: Icon(
+                          //           Icons.people,
+                          //           // color: DesignTheme.blackColor,
+                          //         )
+                          //   ),
+                          // ),
 
                         ]),
                       ),

@@ -141,7 +141,7 @@ class _AuthPageState extends State<AuthPage> {
                       registrationAtLocalDB(user).then((res){
                         if(res){
                           prefs.setBool('banner', false); 
-                            Navigator.pushNamed(context, '/');
+                            Navigator.pushNamed(context, '/authSecondScreen');
                         }
                       });
                     }

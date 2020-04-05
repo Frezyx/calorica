@@ -1,3 +1,4 @@
+import 'package:calory_calc/pages/authSecondScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
         '/add' : (BuildContext context) => AddPage(),
         '/stats' : (BuildContext context) => MainStats(),
         '/history' : (BuildContext context) => HistoryPage(),
+        '/authSecondScreen': (BuildContext context) => SecondAuthPage(),
       },
 
       onGenerateRoute: (RouteSettings){

@@ -32,7 +32,12 @@ class DBUserProvider {
       await db.execute("CREATE TABLE Users ("
           "id INTEGER PRIMARY KEY,"
           "name TEXT,"
-          "surname TEXT"
+          "surname TEXT,"
+          "weight DOUBLE,"
+          "height DOUBLE,"
+          "age DOUBLE,"
+          "workModel DOUBLE,"
+          "gender BOOL"
           ")");
     });
   }
@@ -40,14 +45,28 @@ class DBUserProvider {
   Future<int>addUser(User user) async{
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into Users (id, name, surname)"
-        " VALUES (?,?,?)",
+        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender)"
+        " VALUES (?,?,?,?,?,?,?,?)",
         [0, 
         user.name,
         user.surname,
+        90.0,
+        180.0,
+        25.0,
+        1.375,
+        true,
         ]);
       print(raw);
     return raw;
+  }
+
+  Future<int>updateDateProducts(String paramName, param) async{
+    final db = await database;
+    int count = await db.rawUpdate(
+      'UPDATE Users SET $paramName = ? WHERE id = ?',
+      ['$param', 0]);
+    print('updated: $count');
+    return count;
   }
 
   Future<User> getUser() async {
@@ -57,7 +76,13 @@ class DBUserProvider {
       User user = User(
         id: item['id'],
         name: item['name'],
-        surname: item['surname']
+        surname: item['surname'],
+        weight: item['weight'],
+        height: item['height'],
+        age: item['age'],
+        workModel: item['workModel'],
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        gender: item['gender'],
       );
 
     return user;

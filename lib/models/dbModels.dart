@@ -4,24 +4,54 @@ class User {
   int id;
   String name;
   String surname;
+  double weight;
+  double height;
+  double age;
+  double workModel;
+  bool gender;
 
   User({
-		this.id,
+    this.id,
     this.name,
-    this.surname
+    this.surname,
+    this.weight,
+    this.height,
+    this.age,
+    this.workModel,
+    this.gender,
   });
-
-  factory User.fromMap(Map<String, dynamic> json) => new User(
-        id: json["id"],
-        name: json["name"],
-        surname: json["surname"],
-      );
       
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "name": name,
-        "surname": surname,
-      };
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'surname': surname,
+      'weight': weight,
+      'height': height,
+      'age': age,
+      'workModel': workModel,
+      'gender': gender == 1,
+    };
+  }
+
+  static User fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return User(
+      id: map['id'],
+      name: map['name'],
+      surname: map['surname'],
+      weight: map['weight'],
+      height: map['height'],
+      age: map['age'],
+      workModel: map['workModel'],
+      gender: map['gender'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static User fromJson(String source) => fromMap(json.decode(source));
 }
 
 class Product {

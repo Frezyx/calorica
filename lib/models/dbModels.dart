@@ -9,6 +9,7 @@ class User {
   double age;
   double workModel;
   bool gender;
+  int workFutureModel;
 
   User({
     this.id,
@@ -19,6 +20,7 @@ class User {
     this.age,
     this.workModel,
     this.gender,
+    this.workFutureModel,
   });
       
   Map<String, dynamic> toMap() {
@@ -31,6 +33,7 @@ class User {
       'age': age,
       'workModel': workModel,
       'gender': gender == 1,
+      'workFutureModel': workFutureModel,
     };
   }
 
@@ -46,6 +49,7 @@ class User {
       age: map['age'],
       workModel: map['workModel'],
       gender: map['gender'],
+      workFutureModel: map['workFutureModel'],
     );
   }
 

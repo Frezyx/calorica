@@ -11,6 +11,8 @@ class DesignTheme {
 
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
   static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
+  
+  static const Color mainColorShadow = Color.fromRGBO(68, 211, 177, 0.27);
 
   static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
@@ -22,6 +24,41 @@ class DesignTheme {
   static const Color secondChartsGreen = Color.fromRGBO(162, 229, 184, 1);
   static const Color secondChartRed = Color.fromRGBO(229, 162, 162, 1);
 
+  static const Color selectorGrayText = Color.fromRGBO(103, 103, 103, 1);
+  static const Color selectorGrayBackGround = Color.fromRGBO(234, 234, 234, 1);
+  static const Color selectorGray1 = Color.fromRGBO(180, 180, 180, 1);
+  static const Color selectorGray2 = Color.fromRGBO(132, 132, 132, 1);
+  static const Color selectorGray3 = Color.fromRGBO(72, 72, 72, 1);
+
+  static const TextStyle selectorBigText = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+    color: selectorGray3,
+  );
+
+  static const TextStyle selectorBigTextAction = TextStyle( // h5 -> headline
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    color: mainColor,
+  );
+
+  static const TextStyle selectorLabel = TextStyle( // h5 -> headline
+    fontFamily: fontMain,
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: selectorGrayText,
+  );
+
+  static const TextStyle selectorMiniLabel = TextStyle( // h5 -> headline
+    fontFamily: fontMain,
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    color: selectorGrayText,
+  );
 
   static const TextStyle bigText = TextStyle( // h5 -> headline
     fontFamily:
@@ -173,4 +210,28 @@ class DesignTheme {
       stops: [0.0,1.0],
       tileMode: TileMode.clamp
     );
+
+  static const BoxShadow selectorShadow = BoxShadow(
+                      color: mainColorShadow,
+                      blurRadius: 8.0, // has the effect of softening the shadow
+                      spreadRadius: 2.0, // has the effect of extending the shadow
+                      offset: Offset(
+                        0.0, // horizontal, move right 10
+                        4.0, // vertical, move down 10
+                      ),
+                    );
+                    
+  static const BoxShadow transperentShadow = BoxShadow(
+                      color: Colors.transparent,
+                      blurRadius: 15.0, // has the effect of softening the shadow
+                      spreadRadius: 2.0, // has the effect of extending the shadow
+                      offset: Offset(
+                        10.0, // horizontal, move right 10
+                        10.0, // vertical, move down 10
+                      ),
+                    );
+
+
   }
+
+

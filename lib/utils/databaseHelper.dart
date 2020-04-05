@@ -37,7 +37,8 @@ class DBUserProvider {
           "height DOUBLE,"
           "age DOUBLE,"
           "workModel DOUBLE,"
-          "gender BOOL"
+          "gender BOOL,"
+          "workFutureModel INTEGER"
           ")");
     });
   }
@@ -45,8 +46,8 @@ class DBUserProvider {
   Future<int>addUser(User user) async{
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender)"
-        " VALUES (?,?,?,?,?,?,?,?)",
+        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel)"
+        " VALUES (?,?,?,?,?,?,?,?,?)",
         [0, 
         user.name,
         user.surname,
@@ -55,6 +56,7 @@ class DBUserProvider {
         25.0,
         1.375,
         true,
+        1,
         ]);
       print(raw);
     return raw;
@@ -81,8 +83,8 @@ class DBUserProvider {
         height: item['height'],
         age: item['age'],
         workModel: item['workModel'],
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        gender: item['gender'],
+        gender: item['gender'] == 1,
+        workFutureModel: item['workFutureModel'],
       );
 
     return user;
@@ -406,12 +408,14 @@ class DBDateProductsProvider {
   Future<List<int>> getPoductsIDsByDate(String date) async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+    print("Результат getPoductsIDsByDate ---> " + res.toString());
     var item = res.first;
     var ids = item['ids'];
     var mass = ids.split(";");
     List<int> result = []; 
     for (var i = 1; i < mass.length; i++) {
       result.add(int.parse(mass[i]));
+      print(mass[i]);
     }
     return result;
   }

@@ -55,6 +55,15 @@ flutter:
   assets:
    - assets/bg.png
    - assets/bg2.png
+   - assets/selector/slim.svg
+   - assets/selector/slimColor.png
+   - assets/selector/slim.png
+
+   - assets/selector/normalColor.png
+   - assets/selector/normal.png
+
+   - assets/selector/strongColor.png
+   - assets/selector/strong.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

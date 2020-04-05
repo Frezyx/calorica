@@ -205,6 +205,7 @@ class _ProductPageState extends State<ProductPage> {
                               addProduct(productSend).then((res){
                                 DBDateProductsProvider.db.getPoductsByDate(res.date).then((products){
                                   products.ids += ";" + res.id.toString();
+                                  print(products.ids);
                                   DBDateProductsProvider.db.updateDateProducts(products);
                                 });
 

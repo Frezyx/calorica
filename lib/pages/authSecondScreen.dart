@@ -21,7 +21,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
   double _age = 0.0;
   double workModel = 0.0;
 
-  bool isFP = true; bool isSP = false;
+  bool isFP = true; bool isSP = false; bool isTP = false;
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +251,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                   )
                 );
     }
+
 
 getTP(){
      return CustomRadio();

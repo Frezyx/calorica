@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:calory_calc/design/theme.dart';
 
 class RangeGraphData{
+  double limit;
   String name;
   double percent;
   LinearGradient gradient;
@@ -12,6 +13,7 @@ class RangeGraphData{
     this.percent,
     this.gradient,
     this.weigth,
+    this.limit,
   });
 
 }

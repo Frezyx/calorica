@@ -41,6 +41,7 @@ class _DayDatePageState extends State<DayDatePage> {
 @override
   void initState() {
     super.initState();
+    print("Пришла Дата " + date);
     DBDateProductsProvider.db.getPoductsIDsByDate(date).then((idList){
       for (var i = 0; i < idList.length; i++) {
         DBUserProductsProvider.db.getProductById(idList[i]).then((product){

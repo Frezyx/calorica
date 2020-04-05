@@ -24,47 +24,7 @@ class CustomRadioState extends State<CustomRadio> {
     sampleData.add(new RadioModel(false, 1.9, 'Тренируюсь по несколько раз в день'));
   }
   
-                    Future<void> _goodAllert() async {
-                    return showDialog<void>(
-                      context: context,
-                      barrierDismissible: false, // user must tap button!
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                            title: Text('Ваша диета сформированна'),
-                            actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('Открыть'),
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/');
-                                    },
-                                  ),
-                                ]
-                              );
-                            
-                          },
-                        );
-                      }
-
-                    Future<void> _badAllert() async {
-                    return showDialog<void>(
-                      context: context,
-                      barrierDismissible: false, // user must tap button!
-                      builder: (BuildContext context) {
-                        return 
-                           AlertDialog(
-                            title: Text('Что-то пошло не так'),
-                            actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('Ещё раз'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                            ]
-                          );
-                          },
-                        );
-                      }
+                  
                       
   
 
@@ -93,10 +53,10 @@ class CustomRadioState extends State<CustomRadio> {
                   });
                   DBUserProvider.db.updateDateProducts("workModel", sampleData[index].multiplaier).then((count1){
                       if(count1 == 1){
-                        _goodAllert();
+                        Navigator.pushNamed(context, '/selectActiviti');
                       }
                       else{
-                        _badAllert();
+                        // Implement
                       }
                   });
                 },
@@ -105,34 +65,6 @@ class CustomRadioState extends State<CustomRadio> {
             },
           )
         ),
-// Padding(padding: EdgeInsets.only(bottom:150),
-//         child:
-//         GradientButton(
-//                         increaseWidthBy: 60,
-//                         increaseHeightBy: 5,
-//                         child: 
-//                         Padding(
-//                           child:Text(
-//                           'Далее',
-//                           textAlign: TextAlign.center,
-//                           style: DesignTheme.buttonText,
-//                           ), padding: EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
-//                         ),
-//                         callback: () {
-//                           // if(_formKey2.currentState.validate()){
-//                           //   if(_age != null){
-//                           //     setState(() {
-//                           //       isSP = false;
-//                           //     });
-//                           //     // print("------------Все хорошо-------------" +_weight.toString() +" "+ _height.toString());
-//                           //   }
-//                           // }
-//                         },
-//                         shapeRadius: BorderRadius.circular(50.0),
-//                         gradient: DesignTheme.gradient,
-//                         shadowColor: Gradients.backToFuture.colors.last.withOpacity(0.25),
-//                       ),),
-
       ]
     );
   }

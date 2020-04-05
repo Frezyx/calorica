@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/widgets/range.dart';
 
 import 'package:flutter/material.dart';
@@ -62,10 +63,18 @@ class _HomeState extends State<Home> {
     super.initState();
       DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
+
+          var diet = selectDiet(res);
+
           setState(() {
             name = res.name;
             surname = res.surname;
+            caloryLimit = diet.calory;
+            squiLimit = diet.squi;
+            fatLimit = diet.fat;
+            carbohLimit = diet.carboh;
           });
+
           for (var i = 0; i < products.length; i++) {
               caloryNow = roundDouble(caloryNow + products[i].calory, 2);
               squiNow = roundDouble(squiNow + products[i].squi, 2);
@@ -78,6 +87,11 @@ class _HomeState extends State<Home> {
             fat.weigth = fatNow;
             squi.weigth = squiNow;
             carboh.weigth = carbohNow;
+
+            calory.limit = caloryLimit;
+            fat.limit = fatLimit;
+            squi.limit = squiLimit;
+            carboh.limit = carbohLimit;
 
             calory.percent = (caloryNow/caloryLimit)*100 <= 100? (caloryNow/caloryLimit)*100 : 100;
             fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
@@ -124,12 +138,17 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(children:<Widget>[
-                                Text(name + " " + surname ,style: DesignTheme.bigWhiteText,),
+                                Text(name + " " + surname ,
+                                  style: TextStyle(    fontWeight: FontWeight.w600,
+                                  fontSize: MediaQuery.of(context).size.width*0.085,
+                                  color: Colors.white
+                                  )
+                                ),
                                 IconButton(
                                   icon: Icon(
                                     Icons.edit,
                                     color: Colors.white,
-                                    size: 32,
+                                    size: MediaQuery.of(context).size.width*0.08,
                                     ),
                                  onPressed: (){
 
@@ -308,7 +327,7 @@ class _HomeState extends State<Home> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        range.weigth.toString() + ' г',
+                                        range.weigth.toString()+" / "+ range.limit.toString()+ ' г',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           // fontFamily: FintnessAppTheme.fontName,
@@ -326,30 +345,32 @@ class _HomeState extends State<Home> {
     return  Padding(padding: EdgeInsets.only(top: 10, right: 0, left: 0),
                 child: 
                   Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children:<Widget>[
                                         Padding(
-                                          padding: EdgeInsets.only(right: MediaQuery.of(context).size.width-286,),
-                                          child: Text(
+                                          padding: EdgeInsets.only(right: 20,),
+                                          child: 
+                                          Text(
                                             range.name,
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 20,
+                                              fontSize: MediaQuery.of(context).size.width*0.051,
                                               letterSpacing: -0.2,
                                               color: DesignTheme.whiteColor,
                                             ),
                                           ),
                                         ),
+
                                       Text(
-                                        range.weigth.toString(),
+                                        range.weigth.toString()+" / "+ range.limit.toString(),
                                         textAlign: TextAlign.end,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 20,
+                                          fontSize: MediaQuery.of(context).size.width*0.051,
                                           letterSpacing: -0.2,
                                           color: DesignTheme.whiteColor,
                                         ),
@@ -385,43 +406,4 @@ class _HomeState extends State<Home> {
                                 ),
                               );
   }
-
-  Widget getTaskCard(Data task) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(right: 20, bottom: 30, top: 30),
-      height: 100,
-      width: 100,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          new BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5.0,
-          ),
-        ],
-        borderRadius: BorderRadius.all(Radius.circular(15))
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                  child: Text('sd'
-                ), padding: EdgeInsets.only(left: 5),
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-          ],
-          ),
-        ],
-      ),
-    );
-  }
-
 }

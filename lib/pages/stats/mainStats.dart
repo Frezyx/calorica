@@ -57,7 +57,7 @@ class _MainStatsState extends State<MainStats> {
               charts.Series(
                 domainFn: (Pollution pollution, _) => pollution.place,
                 measureFn: (Pollution pollution, _) => pollution.quantity,
-                id: '2.4.2020',
+                id: 'sssss',
                 data: data2,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
@@ -71,7 +71,7 @@ class _MainStatsState extends State<MainStats> {
               charts.Series(
                 domainFn: (Pollution pollution, _) => pollution.place,
                 measureFn: (Pollution pollution, _) => pollution.quantity,
-                id: '3.4.2020',
+                id: 'fffff',
                 data: data1,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>

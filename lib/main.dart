@@ -1,5 +1,7 @@
+import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
+import 'package:calory_calc/pages/editUser.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,6 +66,7 @@ class _MyAppState extends State<MyApp> {
         '/history' : (BuildContext context) => HistoryPage(),
         '/authSecondScreen': (BuildContext context) => SecondAuthPage(),
         '/selectActiviti' : (BuildContext context) => ActivitiSelectPage(),
+        '/editUser' : (BuildContext context) => EditUserPage(),
       },
 
       onGenerateRoute: (RouteSettings){
@@ -76,6 +79,11 @@ class _MyAppState extends State<MyApp> {
 
         if(path[1] == 'daydata'){
           return new MaterialPageRoute(builder: (context) => new DayDatePage(date:path[2]),
+          settings: RouteSettings);
+        }
+
+        if(path[1] == 'addedProduct'){
+          return new MaterialPageRoute(builder: (context) => new AddedProductPage(id:path[2], from:path[3]),
           settings: RouteSettings);
         }
 

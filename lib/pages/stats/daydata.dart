@@ -26,7 +26,6 @@ class _DayDatePageState extends State<DayDatePage> {
   _DayDatePageState(this.date);
 
   ScrollController scrollController;
-  
   // Product product = new Product();
   double calory = -1.0; 
   double squi = -1.0; 
@@ -264,6 +263,23 @@ class _DayDatePageState extends State<DayDatePage> {
                                   
                                   style: DesignTheme.secondaryText,),
                               ]),
+                               Align(
+                                alignment: Alignment.centerRight,
+                                child:
+                                  IconButton(
+                                    splashColor: DesignTheme.mainColor,
+                                    hoverColor: DesignTheme.secondColor,
+                                    onPressed: () {
+                                      // print("Id:" + data.id.toString());
+                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/$date');
+                                    }, 
+                                  icon: Icon(
+                                    Icons.arrow_forward,
+                                    color: DesignTheme.mainColor,
+                                    size: 28,
+                                    ),
+                                  ),
+                              )
                             ]),
                           ),
                           ),

@@ -284,15 +284,15 @@ class _MainStatsState extends State<MainStats> {
         ),
 
         bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.mainColor,
+            buttonBackgroundColor:DesignTheme.whiteColor,
                 height: 50.0,
             backgroundColor: Colors.transparent,
             animationDuration: Duration(microseconds: 1000),
             items: <Widget>[
               Padding(
                 child:
-                  Icon(Icons.pie_chart_outlined, size: 26, color: DesignTheme.whiteColor),
-                  padding: EdgeInsets.all(7.0),
+                  Icon(Icons.pie_chart_outlined, size: 25, color: DesignTheme.mainColor),
+                  padding: EdgeInsets.all(5.0),
               ),
               Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
               Icon(Icons.add, size: 30, color: Colors.black54,),

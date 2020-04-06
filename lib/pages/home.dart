@@ -42,6 +42,9 @@ class _HomeState extends State<Home> {
   double fatPercent = 0.0;
   double carbohPercent = 0.0;
 
+  bool isNameSurnameBig = false;
+  bool isNameBiggerSurname = false;
+
   String name = "";
   String surname = "";
   List<Data> data = [];
@@ -73,6 +76,8 @@ class _HomeState extends State<Home> {
             squiLimit = diet.squi;
             fatLimit = diet.fat;
             carbohLimit = diet.carboh;
+            isNameSurnameBig = !((name + " " + surname).length <= 11);
+            isNameBiggerSurname = name.length > surname.length;
           });
 
           for (var i = 0; i < products.length; i++) {
@@ -117,7 +122,7 @@ class _HomeState extends State<Home> {
             Stack(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(0),
                   constraints: BoxConstraints.expand(height: 340),
                   decoration: BoxDecoration(
                     gradient: DesignTheme.gradient,
@@ -125,7 +130,7 @@ class _HomeState extends State<Home> {
                   ),
                     
                   child: Container(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: EdgeInsets.only(top: 50, left:30, right: 30),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,21 +143,8 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(children:<Widget>[
-                                Text(name + " " + surname ,
-                                  style: TextStyle(    fontWeight: FontWeight.w600,
-                                  fontSize: MediaQuery.of(context).size.width*0.085,
-                                  color: Colors.white
-                                  )
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                    size: MediaQuery.of(context).size.width*0.08,
-                                    ),
-                                 onPressed: (){
-
-                                 })
+                                    getSubText(name, surname),
+                                    isNameSurnameBig? Container():getIconButton(),
                               ]),
                               getBigRangeWidget(calory),
                               Row(
@@ -232,7 +224,8 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                                 onTap: (){
-                                  Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}');
+                                  Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
+                                  print('/addedProduct/${snapshot.data[i].id}/home');
                                 },
                               );
                             },
@@ -251,7 +244,7 @@ class _HomeState extends State<Home> {
               ),
 
             bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.mainColor,
+            buttonBackgroundColor:DesignTheme.whiteColor,
                 height: 50.0,
             backgroundColor: Colors.transparent,
             animationDuration: Duration(microseconds: 1000),
@@ -259,8 +252,8 @@ class _HomeState extends State<Home> {
               Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
               Padding(
                 child:
-                  Icon(FontAwesomeIcons.userAlt, size: 26, color: DesignTheme.whiteColor),
-                  padding: EdgeInsets.all(7.0),
+                  Icon(FontAwesomeIcons.userAlt, size: 25, color: DesignTheme.mainColor),
+                  padding: EdgeInsets.all(5.0),
               ),
               Icon(Icons.add, size: 30, color: Colors.black54,),
             ],
@@ -283,9 +276,65 @@ class _HomeState extends State<Home> {
 
             );
   }
+  getIconButton(){
+      return                    IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                    size: MediaQuery.of(context).size.width*0.08,
+                                    ),
+                                 onPressed: (){
+                                    Navigator.pushNamed(context, '/editUser');
+                                 });
+  }
+  getSubText(String name, String surname){
+    if((name+" "+surname).length <= 11){
+      return                        Text(
+                                      name+" "+surname,
+                                      style: TextStyle(    fontWeight: FontWeight.w600,
+                                      fontSize: MediaQuery.of(context).size.width*0.085,
+                                      color: Colors.white
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    );
+    }
+    else{
+      return                     Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Text( splitBigTxt(name) ,
+                                          style: TextStyle(    fontWeight: FontWeight.w600,
+                                          fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
+                                          color: Colors.white
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        isNameBiggerSurname ? Container() : getIconButton(),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                      Text( splitBigTxt(surname) ,
+                                        style: TextStyle(    fontWeight: FontWeight.w600,
+                                        fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
+                                        color: Colors.white
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      isNameBiggerSurname ? getIconButton() : Container(),
+                                    ])
+                                  ]);
+    }
+  }
   splitText(String text){
     if(text.length <= 20) return text;
     else return text.substring(0,20);
+  }
+  splitBigTxt(String text){
+    if(text.length <= 13) return text;
+    else return text.substring(0,13);
   }
 
   getRangeWidget(RangeGraphData range) {

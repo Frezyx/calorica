@@ -152,7 +152,7 @@ class _AddPageState extends State<AddPage> {
       ]),),
 
       bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.mainColor,
+            buttonBackgroundColor:DesignTheme.whiteColor,
                 height: 50.0,
             backgroundColor: Colors.transparent,
             animationDuration: Duration(microseconds: 1000),
@@ -161,7 +161,7 @@ class _AddPageState extends State<AddPage> {
               Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
               Padding(
                 child:
-                  Icon(Icons.add, size: 30, color: DesignTheme.whiteColor),
+                  Icon(Icons.add, size: 27, color: DesignTheme.mainColor),
                   padding: EdgeInsets.all(3.0),
               ),
             ],

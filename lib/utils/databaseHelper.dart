@@ -71,6 +71,16 @@ class DBUserProvider {
     return count;
   }
 
+  Future<int>updateUser(User user) async{
+    final db = await database;
+    print(user.name + " " + user.surname + " " + user.weight.toString() + " " + user.height.toString() + " " + user.age.toString() + " " + user.workModel.toString() + " " + user.gender.toString() + " " + user.workFutureModel.toString());
+    int count = await db.rawUpdate(
+      'UPDATE Users SET name = ?, surname = ?, weight = ?, height = ?, age = ?, workModel = ?, gender = ?, workFutureModel = ? WHERE id = ?',
+      ['${user.name}' , '${user.surname}', '${user.weight}', '${user.height}', '${user.age}', '${user.workModel}', '${user.gender}', '${user.workFutureModel}', 0]);
+    print('updated: $count');
+    return count;
+  }
+
   Future<User> getUser() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Users");
@@ -318,6 +328,13 @@ class DBUserProductsProvider {
     db.rawQuery("DELETE FROM UserProducts");
   }
 
+  Future<int>deleteById(int id) async {
+    final db = await database;
+    var res = await db.rawQuery("DELETE FROM UserProducts WHERE id = '$id'");
+    // print(res);
+    return res.length;
+  }
+
   Future<List<UserProduct>> getAllProducts() async {
         final db = await database;
 
@@ -413,23 +430,30 @@ class DBDateProductsProvider {
     var ids = item['ids'];
     var mass = ids.split(";");
     List<int> result = []; 
-    for (var i = 1; i < mass.length; i++) {
+    for (var i = 0; i < mass.length; i++) {
       result.add(int.parse(mass[i]));
       print(mass[i]);
     }
     return result;
   }
 
-  Future<DateProducts> getPoductsByDate(String date) async {
+  Future<DateProducts> getPoductsByDate(String date, int idToAdd) async {
+
     final db = await database;
     DateProducts respons;
+
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+
+    print("res" + res.toString());
+
     if(res.length == 0){
-      var newDP = DateProducts(ids: "", date: toStrDate(DateTime.now()));
+
+      var newDP = DateProducts(ids: idToAdd.toString(), date: toStrDate(DateTime.now()));
+
       addDateProducts(newDP).then((response){
-        var item = res.first;
-        respons = DateProducts(id:item['id'], ids: item['ids'], date: item['date']);
+        respons = DateProducts(id:response.id, ids: response.ids, date: response.date);
       });
+
     }
     else{
       var item = res.first;

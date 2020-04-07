@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "840550993749",
+    "firebase_url": "https://calori-calc.firebaseio.com",
+    "project_id": "calori-calc",
+    "storage_bucket": "calori-calc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840550993749:android:90d4acd3388f8c208229dc",
+        "android_client_info": {
+          "package_name": "com.example.calory_calc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840550993749-24nd3f2fld8alkuk3osnjil1taucqju8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.calory_calc",
+            "certificate_hash": "fdf19d2ff20f724be66ac5b1a5206f1f3092aa31"
+          }
+        },
+        {
+          "client_id": "840550993749-sgtm0v1nm2pss59p34i271i69iavvs5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP-VTPVRVQBTH7dEfK2N8ygJki9anmG3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840550993749-sgtm0v1nm2pss59p34i271i69iavvs5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -29,6 +30,10 @@ class _MainStatsState extends State<MainStats> {
   var squiY = 0.0;
   var carbohY = 0.0;
   var caloryY = 0.0;
+
+  var caloryLimit = 2900.0;
+  var caloryLimitDeltaL = 2300.0;
+  var caloryLimitDeltaR = 3100.0;
 
   double roundDouble(double value, int places){ 
     double mod = pow(10.0, places); 
@@ -62,7 +67,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
+                        (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
               ), 
             // );
@@ -76,7 +81,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor
+                        (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
               ), 
             // );
@@ -87,6 +92,12 @@ class _MainStatsState extends State<MainStats> {
   @override
   void initState() {
     super.initState();
+    DBUserProvider.db.getUser().then((res){
+      var diet = selectDiet(res);
+      caloryLimit = diet.calory;
+      caloryLimitDeltaL = caloryLimit * 0.7;
+      caloryLimitDeltaR = caloryLimit * 1.2;
+    });
 
     // _seriesData = List<charts.Series<Pollution, String>>();
     DBUserProductsProvider.db.getTodayProducts().then((todayProd){
@@ -124,7 +135,7 @@ class _MainStatsState extends State<MainStats> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10, top: 50, left: 20, right: 20),
                 child:Text(
-                  caloryT < caloryY? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
+                  (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
                 )
               ),
 
@@ -197,11 +208,11 @@ class _MainStatsState extends State<MainStats> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:<Widget>[
 
-                    Text(caloryT < caloryY? "-" + checkThousands((caloryT - caloryY).abs()).toString()
+                    Text((caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "-" + checkThousands((caloryT - caloryY).abs()).toString()
                      : "+" + checkThousands((caloryT - caloryY).abs()).toString(),
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
-                        color: caloryT < caloryY ? DesignTheme.secondColor : DesignTheme.redColor,
+                        color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL ) ? DesignTheme.secondColor : DesignTheme.redColor,
                       ),
                     ),
 
@@ -267,10 +278,10 @@ class _MainStatsState extends State<MainStats> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children:<Widget>[
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor,),
+                                    Icon(Icons.label, color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor,),
                                     Text("Сегодня"),]),
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
+                                    Icon(Icons.label, color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
                                     Text("Вчера"),]),
                                 ]),
                               ),

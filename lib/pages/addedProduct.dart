@@ -221,7 +221,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                                     child: Text('Да', style: DesignTheme.midleMainText,),
                                     onPressed: () {
                                       DBUserProductsProvider.db.deleteById(id).then((response){
-                                        Navigator.pushNamed(context, "/");
+                                        Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
                                       });
                                     },
                                   ),

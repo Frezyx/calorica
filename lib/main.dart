@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CALORY CALC',
+      title: 'Calori Calc',
       theme: ThemeData(
         backgroundColor: DesignTheme.bgColor,
         fontFamily: 'Montserrat',

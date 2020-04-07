@@ -147,9 +147,10 @@ class DBProductProvider {
 
   Future<int>addProduct(Product product) async{
     final db = await database;
-    // var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
-    // int id = table.first["id"];
-    int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
+    int id = table.first["id"];
+    print(id);
+    // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
     var raw = await db.rawInsert(
         "INSERT Into Products (id, name, category, calory, squi, fat, carboh)"
         " VALUES (?,?,?,?,?,?,?)",
@@ -162,7 +163,7 @@ class DBProductProvider {
         product.carboh,
         // product.date,
         ]);
-      print(id.toString() + product.name + product.category + product.carboh.toString());
+      // print(id.toString() + product.name + product.category + product.carboh.toString());
     return id;
   }
 
@@ -199,8 +200,10 @@ class DBProductProvider {
 
       Future<List<Product>> getAllProducts() async {
         // print("Я зашёл в поиск");
+        var rnd = Random();
+        var offset = rnd.nextInt(7000);
         final db = await database;
-        var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 0");
+        var res = await db.rawQuery("SELECT * FROM Products LIMIT 20 OFFSET '$offset'");
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
         //     for (int i = 0; i <list.length; i++){

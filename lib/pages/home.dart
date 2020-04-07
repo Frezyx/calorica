@@ -12,6 +12,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:device_info/device_info.dart';
 
 class Data{
   int id;
@@ -42,12 +43,15 @@ class _HomeState extends State<Home> {
   double fatPercent = 0.0;
   double carbohPercent = 0.0;
 
+  var testId = "";
+
   bool isNameSurnameBig = false;
   bool isNameBiggerSurname = false;
 
   String name = "";
   String surname = "";
   List<Data> data = [];
+  List<UserProduct> emptyProduct = [];
 
 
 
@@ -78,6 +82,7 @@ class _HomeState extends State<Home> {
             carbohLimit = diet.carboh;
             isNameSurnameBig = !((name + " " + surname).length <= 11);
             isNameBiggerSurname = name.length > surname.length;
+            emptyProduct.add(UserProduct(name: "Кнопка добавления"));
           });
 
           for (var i = 0; i < products.length; i++) {
@@ -158,7 +163,7 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: EdgeInsets.only(top: 30),
                                 child:
-                                Text("Сегодня " + DateFormat('dd.MM.yyyy').format(DateTime.now()),
+                                Text(testId + "    Сегодня " + DateFormat('dd.MM.yyyy').format(DateTime.now()),
                                   textAlign: TextAlign.start,
                                   style: DesignTheme.lilWhiteText,
                                 ),
@@ -175,10 +180,11 @@ class _HomeState extends State<Home> {
                   constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height-280),
                   child: 
                     FutureBuilder<List<UserProduct>>(
-                      // initialData: data,
+                      initialData: emptyProduct,
                       future: DBUserProductsProvider.db.getAllProducts(),
                       builder:
                       (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                        snapshot.data.add(UserProduct(name: "Кнопка добавления"));
                       switch (snapshot.connectionState) {
                                       case ConnectionState.none:
                                         return new Text('Input a URL to start');
@@ -209,7 +215,14 @@ class _HomeState extends State<Home> {
                                   borderRadius: BorderRadius.circular(10.0)
                                 ),
                                 elevation: 1.0,
-                                child:
+                                child: snapshot.data[i].name == "Кнопка добавления" ?
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
+                                        ]
+                                      ):
                                   Padding(
                                     padding: EdgeInsets.only(left: 10),
                                     child:
@@ -218,15 +231,19 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
-                                          Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[0].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
-                                        ],
+                                          Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[i].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
+                                        ]
                                       ),
                                   ),
                                 ),
-                                onTap: (){
+                                onTap: snapshot.data[i].name != "Кнопка добавления" ?
+                                (){
                                   Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
                                   print('/addedProduct/${snapshot.data[i].id}/home');
-                                },
+                                }:
+                                (){
+                                  Navigator.pushNamed(context, '/add');
+                                }
                               );
                             },
                             staggeredTileBuilder: (int i) => 
@@ -284,6 +301,7 @@ class _HomeState extends State<Home> {
                                     size: MediaQuery.of(context).size.width*0.08,
                                     ),
                                  onPressed: (){
+                                  //  _getId();
                                     Navigator.pushNamed(context, '/editUser');
                                  });
   }

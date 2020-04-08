@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/widgets/customRadio.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+     onTap: (){ addClick(); 
         // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(

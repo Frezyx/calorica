@@ -4,6 +4,8 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/textMonth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,6 +26,7 @@ class DayDatePage extends StatefulWidget{
 class _DayDatePageState extends State<DayDatePage> {
   String date;
   _DayDatePageState(this.date);
+  final _controller = NativeAdmobController();
 
   ScrollController scrollController;
   // Product product = new Product();
@@ -61,7 +64,7 @@ class _DayDatePageState extends State<DayDatePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, "/history");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
@@ -188,6 +191,19 @@ class _DayDatePageState extends State<DayDatePage> {
                                   style: TextStyle(color: Colors.red),
                                 );
                               } else {
+                                  var count = snapshot.data.length;
+                                  if(count > 5){
+                                    snapshot.data.insert(5, UserProduct(date:"Реклама"));
+                                  }
+                                  else if(count > 3){
+                                    snapshot.data.insert(3, UserProduct(date:"Реклама"));
+                                  }
+                                  else if(count > 1){
+                                    snapshot.data.insert(1, UserProduct(date:"Реклама"));
+                                  }
+                                  else{
+                                    snapshot.data.insert(0, UserProduct(date:"Реклама"));
+                                  }
                                 return StaggeredGridView.countBuilder(
                                   controller: scrollController,
                                   padding: const EdgeInsets.all(7.0),
@@ -196,11 +212,22 @@ class _DayDatePageState extends State<DayDatePage> {
                                   crossAxisCount: 4,
                                   itemCount: snapshot.data.length,
                                   itemBuilder: (context, i){
-                                    return 
+                                  return snapshot.data[i].date == "Реклама"?Card(
+                                    shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0)
+                                          ),
+                                          elevation: 1.0,
+                                    child:Container(
+                                    height: 330,
+                                    child:
+                                    NativeAdmob(
+                                      adUnitID: "ca-app-pub-6210480653379985/9298965167",
+                                      controller: _controller,
+                                    ))):
                                     //Изменить
                                     InkWell(
                                       child: getCard(snapshot.data[i]) ,
-                                      onTap: (){
+                                     onTap: (){ addClick(); 
                                         Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
                                       },
                                     );
@@ -269,7 +296,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                   IconButton(
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       // print("Id:" + data.id.toString());
                                       Navigator.pushNamed(context, '/addedProduct/${data.id}/$date');
                                     }, 
@@ -320,4 +347,6 @@ class _DayDatePageState extends State<DayDatePage> {
                                     }
                                     return true;
                                   }
+
+  void addClick() {}
 }

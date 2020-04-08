@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/widgets/customRadio.dart';
 import 'package:calory_calc/widgets/customRadioSelector.dart';
@@ -28,7 +29,7 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+     onTap: (){ addClick(); 
         // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(

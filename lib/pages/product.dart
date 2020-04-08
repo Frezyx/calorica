@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,11 +26,13 @@ class ProductPage extends StatefulWidget{
 class _ProductPageState extends State<ProductPage> {
   String id;
   _ProductPageState(this.id);
-  Product product = new Product();
+  Product product = Product();
+  String name = "";
   double calory = -1.0; double caloryConst = -1.0;
   double squi = -1.0; double squiConst = -1.0;
   double fat = -1.0; double fatConst = -1.0;
   double carboh = -1.0; double carbohConst = -1.0;
+  BannerAd _bannerAd;
 
 @override
   void initState() {
@@ -40,8 +44,13 @@ class _ProductPageState extends State<ProductPage> {
           squi = res.squi;
           fat = res.fat;
           carboh = res.carboh;
+          name = res.name;
         });
       });
+
+    // _bannerAd = createBannerAd()
+    //   ..load()
+    //   ..show();
   }
 
   void multiData(int grams){
@@ -65,14 +74,14 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, "/add");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
-        title: Text(product.name == null? 'Загрузка...' : splitText(product.name), style: TextStyle(fontWeight: FontWeight.w700),),
+        title: Text(name == ''? 'Загрузка...' : splitText(name), style: TextStyle(fontWeight: FontWeight.w700),),
         // automaticallyImplyLeading: false,
       ),
       body:
@@ -125,8 +134,8 @@ class _ProductPageState extends State<ProductPage> {
                         
                         Column(children: <Widget>[
                           
-                          Text(product == null? 'Загрузка...' : product.name,
-                            style: isStringOverSize(product.name)? DesignTheme.bigText20: DesignTheme.bigText24,
+                          Text(product == null? 'Загрузка...' : name,
+                            style: isStringOverSize(name)? DesignTheme.bigText20: DesignTheme.bigText24,
                             textAlign: TextAlign.start,
                             ),
 
@@ -192,7 +201,7 @@ class _ProductPageState extends State<ProductPage> {
                         callback: () {
 
                               UserProduct productSend = UserProduct(
-                                name: product.name,
+                                name: name,
                                 category: product.category,
                                 calory: calory,
                                 carboh: carboh,

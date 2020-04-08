@@ -1,6 +1,8 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,13 +33,13 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return
     GestureDetector(
-  onTap: () {
+ onTap: (){ addClick(); 
     FocusScope.of(context).requestFocus(new FocusNode());
   },child:          
      Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, "/stats");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
@@ -140,7 +142,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         //Изменить
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
-                          onTap: (){
+                         onTap: (){ addClick(); 
                             Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
                           },
                         );
@@ -213,7 +215,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   IconButton(
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       // print("Id:" + data.id.toString());
                                       Navigator.pushNamed(context, '/daydata/${data.date.toString()}');
                                     }, 

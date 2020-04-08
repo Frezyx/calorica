@@ -2,17 +2,19 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/widgets/range.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
-import 'package:device_info/device_info.dart';
 
 class Data{
   int id;
@@ -43,8 +45,6 @@ class _HomeState extends State<Home> {
   double fatPercent = 0.0;
   double carbohPercent = 0.0;
 
-  var testId = "";
-
   bool isNameSurnameBig = false;
   bool isNameBiggerSurname = false;
 
@@ -65,8 +65,30 @@ class _HomeState extends State<Home> {
     return ((value * mod).round().toDouble() / mod); 
   }
 
+
+  // BannerAd _bannerAd;
+
+  //   BannerAd createBannerAd() {
+  //   return BannerAd(
+  //       adUnitId: BannerAd.testAdUnitId,
+  //     //Change BannerAd adUnitId with Admob ID
+  //       size: AdSize.banner,
+  //       targetingInfo: targetingInfo,
+  //       listener: (MobileAdEvent event) {
+  //         print("BannerAd $event");
+  //       });
+  // }
+
   @override
   void initState() {
+
+    //  FirebaseAdMob.instance.initialize(appId: BannerAd.testAdUnitId);
+     
+    //Change appId With Admob Id
+    // _bannerAd = createBannerAd()
+    //   ..load()
+    //   ..show();
+
     super.initState();
       DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
@@ -163,7 +185,7 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: EdgeInsets.only(top: 30),
                                 child:
-                                Text(testId + "    Сегодня " + DateFormat('dd.MM.yyyy').format(DateTime.now()),
+                                Text("Сегодня " + DateFormat('dd.MM.yyyy').format(DateTime.now()),
                                   textAlign: TextAlign.start,
                                   style: DesignTheme.lilWhiteText,
                                 ),
@@ -220,6 +242,15 @@ class _HomeState extends State<Home> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
+                                          // Center(
+                                          //     child: RaisedButton(
+                                          //   child: Text('Click on Ads'),
+                                          //   onPressed: (){ addClick();
+                                          //     createInterstitialAd()
+                                          //       ..load()
+                                          //       ..show();
+                                          //   },
+                                          // )),
                                           Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
                                         ]
                                       ):
@@ -231,17 +262,19 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
-                                          Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[i].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
+                                          Text(snapshot.data[i].calory.toString() + " кКал  ", style: DesignTheme.secondaryText,)
                                         ]
                                       ),
                                   ),
                                 ),
                                 onTap: snapshot.data[i].name != "Кнопка добавления" ?
                                 (){
+                                  addClick();
                                   Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
                                   print('/addedProduct/${snapshot.data[i].id}/home');
                                 }:
                                 (){
+                                  addClick();
                                   Navigator.pushNamed(context, '/add');
                                 }
                               );
@@ -278,14 +311,17 @@ class _HomeState extends State<Home> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
+                addClick();
                 Navigator.pushNamed(context, '/stats');
                 // DBUserProductsProvider.db.deleteAll();
                 // Navigator.pushNamed(context, '/');
               }
               if(index == 1){
+                addClick();
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
+                addClick();
                 Navigator.pushNamed(context, '/add');
               }
             },
@@ -294,13 +330,14 @@ class _HomeState extends State<Home> {
             );
   }
   getIconButton(){
-      return                    IconButton(
+      return 
+      IconButton(
                                   icon: Icon(
                                     Icons.edit,
                                     color: Colors.white,
                                     size: MediaQuery.of(context).size.width*0.08,
                                     ),
-                                 onPressed: (){
+                                 onPressed: (){ addClick();
                                   //  _getId();
                                     Navigator.pushNamed(context, '/editUser');
                                  });

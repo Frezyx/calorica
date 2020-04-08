@@ -38,7 +38,8 @@ class DBUserProvider {
           "age DOUBLE,"
           "workModel DOUBLE,"
           "gender BOOL,"
-          "workFutureModel INTEGER"
+          "workFutureModel INTEGER,"
+          "clickCount INTEGER"
           ")");
     });
   }
@@ -46,8 +47,8 @@ class DBUserProvider {
   Future<int>addUser(User user) async{
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel)"
-        " VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel, clickCount)"
+        " VALUES (?,?,?,?,?,?,?,?,?,?)",
         [0, 
         user.name,
         user.surname,
@@ -57,15 +58,33 @@ class DBUserProvider {
         1.375,
         true,
         1,
+        0
         ]);
       print(raw);
     return raw;
+  }
+  
+  Future<bool>counter() async{
+    final db = await database;
+    var res = await db.rawQuery("SELECT * FROM Users");
+    var item = res.first;
+    print(res.first);
+    int count = res.first['clickCount'];
+    count++;
+    print("count -------------------------------->" + count.toString());
+    if(count <= 20){
+      updateDateProducts('clickCount', count);
+    }
+    else{
+      updateDateProducts('clickCount', 0);
+    }
+    return (count > 19);
   }
 
   Future<int>updateDateProducts(String paramName, param) async{
     final db = await database;
     int count = await db.rawUpdate(
-      'UPDATE Users SET $paramName = ? WHERE id = ?',
+      "UPDATE Users SET $paramName = ? WHERE id = ?",
       ['$param', 0]);
     print('updated: $count');
     return count;
@@ -95,6 +114,7 @@ class DBUserProvider {
         workModel: item['workModel'],
         gender: item['gender'] == 1,
         workFutureModel: item['workFutureModel'],
+        clickCount: item['clickCount'],
       );
 
     return user;

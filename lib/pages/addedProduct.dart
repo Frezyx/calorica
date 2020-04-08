@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/textMonth.dart';
 
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
             },
             icon:Icon(Icons.arrow_back, size: 24,)
@@ -154,7 +155,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                       focusColor: Colors.white,
                       highlightColor: Colors.white,
                       splashColor: Colors.red,
-                      onPressed: () {
+                      onPressed: (){ addClick();
                         _badAllert(context, product.id);
                       },
                       child: 
@@ -219,7 +220,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             actions: <Widget>[
                                   FlatButton(
                                     child: Text('Да', style: DesignTheme.midleMainText,),
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       DBUserProductsProvider.db.deleteById(id).then((response){
                                         Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
                                       });

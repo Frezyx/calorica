@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   charcode:
     dependency: transitive
     description:
@@ -85,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2"
-  device_info:
-    dependency: "direct main"
-    description:
-      name: device_info
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.2+1"
   firebase:
     dependency: transitive
     description:
@@ -139,6 +139,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.4"
+  flutter_native_admob:
+    dependency: "direct main"
+    description:
+      name: flutter_native_admob
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:
@@ -436,4 +443,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.12.13+hotfix.4 <2.0.0"

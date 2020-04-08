@@ -10,6 +10,7 @@ class User {
   double workModel;
   bool gender;
   int workFutureModel;
+  int clickCount;
 
   User({
     this.id,
@@ -21,6 +22,7 @@ class User {
     this.workModel,
     this.gender,
     this.workFutureModel,
+    this.clickCount,
   });
       
   Map<String, dynamic> toMap() {
@@ -34,6 +36,7 @@ class User {
       'workModel': workModel,
       'gender': gender == 1,
       'workFutureModel': workFutureModel,
+      'clickCount' : clickCount,
     };
   }
 
@@ -50,6 +53,7 @@ class User {
       workModel: map['workModel'],
       gender: map['gender'],
       workFutureModel: map['workFutureModel'],
+      clickCount: map['clickCount'],
     );
   }
 

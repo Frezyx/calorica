@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -7,6 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 
 class AddPage extends StatefulWidget{
   @override
@@ -17,7 +20,10 @@ class _AddPageState extends State<AddPage> {
   bool isSaerching = false;
   ScrollController scrollController;
   String searchText;
-  List<Product> prod = [Product(name: "asas"),Product(name: "asas"),Product(name: "asas"),Product(name: "asas"),];
+
+  // static const adUnitID = "ca-app-pub-6210480653379985/9298965167";
+  // final _nativeAdMob = NativeAdmob(adUnitID: "ca-app-pub-6210480653379985~8751142583",);
+   final _controller = NativeAdmobController();
 
   void startSearch(String text){
     setState(() {
@@ -27,11 +33,16 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
+   @override
+   void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return
     GestureDetector(
-  onTap: () {
+ onTap: (){ addClick(); 
     FocusScope.of(context).requestFocus(new FocusNode());
   },child:          
      Scaffold(
@@ -127,6 +138,19 @@ class _AddPageState extends State<AddPage> {
                       style: TextStyle(color: Colors.red),
                     );
                   } else {
+                    var count = snapshot.data.length;
+                    if(count > 5){
+                      snapshot.data.insert(5, Product(name:"Реклама"));
+                    }
+                    else if(count > 3){
+                      snapshot.data.insert(3, Product(name:"Реклама"));
+                    }
+                    else if(count > 1){
+                      snapshot.data.insert(1, Product(name:"Реклама"));
+                    }
+                    else{
+                      snapshot.data.insert(0, Product(name:"Реклама"));
+                    }
                     return StaggeredGridView.countBuilder(
                       controller: scrollController,
                       padding: const EdgeInsets.all(7.0),
@@ -135,10 +159,22 @@ class _AddPageState extends State<AddPage> {
                       crossAxisCount: 4,
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
-                        return 
-                        InkWell(
+                        return snapshot.data[i].name == "Реклама"?
+                        Card(
+                           shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)
+                                ),
+                                elevation: 1.0,
+                          child:Container(
+                          height: 330,
+                          child:
+                          NativeAdmob(
+                            adUnitID: "ca-app-pub-6210480653379985/9298965167",
+                            controller: _controller,
+                          )))
+                        :InkWell(
                           child: getCard(snapshot.data[i]) ,
-                          onTap: (){
+                         onTap: (){ addClick(); 
                             Navigator.pushNamed(context, '/product/'+snapshot.data[i].id.toString());
                           },
                         );
@@ -169,12 +205,15 @@ class _AddPageState extends State<AddPage> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
+                addClick();
                 Navigator.pushNamed(context, '/stats');
               }
               if(index == 1){
+                addClick();
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
+                addClick();
                 Navigator.pushNamed(context, '/add');
               }
             },
@@ -215,7 +254,7 @@ class _AddPageState extends State<AddPage> {
                                   IconButton(
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pushNamed(context, '/product/'+data.id.toString());
                                     }, 
                                   icon: Icon(

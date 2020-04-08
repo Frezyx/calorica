@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -67,7 +68,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
+                        (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
               ), 
             // );
@@ -81,7 +82,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
+                        (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
               ), 
             // );
@@ -135,7 +136,7 @@ class _MainStatsState extends State<MainStats> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10, top: 50, left: 20, right: 20),
                 child:Text(
-                  (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
+                  (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
                 )
               ),
 
@@ -185,7 +186,7 @@ class _MainStatsState extends State<MainStats> {
                                   IconButton(
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pushNamed(context, '/history');
                                     }, 
                                   icon: Icon(
@@ -208,11 +209,11 @@ class _MainStatsState extends State<MainStats> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:<Widget>[
 
-                    Text((caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "-" + checkThousands((caloryT - caloryY).abs()).toString()
+                    Text((caloryT < caloryY )? "-" + checkThousands((caloryT - caloryY).abs()).toString()
                      : "+" + checkThousands((caloryT - caloryY).abs()).toString(),
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
-                        color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL ) ? DesignTheme.secondColor : DesignTheme.redColor,
+                        color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL ) ? DesignTheme.secondColor : DesignTheme.redColor,
                       ),
                     ),
 
@@ -278,10 +279,10 @@ class _MainStatsState extends State<MainStats> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children:<Widget>[
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor,),
+                                    Icon(Icons.label, color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor,),
                                     Text("Сегодня"),]),
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: (caloryT < caloryY && caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
+                                    Icon(Icons.label, color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
                                     Text("Вчера"),]),
                                 ]),
                               ),
@@ -312,12 +313,15 @@ class _MainStatsState extends State<MainStats> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
+                addClick();
                 Navigator.pushNamed(context, '/stats');
               }
               if(index == 1){
+                addClick();
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
+                addClick();
                 Navigator.pushNamed(context, '/add');
               }
             },

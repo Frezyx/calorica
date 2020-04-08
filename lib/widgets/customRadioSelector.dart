@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -51,7 +52,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                 focusColor: Colors.transparent,
 
                 splashColor: Colors.transparent,
-                onTap: () {
+               onTap: (){
                   setState(() {
                     sampleData.forEach((element) => element.isSelected = false);
                     sampleData[index].isSelected = true;
@@ -119,7 +120,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                                   FlatButton(
                                     child: Text('Открыть', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pushNamed(context, '/');
                                     },
                                   ),
@@ -141,7 +142,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                             actions: <Widget>[
                                   FlatButton(
                                     child: Text('Ещё раз'),
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pop(context);
                                     },
                                   ),

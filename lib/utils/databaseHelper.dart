@@ -66,6 +66,7 @@ class DBUserProvider {
   
   Future<bool>counter() async{
     final db = await database;
+    bool adResponse = false;
     var res = await db.rawQuery("SELECT * FROM Users");
     var item = res.first;
     print(res.first);
@@ -76,9 +77,10 @@ class DBUserProvider {
       updateDateProducts('clickCount', count);
     }
     else{
+      adResponse = true;
       updateDateProducts('clickCount', 0);
     }
-    return (count > 19);
+    return adResponse;
   }
 
   Future<int>updateDateProducts(String paramName, param) async{
@@ -469,6 +471,7 @@ class DBDateProductsProvider {
 
     print("res" + res.toString());
 
+    // if(idToAdd == 100000000000000) return DateProducts();
     if(res.length == 0){
 
       var newDP = DateProducts(ids: idToAdd.toString(), date: toStrDate(DateTime.now()));
@@ -500,6 +503,7 @@ class DBDateProductsProvider {
           res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
     return list;
   }
+
 
   toStrDate(DateTime date){
     return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();

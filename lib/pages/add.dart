@@ -103,7 +103,7 @@ class _AddPageState extends State<AddPage> {
                                 Icon(Icons.search, color: DesignTheme.mainColor,),
                             ),
                             contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                            labelText: 'Поиск по заметкам...',
+                            labelText: 'Поиск по продуктам...',
                             border: InputBorder.none,
                             labelStyle: DesignTheme.labelSearchText,
                           ),

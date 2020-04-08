@@ -243,40 +243,40 @@ class _EditUserPageState extends State<EditUserPage> {
 
                 new SizedBox(height: 10),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children:<Widget>[ 
-                          Padding(padding: EdgeInsets.only(left: 0, right: 30, bottom: 15,),
-                            child:  Row(
-                            children:<Widget>[ 
-                            Radio(
-                              value: true,
-                              groupValue: user.gender,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  user.gender = value;
-                                });
-                              },
-                            ),
-                            Text("Мужчина"),
-                          ]),
-                          ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children:<Widget>[ 
+                      //     Padding(padding: EdgeInsets.only(left: 0, right: 30, bottom: 15,),
+                      //       child:  Row(
+                      //       children:<Widget>[ 
+                      //       Radio(
+                      //         value: true,
+                      //         groupValue: user.gender,
+                      //         onChanged: (bool value) {
+                      //           setState(() {
+                      //             user.gender = value;
+                      //           });
+                      //         },
+                      //       ),
+                      //       Text("Мужчина"),
+                      //     ]),
+                      //     ),
 
-                        Padding(padding: EdgeInsets.only( bottom: 15,),
-                          child:Row(
-                            children:<Widget>[ 
-                            Radio(
-                              value: false,
-                              groupValue: user.gender,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  user.gender = value;
-                                });
-                              },
-                            ),
-                            Text("Женщина"),
-                          ]),),
-                      ]),
+                      //   Padding(padding: EdgeInsets.only( bottom: 15,),
+                      //     child:Row(
+                      //       children:<Widget>[ 
+                      //       Radio(
+                      //         value: false,
+                      //         groupValue: user.gender,
+                      //         onChanged: (bool value) {
+                      //           setState(() {
+                      //             user.gender = value;
+                      //           });
+                      //         },
+                      //       ),
+                      //       Text("Женщина"),
+                      //     ]),),
+                      // ]),
 
 
                 DropdownButton<String>(

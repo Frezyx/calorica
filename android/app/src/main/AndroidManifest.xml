@@ -14,6 +14,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6210480653379985~8751142583"/>
         <activity
+            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

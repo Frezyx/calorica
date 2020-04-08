@@ -105,21 +105,32 @@ class _MainStatsState extends State<MainStats> {
       DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
         print(yesterdayProd[0].date);
         for (var i = 0; i < todayProd.length; i++) {
-          setState(() {
+          // setState(() {
             fatT += todayProd[i].fat;
             squiT += todayProd[i].squi;
             carbohT += todayProd[i].carboh;
             caloryT += todayProd[i].calory;
-          });
+          // });
         }
+        setState(() {
+          fatT = fatT;
+          squiT = squiT;
+          carbohT = carbohT;
+          caloryT = roundDouble(caloryT, 2);
+          });
         for (var i = 0; i < yesterdayProd.length; i++) {
-          setState(() {
+          
             fatY += yesterdayProd[i].fat;
             squiY += yesterdayProd[i].squi;
             carbohY += yesterdayProd[i].carboh;
             caloryY += yesterdayProd[i].calory;
-          });
         }
+        setState(() {
+          fatY = fatY;
+          squiY = squiY;
+          carbohY = carbohY;
+          caloryY = roundDouble(caloryY, 2);
+          });
         _generateData(  );
       });
     });

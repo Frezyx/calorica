@@ -25,7 +25,7 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {
       isSaerching = true;
       searchText = text;
-      print("Слушатель ответил:"+isSaerching.toString()+"Выслушал текст:"+searchText);
+      // print("Слушатель ответил:"+isSaerching.toString()+"Выслушал текст:"+searchText);
     });
   }
 

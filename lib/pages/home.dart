@@ -2,14 +2,17 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/widgets/range.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 
@@ -48,6 +51,7 @@ class _HomeState extends State<Home> {
   String name = "";
   String surname = "";
   List<Data> data = [];
+  List<UserProduct> emptyProduct = [];
 
 
 
@@ -63,6 +67,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+
     super.initState();
       DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
@@ -78,6 +83,7 @@ class _HomeState extends State<Home> {
             carbohLimit = diet.carboh;
             isNameSurnameBig = !((name + " " + surname).length <= 11);
             isNameBiggerSurname = name.length > surname.length;
+            emptyProduct.add(UserProduct(name: "Кнопка добавления"));
           });
 
           for (var i = 0; i < products.length; i++) {
@@ -175,10 +181,11 @@ class _HomeState extends State<Home> {
                   constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height-280),
                   child: 
                     FutureBuilder<List<UserProduct>>(
-                      // initialData: data,
+                      initialData: emptyProduct,
                       future: DBUserProductsProvider.db.getAllProducts(),
                       builder:
                       (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                        snapshot.data.add(UserProduct(name: "Кнопка добавления"));
                       switch (snapshot.connectionState) {
                                       case ConnectionState.none:
                                         return new Text('Input a URL to start');
@@ -209,7 +216,23 @@ class _HomeState extends State<Home> {
                                   borderRadius: BorderRadius.circular(10.0)
                                 ),
                                 elevation: 1.0,
-                                child:
+                                child: snapshot.data[i].name == "Кнопка добавления" ?
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          // Center(
+                                          //     child: RaisedButton(
+                                          //   child: Text('Click on Ads'),
+                                          //   onPressed: (){ addClick();
+                                          //     createInterstitialAd()
+                                          //       ..load()
+                                          //       ..show();
+                                          //   },
+                                          // )),
+                                          Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
+                                        ]
+                                      ):
                                   Padding(
                                     padding: EdgeInsets.only(left: 10),
                                     child:
@@ -218,15 +241,21 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
-                                          Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[0].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
-                                        ],
+                                          Text(snapshot.data[i].calory.toString() + " кКал  ", style: DesignTheme.secondaryText,)
+                                        ]
                                       ),
                                   ),
                                 ),
-                                onTap: (){
+                                onTap: snapshot.data[i].name != "Кнопка добавления" ?
+                                (){
+                                  addClick();
                                   Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
                                   print('/addedProduct/${snapshot.data[i].id}/home');
-                                },
+                                }:
+                                (){
+                                  addClick();
+                                  Navigator.pushNamed(context, '/add');
+                                }
                               );
                             },
                             staggeredTileBuilder: (int i) => 
@@ -261,14 +290,17 @@ class _HomeState extends State<Home> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
+                addClick();
                 Navigator.pushNamed(context, '/stats');
                 // DBUserProductsProvider.db.deleteAll();
                 // Navigator.pushNamed(context, '/');
               }
               if(index == 1){
+                addClick();
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
+                addClick();
                 Navigator.pushNamed(context, '/add');
               }
             },
@@ -277,13 +309,15 @@ class _HomeState extends State<Home> {
             );
   }
   getIconButton(){
-      return                    IconButton(
+      return 
+      IconButton(
                                   icon: Icon(
                                     Icons.edit,
                                     color: Colors.white,
                                     size: MediaQuery.of(context).size.width*0.08,
                                     ),
-                                 onPressed: (){
+                                 onPressed: (){ addClick();
+                                  //  _getId();
                                     Navigator.pushNamed(context, '/editUser');
                                  });
   }

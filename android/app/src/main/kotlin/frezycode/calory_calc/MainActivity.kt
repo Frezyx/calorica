@@ -1,4 +1,4 @@
-package com.example.calory_calc
+package frezycode.calory_calc
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

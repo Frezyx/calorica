@@ -30,7 +30,7 @@ class DesignTheme {
   static const Color selectorGray2 = Color.fromRGBO(132, 132, 132, 1);
   static const Color selectorGray3 = Color.fromRGBO(72, 72, 72, 1);
 
-  static const TextStyle selectorBigText = TextStyle( // h5 -> headline
+  static const TextStyle selectorBigText = TextStyle( 
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.w500,
@@ -38,7 +38,7 @@ class DesignTheme {
     color: selectorGray3,
   );
 
-  static const TextStyle selectorBigTextAction = TextStyle( // h5 -> headline
+  static const TextStyle selectorBigTextAction = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.w600,
@@ -46,21 +46,21 @@ class DesignTheme {
     color: mainColor,
   );
 
-  static const TextStyle selectorLabel = TextStyle( // h5 -> headline
+  static const TextStyle selectorLabel = TextStyle(
     fontFamily: fontMain,
     fontWeight: FontWeight.w400,
     fontSize: 16,
     color: selectorGrayText,
   );
 
-  static const TextStyle selectorMiniLabel = TextStyle( // h5 -> headline
+  static const TextStyle selectorMiniLabel = TextStyle(
     fontFamily: fontMain,
     fontWeight: FontWeight.w400,
     fontSize: 12,
     color: selectorGrayText,
   );
 
-  static const TextStyle bigText = TextStyle( // h5 -> headline
+  static const TextStyle bigText = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class DesignTheme {
     color: blackColor,
   );
 
-  static const TextStyle blackText = TextStyle( // h5 -> headline
+  static const TextStyle blackText = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class DesignTheme {
     color: blackColor,
   );
 
-  static const TextStyle bigText24 = TextStyle( // h5 -> headline
+  static const TextStyle bigText24 = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class DesignTheme {
     color: blackColor,
   );
 
-  static const TextStyle bigText20 = TextStyle( // h5 -> headline
+  static const TextStyle bigText20 = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class DesignTheme {
     color: blackColor,
   );
 
-  static const TextStyle bigMainText = TextStyle( // h5 -> headline
+  static const TextStyle bigMainText = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class DesignTheme {
     color: mainColor,
   );
 
-  static const TextStyle midleMainText = TextStyle( // h5 -> headline
+  static const TextStyle midleMainText = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class DesignTheme {
     color: mainColor,
   );
 
-  static const TextStyle bigWhiteText = TextStyle( // h5 -> headline
+  static const TextStyle bigWhiteText = TextStyle(
     fontFamily:
     'Montserrat',
     fontWeight: FontWeight.w600,
@@ -116,63 +116,63 @@ class DesignTheme {
     color: whiteColor,
   );
 
-  static const TextStyle buttonText = TextStyle( // h5 -> headline
+  static const TextStyle buttonText = TextStyle(
     fontFamily: fontMain,
     fontWeight: FontWeight.w800,
     fontSize: 22,
     color: whiteColor,
   );
 
-  static const TextStyle label = TextStyle( // h5 -> headline
+  static const TextStyle label = TextStyle(
     fontFamily: fontMain,
     fontWeight: FontWeight.w400,
     fontSize: 20,
     color: blackColor,
   );
 
-  static const TextStyle lilWhiteText = TextStyle( // h5 -> headline
+  static const TextStyle lilWhiteText = TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,
       letterSpacing: -0.2,
       color: DesignTheme.whiteColor,
   );
 
-  static const TextStyle secondaryText = TextStyle( // h5 -> headline
+  static const TextStyle secondaryText = TextStyle( 
       fontWeight: FontWeight.w400,
       fontSize: 12,
       letterSpacing: -0.2,
       color: DesignTheme.gray170Color,
   );
 
-  static const TextStyle secondaryTextBig = TextStyle( // h5 -> headline
+  static const TextStyle secondaryTextBig = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 14,
       letterSpacing: -0.2,
       color: DesignTheme.gray170Color,
   );
 
-  static const TextStyle primeText = TextStyle( // h5 -> headline
+  static const TextStyle primeText = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 18,
       letterSpacing: -0.2,
       color: DesignTheme.gray36Color,
   );
 
-  static const TextStyle primeTextBig = TextStyle( // h5 -> headline
+  static const TextStyle primeTextBig = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 20,
       letterSpacing: -0.2,
       color: DesignTheme.gray36Color,
   );
 
-  static const TextStyle primeText16 = TextStyle( // h5 -> headline
+  static const TextStyle primeText16 = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 16,
       letterSpacing: -0.3,
       color: DesignTheme.gray36Color,
   );
 
-  static const TextStyle lilGrayText = TextStyle( // h5 -> headline
+  static const TextStyle lilGrayText = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 14,
       letterSpacing: 0.2,
@@ -213,25 +213,33 @@ class DesignTheme {
 
   static const BoxShadow selectorShadow = BoxShadow(
                       color: mainColorShadow,
-                      blurRadius: 8.0, // has the effect of softening the shadow
-                      spreadRadius: 2.0, // has the effect of extending the shadow
+                      blurRadius: 8.0, 
+                      spreadRadius: 2.0,
                       offset: Offset(
-                        0.0, // horizontal, move right 10
-                        4.0, // vertical, move down 10
+                        0.0,
+                        4.0,
                       ),
                     );
                     
   static const BoxShadow transperentShadow = BoxShadow(
                       color: Colors.transparent,
-                      blurRadius: 15.0, // has the effect of softening the shadow
-                      spreadRadius: 2.0, // has the effect of extending the shadow
+                      blurRadius: 15.0,
+                      spreadRadius: 2.0,
                       offset: Offset(
-                        10.0, // horizontal, move right 10
-                        10.0, // vertical, move down 10
+                        10.0,
+                        10.0,
                       ),
                     );
 
-
+  static const BoxShadow originalShadow = BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 20.0, // has the effect of softening the shadow
+                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            offset: Offset(
+                              10.0, // horizontal, move right 10
+                              10.0, // vertical, move down 10
+                            ),
+                          );
   }
 
 

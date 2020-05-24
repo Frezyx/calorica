@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -29,6 +31,10 @@ class _MainStatsState extends State<MainStats> {
   var squiY = 0.0;
   var carbohY = 0.0;
   var caloryY = 0.0;
+
+  var caloryLimit = 2900.0;
+  var caloryLimitDeltaL = 2300.0;
+  var caloryLimitDeltaR = 3100.0;
 
   double roundDouble(double value, int places){ 
     double mod = pow(10.0, places); 
@@ -62,7 +68,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
+                        (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
               ), 
             // );
@@ -76,7 +82,7 @@ class _MainStatsState extends State<MainStats> {
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
                 fillColorFn: (Pollution pollution, _) =>
                     charts.ColorUtil.fromDartColor(
-                        caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor
+                        (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
               ), 
             // );
@@ -87,27 +93,44 @@ class _MainStatsState extends State<MainStats> {
   @override
   void initState() {
     super.initState();
+    DBUserProvider.db.getUser().then((res){
+      var diet = selectDiet(res);
+      caloryLimit = diet.calory;
+      caloryLimitDeltaL = caloryLimit * 0.7;
+      caloryLimitDeltaR = caloryLimit * 1.2;
+    });
 
     // _seriesData = List<charts.Series<Pollution, String>>();
     DBUserProductsProvider.db.getTodayProducts().then((todayProd){
       DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
         print(yesterdayProd[0].date);
         for (var i = 0; i < todayProd.length; i++) {
-          setState(() {
+          // setState(() {
             fatT += todayProd[i].fat;
             squiT += todayProd[i].squi;
             carbohT += todayProd[i].carboh;
             caloryT += todayProd[i].calory;
-          });
+          // });
         }
+        setState(() {
+          fatT = fatT;
+          squiT = squiT;
+          carbohT = carbohT;
+          caloryT = roundDouble(caloryT, 2);
+          });
         for (var i = 0; i < yesterdayProd.length; i++) {
-          setState(() {
+          
             fatY += yesterdayProd[i].fat;
             squiY += yesterdayProd[i].squi;
             carbohY += yesterdayProd[i].carboh;
             caloryY += yesterdayProd[i].calory;
-          });
         }
+        setState(() {
+          fatY = fatY;
+          squiY = squiY;
+          carbohY = carbohY;
+          caloryY = roundDouble(caloryY, 2);
+          });
         _generateData(  );
       });
     });
@@ -124,7 +147,7 @@ class _MainStatsState extends State<MainStats> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10, top: 50, left: 20, right: 20),
                 child:Text(
-                  caloryT < caloryY? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
+                  (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
                 )
               ),
 
@@ -174,7 +197,7 @@ class _MainStatsState extends State<MainStats> {
                                   IconButton(
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pushNamed(context, '/history');
                                     }, 
                                   icon: Icon(
@@ -197,11 +220,11 @@ class _MainStatsState extends State<MainStats> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:<Widget>[
 
-                    Text(caloryT < caloryY? "-" + checkThousands((caloryT - caloryY).abs()).toString()
+                    Text((caloryT < caloryY )? "-" + checkThousands((caloryT - caloryY).abs()).toString()
                      : "+" + checkThousands((caloryT - caloryY).abs()).toString(),
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
-                        color: caloryT < caloryY ? DesignTheme.secondColor : DesignTheme.redColor,
+                        color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL ) ? DesignTheme.secondColor : DesignTheme.redColor,
                       ),
                     ),
 
@@ -267,10 +290,10 @@ class _MainStatsState extends State<MainStats> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children:<Widget>[
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondColor : DesignTheme.redColor,),
+                                    Icon(Icons.label, color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor,),
                                     Text("Сегодня"),]),
                                   Row(children:<Widget>[
-                                    Icon(Icons.label, color: caloryT < caloryY? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
+                                    Icon(Icons.label, color: (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed,),
                                     Text("Вчера"),]),
                                 ]),
                               ),
@@ -301,12 +324,15 @@ class _MainStatsState extends State<MainStats> {
             animationCurve: Curves.easeInExpo,
             onTap: (index) {
               if(index == 0){
+                addClick();
                 Navigator.pushNamed(context, '/stats');
               }
               if(index == 1){
+                addClick();
                 Navigator.pushNamed(context, '/');
               }
               if(index == 2){
+                addClick();
                 Navigator.pushNamed(context, '/add');
               }
             },
@@ -334,60 +360,3 @@ class Pollution {
 
   Pollution(this.year, this.place, this.quantity);
 }
-
-                    //   // initialData: data,
-                    //   future: DBUserProductsProvider.db.getAllProducts(),
-                    //   builder:
-                    //   (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
-                    //   switch (snapshot.connectionState) {
-                    //                   case ConnectionState.none:
-                    //                     return new Text('Input a URL to start');
-                    //                   case ConnectionState.waiting:
-                    //                     return new Center(child: new CircularProgressIndicator());
-                    //                   case ConnectionState.active:
-                    //                     return new Text('');
-                    //                   case ConnectionState.done:
-                    //                     if (snapshot.hasError) {
-                    //                       return new Text(
-                    //                         '${snapshot.error}',
-                    //                         style: TextStyle(color: Colors.red),
-                    //                       );
-                    //                     } else{
-                    //       return StaggeredGridView.countBuilder(
-                    //         controller: scrollController,
-                    //         padding: const EdgeInsets.all(7.0),
-                    //         mainAxisSpacing: 3.0,
-                    //         crossAxisSpacing: 3.0,
-                    //         crossAxisCount: 6,
-                    //         itemCount: snapshot.data.length,
-                    //         itemBuilder: (context, i){
-                    //           return Card(
-                    //             shape: RoundedRectangleBorder(
-                    //               borderRadius: BorderRadius.circular(10.0)
-                    //             ),
-                    //             elevation: 2.0,
-                    //             child:
-                    //               Padding(
-                    //                 padding: EdgeInsets.only(left: 10),
-                    //                 child:
-                    //                   Column(
-                    //                     crossAxisAlignment: CrossAxisAlignment.start,
-                    //                     mainAxisAlignment: MainAxisAlignment.center,
-                    //                     children: <Widget>[
-                    //                       Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
-                    //                       Text(snapshot.data[i].calory.toString() + " кКал  "+ snapshot.data[0].fat.toString() +" Грамм", style: DesignTheme.secondaryText,)
-                    //                     ],
-                    //                   ),
-                    //               ),
-                    //             );
-                    //         },
-                    //         staggeredTileBuilder: (int i) => 
-                    //           StaggeredTile.count(3,2));
-                    //     }
-                    //     }
-                    //     // else 
-                    //     // {
-                    //     //   return Center(child: CircularProgressIndicator());
-                    //     // }
-                    //   }
-                    // ),

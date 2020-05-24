@@ -1,16 +1,12 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/utils/textMonth.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 
 class AddedProductPage extends StatefulWidget{
@@ -52,7 +48,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
             },
             icon:Icon(Icons.arrow_back, size: 24,)
@@ -60,29 +56,15 @@ class _AddedProductPageState extends State<AddedProductPage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("Продукт",
-          // product.name == null? 'Загрузка...' : splitText(product.name),
            style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body:
         Padding(
-          padding:EdgeInsets.only(
-            top: 0,
-                // right: 15, left: 15,
-                // top: 30,
-                // bottom: MediaQuery.of(context).size.height/4,
-                ),
+          padding:EdgeInsets.only(top: 0,),
           child: 
-              // Flexible(
-              //       child:
             Container(
-
               padding: const EdgeInsets.all(0.0),
               constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(15.0)
-              //   ),
-              // elevation: 1.0,
               child: 
               Padding(
                 padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
@@ -96,17 +78,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                         color: DesignTheme.whiteColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 20.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
-                            offset: Offset(
-                              10.0, // horizontal, move right 10
-                              10.0, // vertical, move down 10
-                            ),
-                          )
-                        ],
+                        boxShadow: [DesignTheme.originalShadow],
                       ),
                       child:                    
                       Padding(
@@ -154,7 +126,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                       focusColor: Colors.white,
                       highlightColor: Colors.white,
                       splashColor: Colors.red,
-                      onPressed: () {
+                      onPressed: (){ addClick();
                         _badAllert(context, product.id);
                       },
                       child: 
@@ -189,16 +161,6 @@ class _AddedProductPageState extends State<AddedProductPage> {
                   )
                   )
 
-                  // Padding(
-                  //   padding: EdgeInsets.only(top: 20.0, bottom: 0.0, left: 20),
-                  //   child: 
-                  //   Row(
-                  //     mainAxisAlignment: MainAxisAlignment.start,
-                  //     children: <Widget>[
-                  //     Text("В этот день вы съели:", style: DesignTheme.lilGrayText,),
-                  //   ],),
-                  // ),
-                  // ),
                   ],
                 ) 
               ),
@@ -219,9 +181,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             actions: <Widget>[
                                   FlatButton(
                                     child: Text('Да', style: DesignTheme.midleMainText,),
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       DBUserProductsProvider.db.deleteById(id).then((response){
-                                        Navigator.pushNamed(context, "/");
+                                        Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
                                       });
                                     },
                                   ),
@@ -230,54 +192,6 @@ class _AddedProductPageState extends State<AddedProductPage> {
                           },
                         );
                       }
-
-  //   getCard(UserProduct data){
-  //                   return  
-  //                   Padding(
-  //                   padding: EdgeInsets.only(top: 0.0, bottom: 5.0),
-  //                   child: 
-  //                   Container(
-  //                     decoration: BoxDecoration(
-  //                       color: DesignTheme.whiteColor,
-  //                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                        
-  //                       boxShadow: [
-  //                         BoxShadow(
-  //                           color: Colors.black12.withOpacity(0.05),
-  //                           blurRadius: 5.0, // has the effect of softening the shadow
-  //                           spreadRadius: 2.0, // has the effect of extending the shadow
-  //                           offset: Offset(
-  //                             0.0, // horizontal, move right 10
-  //                             5.0, // vertical, move down 10
-  //                           ),
-  //                         )
-  //                       ],
-  //                     ),
-  //                     child:
-  //                         Padding(
-  //                           padding: EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5, left: 15),
-  //                           child:
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             crossAxisAlignment:  CrossAxisAlignment.center,
-  //                             children:<Widget>[
-  //                             Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               mainAxisAlignment: MainAxisAlignment.center,
-  //                               children:<Widget>[
-  //                               Text(splitText(data.name), style: DesignTheme.primeText16,),
-  //                               Text(data.calory.toString() + " кКал     " +
-  //                                     data.squi.toString() + " Б     " +
-  //                                     data.fat.toString() + " Ж     " +
-  //                                     data.carboh.toString() + " У" ,
-                                  
-  //                                 style: DesignTheme.secondaryText,),
-  //                             ]),
-  //                           ]),
-  //                         ),
-  //                         ),
-  //                       );
-  // }
 
   toStrDate(DateTime date){
     return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();

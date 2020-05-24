@@ -38,7 +38,8 @@ class DBUserProvider {
           "age DOUBLE,"
           "workModel DOUBLE,"
           "gender BOOL,"
-          "workFutureModel INTEGER"
+          "workFutureModel INTEGER,"
+          "clickCount INTEGER"
           ")");
     });
   }
@@ -46,8 +47,8 @@ class DBUserProvider {
   Future<int>addUser(User user) async{
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel)"
-        " VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel, clickCount)"
+        " VALUES (?,?,?,?,?,?,?,?,?,?)",
         [0, 
         user.name,
         user.surname,
@@ -57,15 +58,35 @@ class DBUserProvider {
         1.375,
         true,
         1,
+        0
         ]);
       print(raw);
     return raw;
+  }
+  
+  Future<bool>counter() async{
+    final db = await database;
+    bool adResponse = false;
+    var res = await db.rawQuery("SELECT * FROM Users");
+    var item = res.first;
+    print(res.first);
+    int count = res.first['clickCount'];
+    count++;
+    print("count -------------------------------->" + count.toString());
+    if(count <= 20){
+      updateDateProducts('clickCount', count);
+    }
+    else{
+      adResponse = true;
+      updateDateProducts('clickCount', 0);
+    }
+    return adResponse;
   }
 
   Future<int>updateDateProducts(String paramName, param) async{
     final db = await database;
     int count = await db.rawUpdate(
-      'UPDATE Users SET $paramName = ? WHERE id = ?',
+      "UPDATE Users SET $paramName = ? WHERE id = ?",
       ['$param', 0]);
     print('updated: $count');
     return count;
@@ -95,6 +116,7 @@ class DBUserProvider {
         workModel: item['workModel'],
         gender: item['gender'] == 1,
         workFutureModel: item['workFutureModel'],
+        clickCount: item['clickCount'],
       );
 
     return user;
@@ -147,9 +169,10 @@ class DBProductProvider {
 
   Future<int>addProduct(Product product) async{
     final db = await database;
-    // var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
-    // int id = table.first["id"];
-    int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
+    int id = table.first["id"];
+    print(id);
+    // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
     var raw = await db.rawInsert(
         "INSERT Into Products (id, name, category, calory, squi, fat, carboh)"
         " VALUES (?,?,?,?,?,?,?)",
@@ -162,7 +185,7 @@ class DBProductProvider {
         product.carboh,
         // product.date,
         ]);
-      print(id.toString() + product.name + product.category + product.carboh.toString());
+      // print(id.toString() + product.name + product.category + product.carboh.toString());
     return id;
   }
 
@@ -199,8 +222,10 @@ class DBProductProvider {
 
       Future<List<Product>> getAllProducts() async {
         // print("Я зашёл в поиск");
+        var rnd = Random();
+        var offset = rnd.nextInt(7000);
         final db = await database;
-        var res = await db.rawQuery("SELECT * FROM Products LIMIT 10 OFFSET 0");
+        var res = await db.rawQuery("SELECT * FROM Products LIMIT 20 OFFSET '$offset'");
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
         //     for (int i = 0; i <list.length; i++){
@@ -446,6 +471,7 @@ class DBDateProductsProvider {
 
     print("res" + res.toString());
 
+    // if(idToAdd == 100000000000000) return DateProducts();
     if(res.length == 0){
 
       var newDP = DateProducts(ids: idToAdd.toString(), date: toStrDate(DateTime.now()));
@@ -477,6 +503,7 @@ class DBDateProductsProvider {
           res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
     return list;
   }
+
 
   toStrDate(DateTime date){
     return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();

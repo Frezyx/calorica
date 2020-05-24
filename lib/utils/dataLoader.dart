@@ -11184,13 +11184,8 @@ startLoadData() async{
       squi: double.parse(data[3]),
       fat: double.parse(data[4]),
       carboh: double.parse(data[5]),
-      // date: DateTime.now(),
+      // date: DateTime.now(), 
     );
-      DBProductProvider.db.addProduct(product).then((id){
-        print(id);
-        // DBProductProvider.db.getProductById(id).then((idFromBD){
-        //   print("Записали на id : " + idFromBD.id.toString() + "Название: " + idFromBD.name);
-        // });
-      });
+    await DBProductProvider.db.addProduct(product);
   }
 }

@@ -10,6 +10,7 @@ class User {
   double workModel;
   bool gender;
   int workFutureModel;
+  int clickCount;
 
   User({
     this.id,
@@ -21,6 +22,7 @@ class User {
     this.workModel,
     this.gender,
     this.workFutureModel,
+    this.clickCount,
   });
       
   Map<String, dynamic> toMap() {
@@ -34,6 +36,7 @@ class User {
       'workModel': workModel,
       'gender': gender == 1,
       'workFutureModel': workFutureModel,
+      'clickCount' : clickCount,
     };
   }
 
@@ -50,6 +53,7 @@ class User {
       workModel: map['workModel'],
       gender: map['gender'],
       workFutureModel: map['workFutureModel'],
+      clickCount: map['clickCount'],
     );
   }
 
@@ -66,7 +70,6 @@ class Product {
   double squi;
   double fat;
   double carboh;
-  // DateTime date;
 
   Product({
 		this.id,
@@ -76,7 +79,6 @@ class Product {
     this.squi,
     this.fat,
     this.carboh,
-    // this.date,
   });
 
   factory Product.fromMap(Map<String, dynamic> json) => new Product(
@@ -87,7 +89,6 @@ class Product {
         squi: json["squi"],
         fat: json["fat"],
         carboh: json["carboh"],
-        // date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
       );
       
   Map<String, dynamic> toMap() => {
@@ -98,12 +99,7 @@ class Product {
         "squi": squi,
         "fat": fat,
         "carboh": carboh,
-        // "date": epochFromDate( date ),
       };
-
-      // epochFromDate(DateTime dt) {  
-      //   return dt.millisecondsSinceEpoch ~/ 1000;
-      // }
 }
 
 
@@ -149,10 +145,6 @@ class UserProduct {
         "carboh": carboh,
         "date": date ,
       };
-
-      // epochFromDate(DateTime dt) {  
-      //   return dt.millisecondsSinceEpoch ~/ 1000;
-      // }
 }
 
 class DateProducts {

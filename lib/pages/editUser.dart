@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -12,6 +14,19 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
 
+class RadioModel {
+  bool isSelected;
+  final int multiplaier;
+  final String text;
+  final String icon;
+  final String title;
+  final String subtitle;
+  final double padding;
+  final String subSubTitle;
+
+  RadioModel(this.isSelected, this.multiplaier, this.text, this.icon, this.title, this.subtitle,this.subSubTitle , this.padding,);
+}
+
 class EditUserPage extends StatefulWidget{
 
   @override
@@ -22,6 +37,12 @@ class _EditUserPageState extends State<EditUserPage> {
   final _formKey = GlobalKey<FormState>();
   User user = new User();
   String dropdownValue = 'Минимум физической активности';
+  int workFutureModel = 1; 
+  List<RadioModel> sampleData = [
+    RadioModel(true, 1, 'Минимум физической активности', "slim", "Похудеть", "Диета для", "быстрого похудения", 20),
+    RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal", "Сохранить вес", "Стандартное, здоровое","питание", 5),
+    RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong", "Набрать вес", "Диета для ","набора массы", 20)
+    ];
 
   final TextEditingController _nameController = new TextEditingController( );
   final TextEditingController _surnameController = new TextEditingController( );
@@ -39,6 +60,11 @@ class _EditUserPageState extends State<EditUserPage> {
       _weightController.text = user.weight.toString();
       _heightController.text = user.height.toString();
       _ageController.text = user.age.toString();
+      workFutureModel = user.workFutureModel;
+      sampleData[0].isSelected = workFutureModel == 1; 
+      sampleData[1].isSelected = workFutureModel == 2;
+      sampleData[2].isSelected = workFutureModel == 3;
+
       dropdownValue = user.workModel == 1.2 ?'Минимум физической активности': user.workModel == 1.375 ? 'Занимаюсь спортом 1-3 раза в неделю':
       user.workModel == 1.55? 'Занимаюсь спортом 3-4 раза в неделю': user.workModel == 1.7? 'Занимаюсь спортом каждый день' : 'Тренируюсь по несколько раз в день';
     });
@@ -50,7 +76,7 @@ class _EditUserPageState extends State<EditUserPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
+            onPressed: (){ addClick();
               Navigator.pushNamed(context, "/");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
@@ -62,31 +88,16 @@ class _EditUserPageState extends State<EditUserPage> {
       ),
       body: SingleChildScrollView(
         child:
-      // CustomScrollView(
-      //   slivers: <Widget>[
-      //     SliverAppBar(
-      //       title: Text("Редактирование профиля",style: TextStyle(fontWeight: FontWeight.w700),),
-      //       backgroundColor: DesignTheme.whiteColor,
-      //       expandedHeight: 200,
-      //       flexibleSpace: FlexibleSpaceBar(
-              
-      //       ),
-      //     ),
-      //     SliverFixedExtentList(
-      //       itemExtent: 10,
-      //       delegate: SliverChildDelegate([
-                  
-      //         ])
-      //       )
-      //   ],
-      // )
-      // Stack(
-      //   children:<Widget>[
+                  Stack(
+              children:<Widget>[ 
+      new Form(key: _formKey, child: 
+      Column(
+        children:<Widget>[
             Stack(
               children:<Widget>[ 
         Container(
           padding: EdgeInsets.only(left:30, right:30),
-          child: new Form(key: _formKey, child: 
+          child:
                     Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -214,43 +225,6 @@ class _EditUserPageState extends State<EditUserPage> {
 
                 new SizedBox(height: 10),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children:<Widget>[ 
-                          Padding(padding: EdgeInsets.only(left: 0, right: 30, bottom: 15,),
-                            child:  Row(
-                            children:<Widget>[ 
-                            Radio(
-                              value: true,
-                              groupValue: user.gender,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  user.gender = value;
-                                });
-                              },
-                            ),
-                            Text("Мужчина"),
-                          ]),
-                          ),
-
-                        Padding(padding: EdgeInsets.only( bottom: 15,),
-                          child:Row(
-                            children:<Widget>[ 
-                            Radio(
-                              value: false,
-                              groupValue: user.gender,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  user.gender = value;
-                                });
-                              },
-                            ),
-                            Text("Женщина"),
-                          ]),),
-                      ]),
-
-                SizedBox(height: 10,),
-
                 DropdownButton<String>(
                     value: dropdownValue,
                     icon: Icon(Icons.arrow_downward, color: DesignTheme.mainColor,),
@@ -278,6 +252,50 @@ class _EditUserPageState extends State<EditUserPage> {
                       })
                       .toList(),
                   ),
+            SizedBox(height: 10,),
+
+          
+
+                ]),
+        ),
+        ]
+      ),
+      Container(
+        
+                height: 150,
+                child:
+                CarouselSlider(
+                  
+           // ---- Знаю такая-себе реализация ---- 
+          items: [0,1,2].map((index) {
+            return new Builder(
+              builder: (BuildContext context) {
+                    return new InkWell(
+                      highlightColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+
+                      splashColor: Colors.transparent,
+                    onTap: (){
+                        setState(() {
+                          sampleData.forEach((element) => element.isSelected = false);
+                          sampleData[index].isSelected = true;
+                          user.workFutureModel = sampleData[index].multiplaier;
+                        });
+                      },
+                      child: new RadioItem(sampleData[index]),
+                    );
+                  },
+                );
+              }).toList(),
+              height: 150.0,
+              autoPlay: false,
+              autoPlayCurve: Curves.elasticIn,
+              autoPlayDuration: const Duration(milliseconds: 2800),
+            ),
+          
+              ),
+
+              SizedBox(height: 10),
 
                 GradientButton(
                   increaseWidthBy: 60,
@@ -303,12 +321,9 @@ class _EditUserPageState extends State<EditUserPage> {
                   gradient: DesignTheme.gradient,
                   shadowColor: Gradients.backToFuture.colors.last.withOpacity(0.0),
                 ),
-
-                ]),
-            ),
-        ),
-        ]
-      )
+      ])
+      ),
+      ])
       )
     );
   }
@@ -323,7 +338,7 @@ class _EditUserPageState extends State<EditUserPage> {
                                   FlatButton(
                                     child: Text('Отлично', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
-                                    onPressed: () {
+                                    onPressed: (){ addClick();
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -352,4 +367,50 @@ class _EditUserPageState extends State<EditUserPage> {
                 ),
               ],
         );
+}
+
+class RadioItem extends StatelessWidget {
+  final RadioModel _item;
+  RadioItem(this._item);
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      // color:  DesignTheme.secondColor,
+        decoration: new BoxDecoration(
+          boxShadow: _item.isSelected? [DesignTheme.selectorShadow] : [DesignTheme.transperentShadow],
+          color: _item.isSelected ? DesignTheme.whiteColor: DesignTheme.selectorGrayBackGround,
+              border: new Border.all(
+                  width: 1.0,
+                  color: _item.isSelected? DesignTheme.mainColor: Colors.transparent),
+              borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
+            ),
+      padding: new EdgeInsets.only(left:20, right:20, top: 7.5,bottom: 7.5),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Flexible(
+               child:
+            Text(_item.title, style: _item.isSelected? DesignTheme.selectorBigTextAction : DesignTheme.selectorBigText,)),
+            Flexible(
+               child:
+            Text(_item.subtitle, style: DesignTheme.selectorMiniLabel )),
+            Flexible(
+               child:
+            Text(_item.subSubTitle, style: DesignTheme.selectorMiniLabel ))
+          ],),
+          Padding(
+            padding: new EdgeInsets.only(right:_item.padding),
+            child: Container(
+              child: _item.isSelected ? Image.asset("assets/selector/"+_item.icon+"Color.png", height: 80,) : Image.asset("assets/selector/"+_item.icon+".png", height: 80,),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

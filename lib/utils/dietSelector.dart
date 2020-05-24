@@ -50,20 +50,29 @@ class DietParams {
 
 DietParams selectDiet(User user){
   var diet = DietParams();
-  var squiPercent = 0.3; var fatPercent = 0.3; var carbohPercent = 0.4;
+
+  var squiPercent; 
+  var fatPercent; 
+  var carbohPercent;
+
   if(user.workFutureModel == 1){
-    fatPercent = 0.25;
+    fatPercent = 0.30;
+    squiPercent = 0.30;
+    carbohPercent = 0.40;
+  }
+  else if(user.workFutureModel == 2){
+    fatPercent = 0.35;
     squiPercent = 0.35;
-    carbohPercent = 0.4;
+    carbohPercent = 0.45;
   }
   else if(user.workFutureModel == 3){
-    fatPercent = 0.23;
-    squiPercent = 0.37;
+    fatPercent = 0.275;
+    squiPercent = 0.325;
     carbohPercent = 0.50;
   }
 
-  var genderDelta = user.gender ? 161.0 : -5.0;
-  var caloryLimit = (10 * user.weight + 6.25 * user.height + 5 * user.age + genderDelta) * user.workModel;
+  var genderDelta = user.gender ? 5 : -161.0;
+  var caloryLimit = (10 * user.weight + 6.25 * user.height - (4.92 * user.age) + genderDelta) * user.workModel;
 
   diet.calory = roundDouble(caloryLimit, 1); 
   diet.squi = roundDouble(squiPercent * caloryLimit / 4 , 1);

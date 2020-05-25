@@ -23,6 +23,7 @@ class ProductPage extends StatefulWidget{
 class _ProductPageState extends State<ProductPage> {
   String id;
   _ProductPageState(this.id);
+  final _grammController = new TextEditingController( );
   Product product = Product();
   String name = "";
   double calory = -1.0; double caloryConst = -1.0;
@@ -31,9 +32,20 @@ class _ProductPageState extends State<ProductPage> {
   double carboh = -1.0; double carbohConst = -1.0;
   BannerAd _bannerAd;
 
+  bool canWriteInDB = true;
+
+  final _formKey = GlobalKey<FormState>( );
+
+  setWriteStatus(state){
+    setState(){
+      canWriteInDB = state;
+    }
+  }
+
 @override
   void initState() {
     super.initState();
+    _grammController.text = '100.0';
       DBProductProvider.db.getProductById(int.parse(id)).then((res){
         setState(() {
           product = res;
@@ -54,7 +66,6 @@ class _ProductPageState extends State<ProductPage> {
        fat = roundDouble(product.fat * multiplier, 2);
        carboh = roundDouble(product.carboh * multiplier, 2);
      });
-     print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
   }
 
   double roundDouble(double value, int places){ 
@@ -125,10 +136,13 @@ class _ProductPageState extends State<ProductPage> {
 
                           SizedBox(height:10),
 
-                            TextFormField(
+                          Form(key: _formKey, 
+                            child: TextFormField(
                               onChanged: (text){
+                                if(_formKey.currentState.validate()){}
                                 multiData(double.parse(text));
                               },
+                              controller: _grammController,
                               style: DesignTheme.inputText,
                               cursorColor: DesignTheme.mainColor,
                               decoration: InputDecoration(
@@ -139,8 +153,21 @@ class _ProductPageState extends State<ProductPage> {
                                     Icons.people,
                                   )
                             ),
+                            validator: (value){
+                              if (value.isEmpty){
+                                setWriteStatus(false);
+                                return 'Введите вес продукта';
+                              } 
+                              else if (!(double.parse(value) is double)){
+                                setWriteStatus(false);
+                                return 'Введите число';
+                              } 
+                              else {
+                                setWriteStatus(true);
+                              }
+                            },
                           ),
-
+                        ),
                         ]),
                       ),
                     ),

@@ -21,7 +21,7 @@ class NavigatorPage extends StatefulWidget{
 class _NavigatorPageState extends State<NavigatorPage> {
   _NavigatorPageState(this.index);
   int index;
-
+  bool isFromAnotherContext;
   var _pageController = PageController();
 
   List<Widget> pages = <Widget>[ 
@@ -29,6 +29,18 @@ class _NavigatorPageState extends State<NavigatorPage> {
     Home(),
     AddPage(),
   ];
+
+    @override
+  void initState() {
+    if(this.mounted){
+      
+      setState(() {
+        isFromAnotherContext = index != null;
+        index = index ?? 0;
+      });
+    }
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -70,6 +82,10 @@ class _NavigatorPageState extends State<NavigatorPage> {
             currentIndex: index,
             backgroundColor: Colors.transparent,
             onTap: (int i) {
+              if(isFromAnotherContext){
+                isFromAnotherContext = false;
+                _pageController.jumpToPage(index);
+              }
               _pageController.jumpToPage(i);
               addClick();
             },

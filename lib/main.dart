@@ -58,10 +58,9 @@ class _MyAppState extends State<MyApp> {
         primaryColor: DesignTheme.mainColor,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: banner? '/auth' : '/',
+      initialRoute: banner? '/auth' : '/navigator/1',
       routes: {
         '/auth': (BuildContext context) => AuthPage(prefs: prefs,),
-        '/' : (BuildContext context) => NavigatorPage(index:1),
         '/add' : (BuildContext context) => AddPage(),
         '/stats' : (BuildContext context) => MainStats(),
         '/history' : (BuildContext context) => HistoryPage(),
@@ -75,6 +74,11 @@ class _MyAppState extends State<MyApp> {
 
         if(path[1] == 'product'){
           return new MaterialPageRoute(builder: (context) => new ProductPage(id:path[2]),
+          settings: RouteSettings);
+        }
+
+        if(path[1] == 'navigator'){
+          return new MaterialPageRoute(builder: (context) => new NavigatorPage(index:int.parse(path[2])),
           settings: RouteSettings);
         }
 

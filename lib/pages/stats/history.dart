@@ -37,7 +37,7 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, "/stats");
+              Navigator.popAndPushNamed(context, "/navigator/0");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -151,35 +151,6 @@ class _HistoryPageState extends State<HistoryPage> {
             })),),
 
       ]),),
-
-      // bottomNavigationBar: CurvedNavigationBar(
-      //       buttonBackgroundColor:DesignTheme.mainColor,
-      //           height: 50.0,
-      //       backgroundColor: Colors.transparent,
-      //       animationDuration: Duration(microseconds: 1000),
-      //       items: <Widget>[
-      //         Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
-      //         Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-      //         Padding(
-      //           child:
-      //             Icon(Icons.add, size: 30, color: DesignTheme.whiteColor),
-      //             padding: EdgeInsets.all(3.0),
-      //         ),
-      //       ],
-      //       index: 2,
-      //       animationCurve: Curves.easeInExpo,
-      //       onTap: (index) {
-      //         if(index == 0){
-      //           Navigator.pushNamed(context, '/stats');
-      //         }
-      //         if(index == 1){
-      //           Navigator.pushNamed(context, '/');
-      //         }
-      //         if(index == 2){
-      //           Navigator.pushNamed(context, '/add');
-      //         }
-      //       },
-      //     ),
         ),
     );
   }

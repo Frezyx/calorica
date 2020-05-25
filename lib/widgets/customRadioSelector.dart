@@ -121,7 +121,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                                     child: Text('Открыть', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/');
+                                      Navigator.pushNamed(context, '/navigator/1');
                                     },
                                   ),
                                 ]

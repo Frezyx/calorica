@@ -49,7 +49,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
+              Navigator.popAndPushNamed(context, from == 'home'? '/navigator/1': '/daydata/'+from);
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -183,7 +183,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                                     child: Text('Да', style: DesignTheme.midleMainText,),
                                     onPressed: (){ addClick();
                                       DBUserProductsProvider.db.deleteById(id).then((response){
-                                        Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
+                                        Navigator.popAndPushNamed(context, from == 'home'? '/navigator/1': '/daydata/'+from);
                                       });
                                     },
                                   ),

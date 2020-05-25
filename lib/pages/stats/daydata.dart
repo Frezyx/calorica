@@ -283,7 +283,6 @@ class _DayDatePageState extends State<DayDatePage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      // print("Id:" + data.id.toString());
                                       Navigator.pushNamed(context, '/addedProduct/${data.id}/$date');
                                     }, 
                                   icon: Icon(

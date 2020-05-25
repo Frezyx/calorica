@@ -250,11 +250,10 @@ class _HomeState extends State<Home> {
                                 (){
                                   addClick();
                                   Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
-                                  print('/addedProduct/${snapshot.data[i].id}/home');
                                 }:
                                 (){
                                   addClick();
-                                  Navigator.pushNamed(context, '/add');
+                                  Navigator.popAndPushNamed(context, '/navigator/2');
                                 }
                               );
                             },
@@ -271,41 +270,6 @@ class _HomeState extends State<Home> {
                   ),
                 ]
               ),
-
-          //   bottomNavigationBar: CurvedNavigationBar(
-          //   buttonBackgroundColor:DesignTheme.whiteColor,
-          //       height: 50.0,
-          //   backgroundColor: Colors.transparent,
-          //   animationDuration: Duration(microseconds: 1000),
-          //   items: <Widget>[
-          //     Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
-          //     Padding(
-          //       child:
-          //         Icon(FontAwesomeIcons.userAlt, size: 25, color: DesignTheme.mainColor),
-          //         padding: EdgeInsets.all(5.0),
-          //     ),
-          //     Icon(Icons.add, size: 30, color: Colors.black54,),
-          //   ],
-          //   index: 1,
-          //   animationCurve: Curves.easeInExpo,
-          //   onTap: (index) {
-          //     if(index == 0){
-          //       addClick();
-          //       Navigator.pushNamed(context, '/stats');
-          //       // DBUserProductsProvider.db.deleteAll();
-          //       // Navigator.pushNamed(context, '/');
-          //     }
-          //     if(index == 1){
-          //       addClick();
-          //       Navigator.pushNamed(context, '/');
-          //     }
-          //     if(index == 2){
-          //       addClick();
-          //       Navigator.pushNamed(context, '/add');
-          //     }
-          //   },
-          // ),
-
             );
   }
   getIconButton(){

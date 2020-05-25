@@ -68,7 +68,7 @@ class _ProductPageState extends State<ProductPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, "/add");
+              Navigator.popAndPushNamed(context, "/navigator/2");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -210,7 +210,7 @@ class _ProductPageState extends State<ProductPage> {
                                 var strNow = toStrDate(now);
                                 
                                 if(res.date == strNow){
-                                    Navigator.pushNamed(context, '/');
+                                    Navigator.pushNamed(context, '/navigator/1');
                                 }
 
                               });

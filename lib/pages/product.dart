@@ -46,7 +46,7 @@ class _ProductPageState extends State<ProductPage> {
       });
   }
 
-  void multiData(int grams){
+  void multiData(double grams){
     double multiplier = grams / 100;
      setState(() {
        calory = roundDouble(product.calory * multiplier,2);
@@ -125,12 +125,9 @@ class _ProductPageState extends State<ProductPage> {
 
                           SizedBox(height:10),
 
-                        // Padding(
-                        //   padding: EdgeInsets.only(left:15, right: 15, bottom: 3, top: 3),
-                          // child:
                             TextFormField(
                               onChanged: (text){
-                                multiData(int.parse(text));
+                                multiData(double.parse(text));
                               },
                               style: DesignTheme.inputText,
                               cursorColor: DesignTheme.mainColor,
@@ -140,7 +137,6 @@ class _ProductPageState extends State<ProductPage> {
                                 labelStyle: DesignTheme.labelSearchTextBigger,
                                 suffixIcon: Icon(
                                     Icons.people,
-                                    // color: DesignTheme.blackColor,
                                   )
                             ),
                           ),
@@ -148,7 +144,6 @@ class _ProductPageState extends State<ProductPage> {
                         ]),
                       ),
                     ),
-                  // ),
 
                     SizedBox(height:10),
 

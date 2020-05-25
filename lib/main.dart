@@ -2,6 +2,7 @@ import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
 import 'package:calory_calc/pages/editUser.dart';
+import 'package:calory_calc/widgets/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: banner? '/auth' : '/',
       routes: {
         '/auth': (BuildContext context) => AuthPage(prefs: prefs,),
-        '/' : (BuildContext context) => Home(),
+        '/' : (BuildContext context) => NavigatorPage(index:1),
         '/add' : (BuildContext context) => AddPage(),
         '/stats' : (BuildContext context) => MainStats(),
         '/history' : (BuildContext context) => HistoryPage(),

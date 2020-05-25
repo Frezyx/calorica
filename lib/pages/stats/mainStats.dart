@@ -103,6 +103,7 @@ class _MainStatsState extends State<MainStats> {
     // _seriesData = List<charts.Series<Pollution, String>>();
     DBUserProductsProvider.db.getTodayProducts().then((todayProd){
       DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
+        //TODO: проверка на пустоту данных со вчерашнего дня
         print(yesterdayProd[0].date);
         for (var i = 0; i < todayProd.length; i++) {
           // setState(() {
@@ -305,38 +306,6 @@ class _MainStatsState extends State<MainStats> {
             ),
           ]
         ),
-
-        bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.whiteColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Padding(
-                child:
-                  Icon(Icons.pie_chart_outlined, size: 25, color: DesignTheme.mainColor),
-                  padding: EdgeInsets.all(5.0),
-              ),
-              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-              Icon(Icons.add, size: 30, color: Colors.black54,),
-            ],
-            index: 0,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                addClick();
-                Navigator.pushNamed(context, '/stats');
-              }
-              if(index == 1){
-                addClick();
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                addClick();
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
     );
   }
 }

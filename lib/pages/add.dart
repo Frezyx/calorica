@@ -172,41 +172,9 @@ class _AddPageState extends State<AddPage> {
                   }
               }
             })),),
-
-      ]),),
-
-      bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.whiteColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
-              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-              Padding(
-                child:
-                  Icon(Icons.add, size: 27, color: DesignTheme.mainColor),
-                  padding: EdgeInsets.all(3.0),
-              ),
-            ],
-            index: 2,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                addClick();
-                Navigator.pushNamed(context, '/stats');
-              }
-              if(index == 1){
-                addClick();
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                addClick();
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
+          ]),
         ),
+      ),
     );
   }
 

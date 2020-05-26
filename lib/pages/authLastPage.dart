@@ -18,7 +18,6 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
      onTap: (){ addClick(); 
-        // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(
             decoration: BoxDecoration(

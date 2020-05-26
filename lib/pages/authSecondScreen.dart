@@ -28,7 +28,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
      onTap: (){ addClick(); 
-        // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(
             decoration: BoxDecoration(
@@ -147,14 +146,10 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                           new TextFormField(
                             cursorColor: DesignTheme.mainColor,
                             decoration: InputDecoration(
-                              // focusColor: DesignTheme.mainColor,
-                              // fillColor: DesignTheme.mainColor,
-                              // hoverColor: DesignTheme.mainColor,
                               labelText: 'Сколько вам лет ?',
                               labelStyle: DesignTheme.label,
                               suffixIcon: Icon(
                                   Icons.calendar_today
-                                  // color: DesignTheme.blackColor,
                                 )
                           ),
                           validator: (value){

@@ -84,7 +84,6 @@ class _EditUserPageState extends State<EditUserPage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("Редактирование профиля",style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child:
@@ -106,14 +105,10 @@ class _EditUserPageState extends State<EditUserPage> {
                       controller: _nameController,
                       cursorColor: DesignTheme.mainColor,
                       decoration: InputDecoration(
-                        // focusColor: DesignTheme.mainColor,
-                        // fillColor: DesignTheme.mainColor,
-                        // hoverColor: DesignTheme.mainColor,
                         labelText: 'Имя',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
                             Icons.people,
-                            // color: DesignTheme.blackColor,
                           )
                     ),
                     validator: (value){
@@ -130,15 +125,10 @@ class _EditUserPageState extends State<EditUserPage> {
                       controller: _surnameController,
                       cursorColor: DesignTheme.mainColor,
                       decoration: InputDecoration(
-                        // focusColor: DesignTheme.mainColor,
-                        // fillColor: DesignTheme.mainColor,
-                        // hoverColor: DesignTheme.mainColor,
                         labelText: 'Фамилия',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
                             Icons.people,
-                            // color: DesignTheme.blackColor,
-
                           )
                     ),
                     validator: (value){
@@ -155,14 +145,10 @@ class _EditUserPageState extends State<EditUserPage> {
                       controller: _weightController,
                       cursorColor: DesignTheme.mainColor,
                       decoration: InputDecoration(
-                        // focusColor: DesignTheme.mainColor,
-                        // fillColor: DesignTheme.mainColor,
-                        // hoverColor: DesignTheme.mainColor,
                         labelText: 'Вес',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
                             FontAwesomeIcons.ruler,
-                            // color: DesignTheme.blackColor,
                           )
                     ),
                     validator: (value){
@@ -179,15 +165,10 @@ class _EditUserPageState extends State<EditUserPage> {
                       controller: _heightController,
                       cursorColor: DesignTheme.mainColor,
                       decoration: InputDecoration(
-                        // focusColor: DesignTheme.mainColor,
-                        // fillColor: DesignTheme.mainColor,
-                        // hoverColor: DesignTheme.mainColor,
                         labelText: 'Рост',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
                             FontAwesomeIcons.ruler,
-                            // color: DesignTheme.blackColor,
-
                           )
                     ),
                     validator: (value){
@@ -204,15 +185,10 @@ class _EditUserPageState extends State<EditUserPage> {
                       controller: _ageController,
                       cursorColor: DesignTheme.mainColor,
                       decoration: InputDecoration(
-                        // focusColor: DesignTheme.mainColor,
-                        // fillColor: DesignTheme.mainColor,
-                        // hoverColor: DesignTheme.mainColor,
                         labelText: 'Возраст',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
                             Icons.calendar_today,
-                            // color: DesignTheme.blackColor,
-
                           )
                     ),
                     validator: (value){
@@ -266,7 +242,6 @@ class _EditUserPageState extends State<EditUserPage> {
                 child:
                 CarouselSlider(
                   
-           // ---- Знаю такая-себе реализация ---- 
           items: [0,1,2].map((index) {
             return new Builder(
               builder: (BuildContext context) {
@@ -330,7 +305,7 @@ class _EditUserPageState extends State<EditUserPage> {
     Future<void> _goodAllert(context) async {
                     return showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
                             title: Text('Данные сохранены'),
@@ -375,7 +350,6 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      // color:  DesignTheme.secondColor,
         decoration: new BoxDecoration(
           boxShadow: _item.isSelected? [DesignTheme.selectorShadow] : [DesignTheme.transperentShadow],
           color: _item.isSelected ? DesignTheme.whiteColor: DesignTheme.selectorGrayBackGround,

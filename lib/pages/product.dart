@@ -84,7 +84,6 @@ class _ProductPageState extends State<ProductPage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text(name == ''? 'Загрузка...' : splitText(name), style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body:
         Padding(
@@ -111,11 +110,11 @@ class _ProductPageState extends State<ProductPage> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.1),
-                            blurRadius: 20.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            blurRadius: 20.0,
+                            spreadRadius: 2.0,
                             offset: Offset(
-                              10.0, // horizontal, move right 10
-                              10.0, // vertical, move down 10
+                              10.0, 
+                              10.0, 
                             ),
                           )
                         ],
@@ -242,7 +241,6 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
           ),
-        // ),
       );
   }
 

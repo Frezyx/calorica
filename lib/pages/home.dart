@@ -106,10 +106,6 @@ class _HomeState extends State<Home> {
             fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
             squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;
             carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
-            // calory.gradient = getColor(calory);
-            // fat.gradient = getColor(fat);
-            // squi.gradient = getColor(squi);
-            // carboh.gradient = getColor(carboh);
           });
         });
       });
@@ -219,15 +215,6 @@ class _HomeState extends State<Home> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                          // Center(
-                                          //     child: RaisedButton(
-                                          //   child: Text('Click on Ads'),
-                                          //   onPressed: (){ addClick();
-                                          //     createInterstitialAd()
-                                          //       ..load()
-                                          //       ..show();
-                                          //   },
-                                          // )),
                                           Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
                                         ]
                                       ):
@@ -259,10 +246,6 @@ class _HomeState extends State<Home> {
                               StaggeredTile.count(3,2));
                         }
                         }
-                        // else 
-                        // {
-                        //   return Center(child: CircularProgressIndicator());
-                        // }
                       }
                     ),
                   ),
@@ -279,7 +262,6 @@ class _HomeState extends State<Home> {
                                     size: MediaQuery.of(context).size.width*0.08,
                                     ),
                                  onPressed: (){ addClick();
-                                  //  _getId();
                                     Navigator.pushNamed(context, '/editUser');
                                  });
   }
@@ -375,7 +357,6 @@ class _HomeState extends State<Home> {
                                         range.weigth.toString()+" / "+ range.limit.toString()+ ' г',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          // fontFamily: FintnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                           color: DesignTheme.whiteColor

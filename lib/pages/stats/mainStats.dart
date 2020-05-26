@@ -57,7 +57,6 @@ class _MainStatsState extends State<MainStats> {
     ];
     setState(() {
           _seriesData = [
-            // _seriesData.add(
               charts.Series(
                 domainFn: (GraphData data, _) => data.place,
                 measureFn: (GraphData data, _) => data.quantity,
@@ -68,10 +67,7 @@ class _MainStatsState extends State<MainStats> {
                     charts.ColorUtil.fromDartColor(
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
-              ), 
-            // );
-
-            // _seriesData.add(
+              ),
               charts.Series(
                 domainFn: (GraphData data, _) => data.place,
                 measureFn: (GraphData data, _) => data.quantity,
@@ -83,7 +79,6 @@ class _MainStatsState extends State<MainStats> {
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
               ), 
-            // );
             ];
     });
   }
@@ -151,19 +146,8 @@ class _MainStatsState extends State<MainStats> {
                   padding: EdgeInsets.only(bottom:20, top: 20, left: 20, right: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                    
                       borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20.0, // has the effect of softening the shadow
-                          spreadRadius: 2.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            10.0, // horizontal, move right 10
-                            10.0, // vertical, move down 10
-                          ),
-                        )
-                      ],
+                      boxShadow: [DesignTheme.originalShadow]
                   ),
                     constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height/8),
                     child:Card(
@@ -246,17 +230,7 @@ class _MainStatsState extends State<MainStats> {
                     decoration: BoxDecoration(
                     
                       borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20.0, // has the effect of softening the shadow
-                          spreadRadius: 2.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            10.0, // horizontal, move right 10
-                            10.0, // vertical, move down 10
-                          ),
-                        )
-                      ],
+                      boxShadow: [DesignTheme.originalShadow],
                   ),
                     constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height/3),
                     child:Card(
@@ -274,7 +248,6 @@ class _MainStatsState extends State<MainStats> {
                                 _seriesData,
                                 animate: true,
                                 barGroupingType: charts.BarGroupingType.stacked,
-                                //behaviors: [new charts.SeriesLegend()],
                                 animationDuration: Duration(seconds: 3),
                               ),
                             ),

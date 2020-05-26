@@ -26,7 +26,6 @@ class _DayDatePageState extends State<DayDatePage> {
   final _controller = NativeAdmobController();
 
   ScrollController scrollController;
-  // Product product = new Product();
   double calory = -1.0; 
   double squi = -1.0; 
   double fat = -1.0; 
@@ -65,29 +64,18 @@ class _DayDatePageState extends State<DayDatePage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("История дня",
-          // product.name == null? 'Загрузка...' : splitText(product.name),
            style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body:
         Padding(
           padding:EdgeInsets.only(
             top: 0,
-                // right: 15, left: 15,
-                // top: 30,
-                // bottom: MediaQuery.of(context).size.height/4,
                 ),
           child: 
-              // Flexible(
-              //       child:
             Container(
 
               padding: const EdgeInsets.all(0.0),
               constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(15.0)
-              //   ),
-              // elevation: 1.0,
               child: 
               Padding(
                 padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
@@ -113,8 +101,7 @@ class _DayDatePageState extends State<DayDatePage> {
                           children: <Widget>[
                           
                           Text(getTextMonth(date),
-                            // product == null? 'Загрузка...' : product.name,
-                            style: isStringOverSize("Привет")? DesignTheme.bigText: DesignTheme.blackText,
+                            style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),
 
@@ -151,7 +138,6 @@ class _DayDatePageState extends State<DayDatePage> {
                       Text("В этот день вы съели:", style: DesignTheme.lilGrayText,),
                     ],),
                   ),
-                  // ),
                     Flexible(
                       child:
                     Container(
@@ -207,7 +193,6 @@ class _DayDatePageState extends State<DayDatePage> {
                                       adUnitID: AdMobConfig.NATIVE_ADMOB_UNIT_ID,
                                       controller: _controller,
                                     ))):
-                                    //Изменить
                                     InkWell(
                                       child: getCard(snapshot.data[i]) ,
                                      onTap: (){ addClick(); 
@@ -227,7 +212,6 @@ class _DayDatePageState extends State<DayDatePage> {
               ),
             ),
           ),
-        // ),
       );
   }
 
@@ -244,11 +228,11 @@ class _DayDatePageState extends State<DayDatePage> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.05),
-                            blurRadius: 5.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            blurRadius: 5.0, 
+                            spreadRadius: 2.0, 
                             offset: Offset(
-                              0.0, // horizontal, move right 10
-                              5.0, // vertical, move down 10
+                              0.0, 
+                              5.0, 
                             ),
                           )
                         ],

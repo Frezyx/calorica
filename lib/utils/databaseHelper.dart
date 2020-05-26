@@ -19,7 +19,6 @@ class DBUserProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -126,7 +125,6 @@ class DBProductProvider {
   var rng = new Random();
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -189,7 +187,6 @@ class DBProductProvider {
         squi: item["squi"],
         fat: item["fat"],
         carboh: item["carboh"],
-        // date: DateTime.fromMillisecondsSinceEpoch(item["date"]),
       );
 
     return product;
@@ -224,7 +221,6 @@ class DBUserProductsProvider {
   var rng = new Random();
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -384,7 +380,6 @@ class DBDateProductsProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }

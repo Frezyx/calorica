@@ -43,7 +43,6 @@ class _HistoryPageState extends State<HistoryPage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("История питания", style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
 
 
@@ -58,22 +57,10 @@ class _HistoryPageState extends State<HistoryPage> {
             padding: EdgeInsets.only(top: 15, bottom: 20),
             child: 
             Container(
-              // padding: build(),
                 decoration: BoxDecoration(
                   color: DesignTheme.whiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20.0, // has the effect of softening the shadow
-                      spreadRadius: 2.0, // has the effect of extending the shadow
-                      offset: Offset(
-                        10.0, // horizontal, move right 10
-                        10.0, // vertical, move down 10
-                      ),
-                    )
-                  ],
+                  boxShadow: [DesignTheme.originalShadow]
                 ),
                 child: 
                 TextFormField(
@@ -135,7 +122,6 @@ class _HistoryPageState extends State<HistoryPage> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
                         return 
-                        //Изменить
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                          onTap: (){ addClick(); 
@@ -173,8 +159,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
                                   Text(splitText(data.date), style: DesignTheme.primeText16,),
-                                  // Text(data.calory.toString() + " кКал",
-                                  // style: DesignTheme.secondaryText,),
                               ]),
                               Align(
                                 alignment: Alignment.centerRight,

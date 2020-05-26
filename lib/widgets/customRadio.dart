@@ -16,7 +16,6 @@ class CustomRadioState extends State<CustomRadio> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     sampleData.add(new RadioModel(false, 1.2, 'Минимум физической активности'));
     sampleData.add(new RadioModel(false, 1.375, 'Занимаюсь спортом 1-3 раза в неделю'));
@@ -57,7 +56,7 @@ class CustomRadioState extends State<CustomRadio> {
                         Navigator.pushNamed(context, '/selectActiviti');
                       }
                       else{
-                        // Implement
+                        // TODO : Alert
                       }
                   });
                 },

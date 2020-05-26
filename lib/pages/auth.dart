@@ -74,14 +74,10 @@ class _AuthPageState extends State<AuthPage> {
                     },
                     cursorColor: DesignTheme.mainColor,
                     decoration: InputDecoration(
-                      // focusColor: DesignTheme.mainColor,
-                      // fillColor: DesignTheme.mainColor,
-                      // hoverColor: DesignTheme.mainColor,
                       labelText: 'Имя',
                       labelStyle: DesignTheme.label,
                       suffixIcon: Icon(
                           Icons.people,
-                          // color: DesignTheme.blackColor,
                         )
                   ),
                   validator: (value){
@@ -104,8 +100,6 @@ class _AuthPageState extends State<AuthPage> {
                       labelStyle: DesignTheme.label,
                       suffixIcon: Icon(
                           Icons.people,
-                          // color: DesignTheme.blackColor,
-
                         )
                   ),
                   validator: (value){

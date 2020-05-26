@@ -90,7 +90,6 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             style: isStringOverSize(product.name)? DesignTheme.bigText20: DesignTheme.bigText24,
                             textAlign: TextAlign.start,
                             ),
-// getTextMonth(product.date)
                           SizedBox(height:30),
 
                           Row(
@@ -163,14 +162,13 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
           ),
-        // ),
       );
   }
 
                   Future<void> _badAllert(context, id) async {
                     return showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return 
                            AlertDialog(

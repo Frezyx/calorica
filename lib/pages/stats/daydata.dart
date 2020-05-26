@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
@@ -31,10 +32,7 @@ class _DayDatePageState extends State<DayDatePage> {
   double fat = -1.0; 
   double carboh = -1.0; 
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 @override
   void initState() {

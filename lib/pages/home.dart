@@ -4,6 +4,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/range.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 
@@ -60,10 +61,7 @@ class _HomeState extends State<Home> {
   RangeGraphData squi = RangeGraphData( name: "Белки",percent: 0.0 ,weigth: 0);
   RangeGraphData carboh = RangeGraphData( name: "Углеводы",percent: 0.0,weigth: 0);
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
   @override
   void initState() {

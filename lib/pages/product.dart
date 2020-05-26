@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
@@ -26,10 +27,10 @@ class _ProductPageState extends State<ProductPage> {
   final _grammController = new TextEditingController( );
   Product product = Product();
   String name = "";
-  double calory = -1.0; double caloryConst = -1.0;
-  double squi = -1.0; double squiConst = -1.0;
-  double fat = -1.0; double fatConst = -1.0;
-  double carboh = -1.0; double carbohConst = -1.0;
+  double calory = 0.0; double caloryConst = 0.0;
+  double squi = 0.0; double squiConst = 0.0;
+  double fat = 0.0; double fatConst = 0.0;
+  double carboh = 0.0; double carbohConst = 0.0;
   BannerAd _bannerAd;
 
   bool canWriteInDB = true;
@@ -68,10 +69,7 @@ class _ProductPageState extends State<ProductPage> {
      });
   }
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
   @override
   Widget build(BuildContext context) {

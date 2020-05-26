@@ -5,6 +5,7 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -36,10 +37,7 @@ class _MainStatsState extends State<MainStats> {
   var caloryLimitDeltaL = 2300.0;
   var caloryLimitDeltaR = 3100.0;
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
   
   
 
@@ -317,10 +315,7 @@ checkThousands(double value) {
   return value;
 }
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 class Pollution {
   String place;

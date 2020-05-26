@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
   ScrollController scrollController;
   UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date:"1.1.2020");
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 @override
   void initState() {

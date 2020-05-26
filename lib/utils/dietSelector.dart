@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:calory_calc/models/dbModels.dart';
 
+import 'doubleRounder.dart';
+
 class DietParams {
   double calory;
   double squi;
@@ -43,10 +45,7 @@ class DietParams {
   static DietParams fromJson(String source) => fromMap(json.decode(source));
 }
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 DietParams selectDiet(User user){
   var diet = DietParams();

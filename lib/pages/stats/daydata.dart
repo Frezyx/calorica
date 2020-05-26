@@ -37,7 +37,6 @@ class _DayDatePageState extends State<DayDatePage> {
 @override
   void initState() {
     super.initState();
-    print("Пришла Дата " + date);
     DBDateProductsProvider.db.getPoductsIDsByDate(date).then((idList){
       for (var i = 0; i < idList.length; i++) {
         DBUserProductsProvider.db.getProductById(idList[i]).then((product){
@@ -301,7 +300,6 @@ class _DayDatePageState extends State<DayDatePage> {
   }
 
   Future<DateAndCalory> addProduct(UserProduct nowClient) async{
-      // print(nowClient.name + " --- " + nowClient.surname);
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
       return res;
   }

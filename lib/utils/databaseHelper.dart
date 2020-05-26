@@ -60,7 +60,6 @@ class DBUserProvider {
         1,
         0
         ]);
-      print(raw);
     return raw;
   }
   
@@ -69,10 +68,8 @@ class DBUserProvider {
     bool adResponse = false;
     var res = await db.rawQuery("SELECT * FROM Users");
     var item = res.first;
-    print(res.first);
     int count = res.first['clickCount'];
     count++;
-    print("count -------------------------------->" + count.toString());
     if(count <= 20){
       updateDateProducts('clickCount', count);
     }
@@ -88,17 +85,14 @@ class DBUserProvider {
     int count = await db.rawUpdate(
       "UPDATE Users SET $paramName = ? WHERE id = ?",
       ['$param', 0]);
-    print('updated: $count');
     return count;
   }
 
   Future<int>updateUser(User user) async{
     final db = await database;
-    print(user.name + " " + user.surname + " " + user.weight.toString() + " " + user.height.toString() + " " + user.age.toString() + " " + user.workModel.toString() + " " + user.gender.toString() + " " + user.workFutureModel.toString());
     int count = await db.rawUpdate(
       'UPDATE Users SET name = ?, surname = ?, weight = ?, height = ?, age = ?, workModel = ?, gender = ?, workFutureModel = ? WHERE id = ?',
       ['${user.name}' , '${user.surname}', '${user.weight}', '${user.height}', '${user.age}', '${user.workModel}', '${user.gender}', '${user.workFutureModel}', 0]);
-    print('updated: $count');
     return count;
   }
 
@@ -145,7 +139,6 @@ class DBProductProvider {
         " VALUES (?,?,?,?,?,?,?)",
         [id,'Говядина отборная', 'Говядина и телятина', 218, 18.6, 16, 0]
         );
-    print("Первая запись");
     return(raw);
   }
 
@@ -154,7 +147,6 @@ class DBProductProvider {
     String path = join(documentsDirectory.path, "Products.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          print("БД создана");
       await db.execute("CREATE TABLE Products ("
           "id INTEGER PRIMARY KEY,"
           "name TEXT,"
@@ -171,8 +163,6 @@ class DBProductProvider {
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Products");
     int id = table.first["id"];
-    print(id);
-    // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
     var raw = await db.rawInsert(
         "INSERT Into Products (id, name, category, calory, squi, fat, carboh)"
         " VALUES (?,?,?,?,?,?,?)",
@@ -183,9 +173,7 @@ class DBProductProvider {
         product.squi,
         product.fat,
         product.carboh,
-        // product.date,
         ]);
-      // print(id.toString() + product.name + product.category + product.carboh.toString());
     return id;
   }
 
@@ -208,30 +196,20 @@ class DBProductProvider {
   }
 
       Future<List<Product>> getAllProductsSearch(String text) async {
-        print(1);
         final db = await database;
         var res = await db.query("Products", where: "name LIKE ?", whereArgs: ["%$text%"]);
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
-        //     for (int i = 0; i <list.length; i++){
-        //       print(i.toString() + list[i].name.toString());
-        //     }
-        // print(list.length.toString() + "Кол-во ссаных заметок");
         return list;
       }
 
       Future<List<Product>> getAllProducts() async {
-        // print("Я зашёл в поиск");
         var rnd = Random();
         var offset = rnd.nextInt(7000);
         final db = await database;
         var res = await db.rawQuery("SELECT * FROM Products LIMIT 20 OFFSET '$offset'");
         List<Product> list =
             res.isNotEmpty ? res.map((c) => Product.fromMap(c)).toList() : [];
-        //     for (int i = 0; i <list.length; i++){
-        //       // print(i.toString() + list[i].name.toString());
-        //     }
-        // print(list.length.toString() + "Кол-во ссаных заметок");
         return list;
       }
 
@@ -260,7 +238,6 @@ class DBUserProductsProvider {
         " VALUES (?,?,?,?,?,?,?,?)",
         [id,'Говядина отборная', 'Говядина и телятина', 0, 0.0, 0, 0, now]
         );
-    print("Первая запись");
     return(raw);
   }
 
@@ -270,7 +247,6 @@ class DBUserProductsProvider {
     String path = join(documentsDirectory.path, "UserProducts.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          print("БД создана");
       await db.execute("CREATE TABLE UserProducts ("
           "id INTEGER PRIMARY KEY,"
           "name TEXT,"
@@ -294,7 +270,7 @@ class DBUserProductsProvider {
     int id = table.first["id"];
     var now = DateTime.now();
     var strNow = toStrDate(now);
-    // int id =rng.nextInt(100)*rng.nextInt(100)+rng.nextInt(100)*rng.nextInt(100)*rng.nextInt(1200);
+
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
         " VALUES (?,?,?,?,?,?,?,?)",
@@ -307,7 +283,6 @@ class DBUserProductsProvider {
         product.carboh,
         strNow,
         ]);
-      print(strNow);
     return DateAndCalory(id:id,date:strNow);
   }
 
@@ -356,7 +331,6 @@ class DBUserProductsProvider {
   Future<int>deleteById(int id) async {
     final db = await database;
     var res = await db.rawQuery("DELETE FROM UserProducts WHERE id = '$id'");
-    // print(res);
     return res.length;
   }
 
@@ -450,36 +424,25 @@ class DBDateProductsProvider {
   Future<List<int>> getPoductsIDsByDate(String date) async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
-    print("Результат getPoductsIDsByDate ---> " + res.toString());
     var item = res.first;
     var ids = item['ids'];
     var mass = ids.split(";");
     List<int> result = []; 
     for (var i = 0; i < mass.length; i++) {
       result.add(int.parse(mass[i]));
-      print(mass[i]);
     }
     return result;
   }
 
   Future<DateProducts> getPoductsByDate(String date, int idToAdd) async {
-
     final db = await database;
     DateProducts respons;
-
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
-
-    print("res" + res.toString());
-
-    // if(idToAdd == 100000000000000) return DateProducts();
     if(res.length == 0){
-
       var newDP = DateProducts(ids: idToAdd.toString(), date: toStrDate(DateTime.now()));
-
       addDateProducts(newDP).then((response){
         respons = DateProducts(id:response.id, ids: response.ids, date: response.date);
       });
-
     }
     else{
       var item = res.first;
@@ -493,7 +456,6 @@ class DBDateProductsProvider {
     int count = await db.rawUpdate(
       'UPDATE DateProducts SET ids = ? WHERE id = ?',
       ['${products.ids}', '${products.id}']);
-    print('updated: $count');
   }
 
     Future<List<DateProducts>> getDates() async {

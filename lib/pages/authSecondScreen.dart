@@ -66,7 +66,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                               labelStyle: DesignTheme.label,
                               suffixIcon: Icon(
                                   FontAwesomeIcons.ruler
-                                  // color: DesignTheme.blackColor,
                                 )
                           ),
                           validator: (value){
@@ -74,7 +73,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _weight = double.parse(value);
-                              // print(_weight);
                             }
                         },
                       ),
@@ -96,7 +94,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _height = double.parse(value);
-                              // print(_height);
                             }
                         },
                       ),
@@ -127,7 +124,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                                   }
                                 });
                               });
-                              // print("------------Все хорошо-------------" +_weight.toString() +" "+ _height.toString());
                             }
                           }
                         },
@@ -166,7 +162,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _age = double.parse(value);
-                              // print(_weight);
                             }
                         },
                       ),
@@ -232,7 +227,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                                   }
                                 });
                               });
-                              // print("------------Все хорошо-------------" +_weight.toString() +" "+ _height.toString());
                             }
                           }
                         },

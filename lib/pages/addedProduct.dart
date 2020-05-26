@@ -32,7 +32,6 @@ class _AddedProductPageState extends State<AddedProductPage> {
 @override
   void initState() {
     super.initState();
-    print("Пришла Дата " + id);
     DBUserProductsProvider.db.getProductById(int.parse(id)).then((prod){
       setState(() {
         product = prod;

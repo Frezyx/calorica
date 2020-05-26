@@ -22,7 +22,6 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {
       isSaerching = true;
       searchText = text;
-      // print("Слушатель ответил:"+isSaerching.toString()+"Выслушал текст:"+searchText);
     });
   }
 
@@ -184,7 +183,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      // print("Id:" + data.id.toString());
                                       Navigator.pushNamed(context, '/daydata/${data.date.toString()}');
                                     }, 
                                   icon: Icon(

@@ -20,7 +20,7 @@ class MainStats extends StatefulWidget {
 }
 
 class _MainStatsState extends State<MainStats> {
-  List<charts.Series<Pollution, String>> _seriesData = List<charts.Series<Pollution, String>>();
+  List<charts.Series<GraphData, String>> _seriesData = List<charts.Series<GraphData, String>>();
   List<UserProduct> userTodayProducts;
   List<UserProduct> userYesterdayProducts;
   var fatT = 0.0;
@@ -45,26 +45,26 @@ class _MainStatsState extends State<MainStats> {
     
 
     var data2 = [
-      Pollution(1980, 'Белки', squiY.round() ),
-      Pollution(1980, 'Жиры', fatY.round() ),
-      Pollution(1980, 'Углеводы', carbohY.round() ),
+      GraphData('Белки', squiY.round() ),
+      GraphData('Жиры', fatY.round() ),
+      GraphData('Углеводы', carbohY.round() ),
     ];
 
     var data1 = [
-      Pollution(1980, 'Белки', squiT.round() ),
-      Pollution(1980, 'Жиры', fatT.round() ),
-      Pollution(1980, 'Углеводы', carbohT.round() ),
+      GraphData('Белки', squiT.round() ),
+      GraphData('Жиры', fatT.round() ),
+      GraphData('Углеводы', carbohT.round() ),
     ];
     setState(() {
           _seriesData = [
             // _seriesData.add(
               charts.Series(
-                domainFn: (Pollution pollution, _) => pollution.place,
-                measureFn: (Pollution pollution, _) => pollution.quantity,
+                domainFn: (GraphData data, _) => data.place,
+                measureFn: (GraphData data, _) => data.quantity,
                 id: 'sssss',
                 data: data2,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
-                fillColorFn: (Pollution pollution, _) =>
+                fillColorFn: (GraphData data, _) =>
                     charts.ColorUtil.fromDartColor(
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
@@ -73,12 +73,12 @@ class _MainStatsState extends State<MainStats> {
 
             // _seriesData.add(
               charts.Series(
-                domainFn: (Pollution pollution, _) => pollution.place,
-                measureFn: (Pollution pollution, _) => pollution.quantity,
+                domainFn: (GraphData data, _) => data.place,
+                measureFn: (GraphData data, _) => data.quantity,
                 id: 'fffff',
                 data: data1,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
-                fillColorFn: (Pollution pollution, _) =>
+                fillColorFn: (GraphData data, _) =>
                     charts.ColorUtil.fromDartColor(
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
@@ -98,25 +98,23 @@ class _MainStatsState extends State<MainStats> {
       caloryLimitDeltaR = caloryLimit * 1.2;
     });
 
-    // _seriesData = List<charts.Series<Pollution, String>>();
     DBUserProductsProvider.db.getTodayProducts().then((todayProd){
       DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
         //TODO: проверка на пустоту данных со вчерашнего дня
-        print(yesterdayProd[0].date);
         for (var i = 0; i < todayProd.length; i++) {
-          // setState(() {
             fatT += todayProd[i].fat;
             squiT += todayProd[i].squi;
             carbohT += todayProd[i].carboh;
             caloryT += todayProd[i].calory;
-          // });
         }
+
         setState(() {
           fatT = fatT;
           squiT = squiT;
           carbohT = carbohT;
           caloryT = roundDouble(caloryT, 2);
           });
+
         for (var i = 0; i < yesterdayProd.length; i++) {
           
             fatY += yesterdayProd[i].fat;
@@ -133,7 +131,6 @@ class _MainStatsState extends State<MainStats> {
         _generateData(  );
       });
     });
-    print("ok");
   }
 
   @override
@@ -317,10 +314,9 @@ checkThousands(double value) {
 
 
 
-class Pollution {
+class GraphData {
   String place;
-  int year;
   int quantity;
 
-  Pollution(this.year, this.place, this.quantity);
+  GraphData(this.place, this.quantity);
 }

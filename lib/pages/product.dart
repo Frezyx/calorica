@@ -213,13 +213,10 @@ class _ProductPageState extends State<ProductPage> {
                                 fat: fat,
                               );
 
-                              print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
-
                               addProduct(productSend).then((res){
                                 DBDateProductsProvider.db.getPoductsByDate(res.date, res.id).then((products){
                                   try {
                                     products.ids += ";" + res.id.toString();
-                                    print(products.ids);
                                   } catch (e) {
 
                                   }
@@ -254,7 +251,6 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future<DateAndCalory> addProduct(UserProduct nowClient) async{
-      print(nowClient.name + " --- " + nowClient.id.toString());
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
       return res;
   }

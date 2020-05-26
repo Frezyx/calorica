@@ -49,7 +49,6 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
 }
 
   Future<bool> registrationAtLocalDB(User nowClient) async{
-      print(nowClient.name + " --- " + nowClient.surname);
       int res = await DBUserProvider.db.addUser(nowClient);
       return(res == 0);
   }

@@ -61,16 +61,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
         bottomNavigationBar: Container(
           height: 80,
           decoration: BoxDecoration(
-            boxShadow: [
-                          BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 20.0,
-                              spreadRadius: 2.0, 
-                              offset: Offset(
-                                10.0, 
-                                5.0, 
-                              ),
-                            )],
+            boxShadow: [DesignTheme.originalShadow],
             color: DesignTheme.whiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),

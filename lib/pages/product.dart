@@ -232,6 +232,12 @@ class _ProductPageState extends State<ProductPage> {
   Future<bool> addProduct(UserProduct nowClient) async{
 
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
+      if(res!=null){
+        var response = await DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
+        if(response){
+          Navigator.pushNamed(context, '/navigator/1');
+        }
+      }
 
       return res != null;
   }

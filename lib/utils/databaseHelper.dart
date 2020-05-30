@@ -290,13 +290,18 @@ class DBUserProductsProvider {
     debugPrint(raw.toString());
     debugPrint(now.toString());
 
+    var u =await getProductById(id);
+    debugPrint(epochFromDate(u.date).toString());
+
     return DateAndCalory(id:id, date: _date);
   }
 
   Future<UserProduct> getProductById(int id) async {
     final db = await database;
+
     var res = await db.rawQuery("SELECT * FROM UserProducts WHERE id = $id");
       var item = res.first;
+
       UserProduct product = UserProduct(
         id: item["id"],
         name: item["name"],
@@ -305,7 +310,7 @@ class DBUserProductsProvider {
         squi: item["squi"],
         fat: item["fat"],
         carboh: item["carboh"],
-        date: item["date"],
+        date: DateTime.fromMillisecondsSinceEpoch(item["date"]),
       );
 
     return product;
@@ -419,7 +424,8 @@ class DBDateProductsProvider {
 
   Future<DateProducts>addDateProducts(DateProducts dateProducts) async{
     final db = await database;
-    dateProducts.date = DateTime(dateProducts.date.day, dateProducts.date.month, dateProducts.date.day);
+
+    dateProducts.date = DateTime(dateProducts.date.year, dateProducts.date.month, dateProducts.date.day);
 
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
     int id = table.first["id"];
@@ -458,29 +464,34 @@ class DBDateProductsProvider {
     return result;
   }
 
-  Future<DateProducts> getPoductsByDate(DateTime date, int idToAdd) async {
+  Future<bool> getPoductsByDate(DateTime date, int idToAdd) async {
     final db = await database;
 
     var dateByYMD = DateTime(date.year, date.month, date.day);
     var dateInt = epochFromDate(dateByYMD);
 
-    DateProducts respons;
+    bool resp = false;
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
+
+    debugPrint(res.toList().toString());
 
     if(res.length == 0){
       var newDP = DateProducts(ids: idToAdd.toString(), date: dateByYMD);
-      addDateProducts(newDP).then((response){
-        respons = DateProducts(id:response.id, ids: response.ids, date: response.date);
-
-      });
+      var response = await addDateProducts(newDP);
+      resp = response != null;
     }
     else{
       var item = res.first;
-      respons = DateProducts(id:item['id'], ids: item['ids'], date: DateTime.fromMillisecondsSinceEpoch(item['date']));
-    }
+      var products = DateProducts(id:item['id'], ids: item['ids'], date: DateTime.fromMillisecondsSinceEpoch(item['date']));
+        try {
+          products.ids += ";" + res.first['id'].toString();
+        } catch (e) {
 
-    debugPrint(dateInt.toString());
-    return respons;
+        }
+      var response = await DBDateProductsProvider.db.updateDateProducts(products);
+      resp = response == 1;
+    }
+    return resp;
   }
   
   updateDateProducts(DateProducts products) async{

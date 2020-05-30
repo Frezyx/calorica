@@ -2,17 +2,20 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:intl/intl.dart';
 
 
 class AddedProductPage extends StatefulWidget{
   String _id;
   String _from;
+
   AddedProductPage({String id, String from}): _id = id, _from = from;
 
   @override
@@ -91,6 +94,8 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             textAlign: TextAlign.start,
                             ),
                           SizedBox(height:30),
+
+                          Text("Добавлено" + DateFormat('yyyy-MM-dd').format(product.date)),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

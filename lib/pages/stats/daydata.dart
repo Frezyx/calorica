@@ -242,7 +242,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
                                 Text(splitText(data.name), style: DesignTheme.primeText16,),
-                                Text( getKBGUText(data),style: DesignTheme.secondaryText,),
+                                Text(getKBGUText(data),style: DesignTheme.secondaryText,),
                               ]),
                                Align(
                                 alignment: Alignment.centerRight,

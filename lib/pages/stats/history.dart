@@ -7,6 +7,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget{
   @override
@@ -159,7 +160,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
-                                  Text(splitText(epochFromDate(data.date).toString()), style: DesignTheme.primeText16,),
+                                  //TYT
+                                  Text(splitText(DateFormat('yyyy-MM-dd').format(data.date)), style: DesignTheme.primeText16,),
                               ]),
                               Align(
                                 alignment: Alignment.centerRight,

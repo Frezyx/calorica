@@ -10,6 +10,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/textMonth.dart';
+import 'package:intl/intl.dart';
 
 class DayDatePage extends StatefulWidget{
   String _date;
@@ -31,14 +32,17 @@ class _DayDatePageState extends State<DayDatePage> {
   double squi = 0.0; 
   double fat = 0.0; 
   double carboh = 0.0; 
+  DateTime dateInDT;
 
 
 
 @override
   void initState() {
-    var intData = int.parse(date);
+    intDate = int.parse(date);
     super.initState();
-    var dateInDT = DateTime.fromMillisecondsSinceEpoch(int.parse(date));
+
+    dateInDT = DateTime.fromMillisecondsSinceEpoch(int.parse(date));
+
     DBDateProductsProvider.db.getPoductsIDsByDate(dateInDT).then((idList){
       for (var i = 0; i < idList.length; i++) {
         DBUserProductsProvider.db.getProductById(idList[i]).then((product){
@@ -190,7 +194,7 @@ class _DayDatePageState extends State<DayDatePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                          Text(getTextMonth(date),
+                          Text(DateFormat('yyyy-MM-dd').format(dateInDT),
                             style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),
@@ -251,7 +255,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/${intDate.toSTring}');
+                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/${intDate.toString}');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,

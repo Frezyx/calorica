@@ -337,6 +337,7 @@ class DBUserProductsProvider {
         final db = await database;
 
         var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$date'");
+
         List<UserProduct> list =
             res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
         return list;
@@ -358,7 +359,6 @@ class DBUserProductsProvider {
 
         final now = DateTime.now();
         int today = epochFromDate(DateTime(now.year, now.month, now.day));
-
 
         var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$today'");
         List<UserProduct> list =
@@ -426,14 +426,19 @@ class DBDateProductsProvider {
     final db = await database;
 
     dateProducts.date = DateTime(dateProducts.date.year, dateProducts.date.month, dateProducts.date.day);
+    var intDate =epochFromDate(dateProducts.date);
+
+    debugPrint(intDate.toString());
 
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
     int id = table.first["id"];
+
     var raw = await db.rawInsert(
         "INSERT Into DateProducts (id, date, ids)"
         " VALUES (?,?,?)",
+
         [id, 
-        epochFromDate(dateProducts.date),
+        intDate,
         dateProducts.ids,
         ]);
 

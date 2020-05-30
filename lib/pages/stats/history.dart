@@ -127,6 +127,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                          onTap: (){ addClick(); 
+                            print('/daydata/${epochFromDate(snapshot.data[i].date)}');
                             Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
                           },
                         );

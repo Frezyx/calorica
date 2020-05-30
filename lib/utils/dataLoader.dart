@@ -11184,7 +11184,6 @@ startLoadData() async{
       squi: double.parse(data[3]),
       fat: double.parse(data[4]),
       carboh: double.parse(data[5]),
-      // date: DateTime.now(), 
     );
     await DBProductProvider.db.addProduct(product);
   }

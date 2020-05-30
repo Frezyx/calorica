@@ -2,16 +2,20 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:intl/intl.dart';
 
 
 class AddedProductPage extends StatefulWidget{
   String _id;
   String _from;
+
   AddedProductPage({String id, String from}): _id = id, _from = from;
 
   @override
@@ -24,17 +28,13 @@ class _AddedProductPageState extends State<AddedProductPage> {
   _AddedProductPageState(this.id, this.from);
 
   ScrollController scrollController;
-  UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date:"1.1.2020");
+  UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date: DateTime.now());
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 @override
   void initState() {
     super.initState();
-    print("Пришла Дата " + id);
     DBUserProductsProvider.db.getProductById(int.parse(id)).then((prod){
       setState(() {
         product = prod;
@@ -49,7 +49,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
+              Navigator.popAndPushNamed(context, from == 'home'? '/navigator/1': '/daydata/'+from);
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -93,8 +93,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             style: isStringOverSize(product.name)? DesignTheme.bigText20: DesignTheme.bigText24,
                             textAlign: TextAlign.start,
                             ),
-// getTextMonth(product.date)
                           SizedBox(height:30),
+
+                          Text("Добавлено" + DateFormat('yyyy-MM-dd').format(product.date)),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,14 +167,13 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
           ),
-        // ),
       );
   }
 
                   Future<void> _badAllert(context, id) async {
                     return showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return 
                            AlertDialog(
@@ -183,7 +183,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                                     child: Text('Да', style: DesignTheme.midleMainText,),
                                     onPressed: (){ addClick();
                                       DBUserProductsProvider.db.deleteById(id).then((response){
-                                        Navigator.pushNamed(context, from == 'home'? '/': '/daydata/'+from);
+                                        Navigator.popAndPushNamed(context, from == 'home'? '/navigator/1': '/daydata/'+from);
                                       });
                                     },
                                   ),

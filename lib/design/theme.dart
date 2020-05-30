@@ -231,13 +231,26 @@ class DesignTheme {
                       ),
                     );
 
+
+  static shadowByOpacity(double opacity){
+    return  [BoxShadow(
+      color: Colors.black12.withOpacity(opacity),
+      blurRadius: 5.0, 
+      spreadRadius: 2.0, 
+      offset: Offset(
+      0.0, 5.0, 
+      ),
+    )]; 
+  }
+                        
+
   static const BoxShadow originalShadow = BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 20.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            blurRadius: 20.0,
+                            spreadRadius: 2.0,
                             offset: Offset(
-                              10.0, // horizontal, move right 10
-                              10.0, // vertical, move down 10
+                              10.0,
+                              10.0,
                             ),
                           );
   }

@@ -5,6 +5,7 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -19,7 +20,7 @@ class MainStats extends StatefulWidget {
 }
 
 class _MainStatsState extends State<MainStats> {
-  List<charts.Series<Pollution, String>> _seriesData = List<charts.Series<Pollution, String>>();
+  List<charts.Series<GraphData, String>> _seriesData = List<charts.Series<GraphData, String>>();
   List<UserProduct> userTodayProducts;
   List<UserProduct> userYesterdayProducts;
   var fatT = 0.0;
@@ -36,10 +37,7 @@ class _MainStatsState extends State<MainStats> {
   var caloryLimitDeltaL = 2300.0;
   var caloryLimitDeltaR = 3100.0;
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
   
   
 
@@ -47,45 +45,40 @@ class _MainStatsState extends State<MainStats> {
     
 
     var data2 = [
-      Pollution(1980, 'Белки', squiY.round() ),
-      Pollution(1980, 'Жиры', fatY.round() ),
-      Pollution(1980, 'Углеводы', carbohY.round() ),
+      GraphData('Белки', squiY.round() ),
+      GraphData('Жиры', fatY.round() ),
+      GraphData('Углеводы', carbohY.round() ),
     ];
 
     var data1 = [
-      Pollution(1980, 'Белки', squiT.round() ),
-      Pollution(1980, 'Жиры', fatT.round() ),
-      Pollution(1980, 'Углеводы', carbohT.round() ),
+      GraphData('Белки', squiT.round() ),
+      GraphData('Жиры', fatT.round() ),
+      GraphData('Углеводы', carbohT.round() ),
     ];
     setState(() {
           _seriesData = [
-            // _seriesData.add(
               charts.Series(
-                domainFn: (Pollution pollution, _) => pollution.place,
-                measureFn: (Pollution pollution, _) => pollution.quantity,
+                domainFn: (GraphData data, _) => data.place,
+                measureFn: (GraphData data, _) => data.quantity,
                 id: 'sssss',
                 data: data2,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
-                fillColorFn: (Pollution pollution, _) =>
+                fillColorFn: (GraphData data, _) =>
                     charts.ColorUtil.fromDartColor(
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondChartsGreen : DesignTheme.secondChartRed
                       ),
-              ), 
-            // );
-
-            // _seriesData.add(
+              ),
               charts.Series(
-                domainFn: (Pollution pollution, _) => pollution.place,
-                measureFn: (Pollution pollution, _) => pollution.quantity,
+                domainFn: (GraphData data, _) => data.place,
+                measureFn: (GraphData data, _) => data.quantity,
                 id: 'fffff',
                 data: data1,
                 fillPatternFn: (_, __) => charts.FillPatternType.solid,
-                fillColorFn: (Pollution pollution, _) =>
+                fillColorFn: (GraphData data, _) =>
                     charts.ColorUtil.fromDartColor(
                         (caloryT < caloryY || caloryT <= caloryLimitDeltaR && caloryT >= caloryLimitDeltaL )? DesignTheme.secondColor : DesignTheme.redColor
                       ),
               ), 
-            // );
             ];
     });
   }
@@ -100,24 +93,23 @@ class _MainStatsState extends State<MainStats> {
       caloryLimitDeltaR = caloryLimit * 1.2;
     });
 
-    // _seriesData = List<charts.Series<Pollution, String>>();
     DBUserProductsProvider.db.getTodayProducts().then((todayProd){
       DBUserProductsProvider.db.getYesterdayProducts().then((yesterdayProd){
-        print(yesterdayProd[0].date);
+        //TODO: проверка на пустоту данных со вчерашнего дня
         for (var i = 0; i < todayProd.length; i++) {
-          // setState(() {
             fatT += todayProd[i].fat;
             squiT += todayProd[i].squi;
             carbohT += todayProd[i].carboh;
             caloryT += todayProd[i].calory;
-          // });
         }
+
         setState(() {
           fatT = fatT;
           squiT = squiT;
           carbohT = carbohT;
           caloryT = roundDouble(caloryT, 2);
           });
+
         for (var i = 0; i < yesterdayProd.length; i++) {
           
             fatY += yesterdayProd[i].fat;
@@ -134,7 +126,6 @@ class _MainStatsState extends State<MainStats> {
         _generateData(  );
       });
     });
-    print("ok");
   }
 
   @override
@@ -155,19 +146,8 @@ class _MainStatsState extends State<MainStats> {
                   padding: EdgeInsets.only(bottom:20, top: 20, left: 20, right: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                    
                       borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20.0, // has the effect of softening the shadow
-                          spreadRadius: 2.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            10.0, // horizontal, move right 10
-                            10.0, // vertical, move down 10
-                          ),
-                        )
-                      ],
+                      boxShadow: [DesignTheme.originalShadow]
                   ),
                     constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height/8),
                     child:Card(
@@ -250,17 +230,7 @@ class _MainStatsState extends State<MainStats> {
                     decoration: BoxDecoration(
                     
                       borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20.0, // has the effect of softening the shadow
-                          spreadRadius: 2.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            10.0, // horizontal, move right 10
-                            10.0, // vertical, move down 10
-                          ),
-                        )
-                      ],
+                      boxShadow: [DesignTheme.originalShadow],
                   ),
                     constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height/3),
                     child:Card(
@@ -278,7 +248,6 @@ class _MainStatsState extends State<MainStats> {
                                 _seriesData,
                                 animate: true,
                                 barGroupingType: charts.BarGroupingType.stacked,
-                                //behaviors: [new charts.SeriesLegend()],
                                 animationDuration: Duration(seconds: 3),
                               ),
                             ),
@@ -305,38 +274,6 @@ class _MainStatsState extends State<MainStats> {
             ),
           ]
         ),
-
-        bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.whiteColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Padding(
-                child:
-                  Icon(Icons.pie_chart_outlined, size: 25, color: DesignTheme.mainColor),
-                  padding: EdgeInsets.all(5.0),
-              ),
-              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-              Icon(Icons.add, size: 30, color: Colors.black54,),
-            ],
-            index: 0,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                addClick();
-                Navigator.pushNamed(context, '/stats');
-              }
-              if(index == 1){
-                addClick();
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                addClick();
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
     );
   }
 }
@@ -348,15 +285,11 @@ checkThousands(double value) {
   return value;
 }
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
 
-class Pollution {
+
+class GraphData {
   String place;
-  int year;
   int quantity;
 
-  Pollution(this.year, this.place, this.quantity);
+  GraphData(this.place, this.quantity);
 }

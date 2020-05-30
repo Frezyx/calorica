@@ -58,14 +58,6 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                     sampleData[index].isSelected = true;
                     workModel = sampleData[index].multiplaier;
                   });
-                  // DBUserProvider.db.updateDateProducts("workModel", sampleData[index].multiplaier).then((count1){
-                  //     if(count1 == 1){
-                  //       Navigator.pushNamed(context, '/selectActiviti');
-                  //     }
-                  //     else{
-                  //       // Implement
-                  //     }
-                  // });
                 },
                 child: new RadioItem(sampleData[index]),
               );
@@ -112,7 +104,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
   Future<void> _goodAllert(context) async {
                     return showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
                             title: Text('Ваша диета сформированна'),
@@ -121,7 +113,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                                     child: Text('Открыть', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/');
+                                      Navigator.pushNamed(context, '/navigator/1');
                                     },
                                   ),
                                 ]
@@ -134,7 +126,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                     Future<void> _badAllert(context) async {
                     return showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return 
                            AlertDialog(
@@ -158,7 +150,6 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      // color:  DesignTheme.secondColor,
         decoration: new BoxDecoration(
           boxShadow: _item.isSelected? [DesignTheme.selectorShadow] : [DesignTheme.transperentShadow],
           color: _item.isSelected ? DesignTheme.whiteColor: DesignTheme.selectorGrayBackGround,

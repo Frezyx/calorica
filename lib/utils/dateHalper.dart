@@ -53,7 +53,7 @@ String getDateDayAgo(String date){
           agoDate = getDay(mass, "30");
         break;
 
-      default: print("[eqyz");
+      default: return "No";
     }
   }
   return agoDate;

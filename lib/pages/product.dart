@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
@@ -23,17 +24,29 @@ class ProductPage extends StatefulWidget{
 class _ProductPageState extends State<ProductPage> {
   String id;
   _ProductPageState(this.id);
+  final _grammController = new TextEditingController( );
   Product product = Product();
   String name = "";
-  double calory = -1.0; double caloryConst = -1.0;
-  double squi = -1.0; double squiConst = -1.0;
-  double fat = -1.0; double fatConst = -1.0;
-  double carboh = -1.0; double carbohConst = -1.0;
+  double calory = 0.0; double caloryConst = 0.0;
+  double squi = 0.0; double squiConst = 0.0;
+  double fat = 0.0; double fatConst = 0.0;
+  double carboh = 0.0; double carbohConst = 0.0;
   BannerAd _bannerAd;
+
+  bool canWriteInDB = true;
+
+  final _formKey = GlobalKey<FormState>( );
+
+  setWriteStatus(state){
+    setState(){
+      canWriteInDB = state;
+    }
+  }
 
 @override
   void initState() {
     super.initState();
+    _grammController.text = '100.0';
       DBProductProvider.db.getProductById(int.parse(id)).then((res){
         setState(() {
           product = res;
@@ -46,7 +59,7 @@ class _ProductPageState extends State<ProductPage> {
       });
   }
 
-  void multiData(int grams){
+  void multiData(double grams){
     double multiplier = grams / 100;
      setState(() {
        calory = roundDouble(product.calory * multiplier,2);
@@ -54,13 +67,9 @@ class _ProductPageState extends State<ProductPage> {
        fat = roundDouble(product.fat * multiplier, 2);
        carboh = roundDouble(product.carboh * multiplier, 2);
      });
-     print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
   }
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +77,13 @@ class _ProductPageState extends State<ProductPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, "/add");
+              Navigator.popAndPushNamed(context, "/navigator/2");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text(name == ''? 'Загрузка...' : splitText(name), style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body:
         Padding(
@@ -102,11 +110,11 @@ class _ProductPageState extends State<ProductPage> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.1),
-                            blurRadius: 20.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            blurRadius: 20.0,
+                            spreadRadius: 2.0,
                             offset: Offset(
-                              10.0, // horizontal, move right 10
-                              10.0, // vertical, move down 10
+                              10.0, 
+                              10.0, 
                             ),
                           )
                         ],
@@ -125,13 +133,13 @@ class _ProductPageState extends State<ProductPage> {
 
                           SizedBox(height:10),
 
-                        // Padding(
-                        //   padding: EdgeInsets.only(left:15, right: 15, bottom: 3, top: 3),
-                          // child:
-                            TextFormField(
+                          Form(key: _formKey, 
+                            child: TextFormField(
                               onChanged: (text){
-                                multiData(int.parse(text));
+                                if(_formKey.currentState.validate()){}
+                                multiData(double.parse(text));
                               },
+                              controller: _grammController,
                               style: DesignTheme.inputText,
                               cursorColor: DesignTheme.mainColor,
                               decoration: InputDecoration(
@@ -140,15 +148,26 @@ class _ProductPageState extends State<ProductPage> {
                                 labelStyle: DesignTheme.labelSearchTextBigger,
                                 suffixIcon: Icon(
                                     Icons.people,
-                                    // color: DesignTheme.blackColor,
                                   )
                             ),
+                            validator: (value){
+                              if (value.isEmpty){
+                                setWriteStatus(false);
+                                return 'Введите вес продукта';
+                              } 
+                              else if (!(double.parse(value) is double)){
+                                setWriteStatus(false);
+                                return 'Введите число';
+                              } 
+                              else {
+                                setWriteStatus(true);
+                              }
+                            },
                           ),
-
+                        ),
                         ]),
                       ),
                     ),
-                  // ),
 
                     SizedBox(height:10),
 
@@ -193,26 +212,8 @@ class _ProductPageState extends State<ProductPage> {
                                 fat: fat,
                               );
 
-                              print(calory.toString()+" "+fat.toString()+" "+squi.toString()+" "+carboh.toString());
-
                               addProduct(productSend).then((res){
-                                DBDateProductsProvider.db.getPoductsByDate(res.date, res.id).then((products){
-                                  try {
-                                    products.ids += ";" + res.id.toString();
-                                    print(products.ids);
-                                  } catch (e) {
-
-                                  }
-                                  DBDateProductsProvider.db.updateDateProducts(products);
-                                });
-
-                                var now = DateTime.now();
-                                var strNow = toStrDate(now);
-                                
-                                if(res.date == strNow){
-                                    Navigator.pushNamed(context, '/');
-                                }
-
+                                if (res){ Navigator.pushNamed(context, '/navigator/1'); }
                               });
                         },
                         shapeRadius: BorderRadius.circular(50.0),
@@ -225,18 +226,20 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
           ),
-        // ),
       );
   }
 
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
-  }
+  Future<bool> addProduct(UserProduct nowClient) async{
 
-  Future<DateAndCalory> addProduct(UserProduct nowClient) async{
-      print(nowClient.name + " --- " + nowClient.id.toString());
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
-      return res;
+      if(res!=null){
+        var response = await DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
+        if(response){
+          Navigator.pushNamed(context, '/navigator/1');
+        }
+      }
+
+      return res != null;
   }
 
   getParamText(double value, String name){

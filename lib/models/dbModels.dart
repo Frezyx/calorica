@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+
 class User {
   int id;
   String name;
@@ -111,7 +113,7 @@ class UserProduct {
   double squi;
   double fat;
   double carboh;
-  String date;
+  DateTime date;
 
   UserProduct({
 		this.id,
@@ -132,7 +134,7 @@ class UserProduct {
         squi: json["squi"],
         fat: json["fat"],
         carboh: json["carboh"],
-        date: json["date"],
+        date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
       );
       
   Map<String, dynamic> toMap() => {
@@ -143,13 +145,13 @@ class UserProduct {
         "squi": squi,
         "fat": fat,
         "carboh": carboh,
-        "date": date ,
+        "date": epochFromDate(date) ,
       };
 }
 
 class DateProducts {
   String ids;
-  String date;
+  DateTime date;
   int id;
 
   DateProducts({
@@ -160,7 +162,7 @@ class DateProducts {
 
   Map<String, dynamic> toMap() {
     return {
-      'date': date,
+      'date': epochFromDate(date),
       'id': id,
       'ids' : ids,
     };
@@ -170,7 +172,7 @@ class DateProducts {
     if (map == null) return null;
   
     return DateProducts(
-      date: map['date'],
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       id: map['id'],
       ids: map['ids'],
     );

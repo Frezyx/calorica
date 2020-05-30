@@ -4,6 +4,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/range.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 
@@ -60,16 +61,13 @@ class _HomeState extends State<Home> {
   RangeGraphData squi = RangeGraphData( name: "Белки",percent: 0.0 ,weigth: 0);
   RangeGraphData carboh = RangeGraphData( name: "Углеводы",percent: 0.0,weigth: 0);
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
   @override
   void initState() {
-
     super.initState();
-      DBUserProvider.db.getUser().then((res){
+    if(this.mounted){
+    DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
 
           var diet = selectDiet(res);
@@ -108,16 +106,13 @@ class _HomeState extends State<Home> {
             fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
             squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;
             carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
-            // calory.gradient = getColor(calory);
-            // fat.gradient = getColor(fat);
-            // squi.gradient = getColor(squi);
-            // carboh.gradient = getColor(carboh);
           });
         });
       });
     for (var i = 0; i < 6; i++) {
         data.add(Data(id:i));
       }
+    }
   }
 
   @override
@@ -221,15 +216,6 @@ class _HomeState extends State<Home> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                          // Center(
-                                          //     child: RaisedButton(
-                                          //   child: Text('Click on Ads'),
-                                          //   onPressed: (){ addClick();
-                                          //     createInterstitialAd()
-                                          //       ..load()
-                                          //       ..show();
-                                          //   },
-                                          // )),
                                           Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
                                         ]
                                       ):
@@ -250,11 +236,10 @@ class _HomeState extends State<Home> {
                                 (){
                                   addClick();
                                   Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
-                                  print('/addedProduct/${snapshot.data[i].id}/home');
                                 }:
                                 (){
                                   addClick();
-                                  Navigator.pushNamed(context, '/add');
+                                  Navigator.popAndPushNamed(context, '/navigator/2');
                                 }
                               );
                             },
@@ -262,50 +247,11 @@ class _HomeState extends State<Home> {
                               StaggeredTile.count(3,2));
                         }
                         }
-                        // else 
-                        // {
-                        //   return Center(child: CircularProgressIndicator());
-                        // }
                       }
                     ),
                   ),
                 ]
               ),
-
-            bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.whiteColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
-              Padding(
-                child:
-                  Icon(FontAwesomeIcons.userAlt, size: 25, color: DesignTheme.mainColor),
-                  padding: EdgeInsets.all(5.0),
-              ),
-              Icon(Icons.add, size: 30, color: Colors.black54,),
-            ],
-            index: 1,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                addClick();
-                Navigator.pushNamed(context, '/stats');
-                // DBUserProductsProvider.db.deleteAll();
-                // Navigator.pushNamed(context, '/');
-              }
-              if(index == 1){
-                addClick();
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                addClick();
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
-
             );
   }
   getIconButton(){
@@ -317,7 +263,6 @@ class _HomeState extends State<Home> {
                                     size: MediaQuery.of(context).size.width*0.08,
                                     ),
                                  onPressed: (){ addClick();
-                                  //  _getId();
                                     Navigator.pushNamed(context, '/editUser');
                                  });
   }
@@ -413,7 +358,6 @@ class _HomeState extends State<Home> {
                                         range.weigth.toString()+" / "+ range.limit.toString()+ ' г',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          // fontFamily: FintnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                           color: DesignTheme.whiteColor

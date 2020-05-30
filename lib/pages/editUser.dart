@@ -77,7 +77,7 @@ class _EditUserPageState extends State<EditUserPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, "/");
+              Navigator.popAndPushNamed(context, "/navigator/1");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),

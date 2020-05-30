@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
@@ -26,10 +24,10 @@ class _DayDatePageState extends State<DayDatePage> {
   final _controller = NativeAdmobController();
 
   ScrollController scrollController;
-  double calory = -1.0; 
-  double squi = -1.0; 
-  double fat = -1.0; 
-  double carboh = -1.0; 
+  double calory = 0.0; 
+  double squi = 0.0; 
+  double fat = 0.0; 
+  double carboh = 0.0; 
 
 
 
@@ -82,52 +80,8 @@ class _DayDatePageState extends State<DayDatePage> {
                 child: 
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  
                   children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: DesignTheme.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        
-                        boxShadow: [DesignTheme.originalShadow],
-                      ),
-                      child:                    
-                      Padding(
-                        padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
-                        child:
-                        
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                          
-                          Text(getTextMonth(date),
-                            style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
-                            textAlign: TextAlign.start,
-                            ),
-
-                          SizedBox(height:30),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children:<Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children:<Widget>[
-                                getParamText(roundDouble(calory,2)," кКал"),
-                                getParamText(roundDouble(squi,2), " Белки г."),
-                            ]),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children:<Widget>[
-                                getParamText(roundDouble(fat,2), " Жир г."),
-                                getParamText(roundDouble(carboh,2), " Углеводы г."),
-                            ])
-                          ]),
-                        ]),
-                      ),
-                    ),
+                    getDayCard(),
 
                   Padding(
                     padding: EdgeInsets.only(top: 20.0, bottom: 0.0, left: 20),
@@ -194,7 +148,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                       controller: _controller,
                                     ))):
                                     InkWell(
-                                      child: getCard(snapshot.data[i]) ,
+                                      child: getProductCard(snapshot.data[i]) ,
                                      onTap: (){ addClick(); 
                                         Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
                                       },
@@ -215,7 +169,49 @@ class _DayDatePageState extends State<DayDatePage> {
       );
   }
 
-    getCard(UserProduct data){
+  getDayCard(){
+              return Container(
+                      decoration: BoxDecoration(
+                        color: DesignTheme.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        
+                        boxShadow: [DesignTheme.originalShadow],
+                      ),
+                      child:Padding(
+                        padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
+                        child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                          Text(getTextMonth(date),
+                            style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
+                            textAlign: TextAlign.start,
+                            ),
+                          SizedBox(height:30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children:<Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children:<Widget>[
+                                getParamText(roundDouble(calory,2)," кКал"),
+                                getParamText(roundDouble(squi,2), " Белки г."),
+                            ]),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children:<Widget>[
+                                getParamText(roundDouble(fat,2), " Жир г."),
+                                getParamText(roundDouble(carboh,2), " Углеводы г."),
+                            ])
+                          ]),
+                        ]),
+                      ),
+                    );
+  }
+
+    getProductCard(UserProduct data){
                     return  
                     Padding(
                     padding: EdgeInsets.only(top: 0.0, bottom: 5.0),
@@ -224,18 +220,7 @@ class _DayDatePageState extends State<DayDatePage> {
                       decoration: BoxDecoration(
                         color: DesignTheme.whiteColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
-                        
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12.withOpacity(0.05),
-                            blurRadius: 5.0, 
-                            spreadRadius: 2.0, 
-                            offset: Offset(
-                              0.0, 
-                              5.0, 
-                            ),
-                          )
-                        ],
+                        boxShadow: DesignTheme.shadowByOpacity(0.05),
                       ),
                       child:
                           Padding(
@@ -250,12 +235,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
                                 Text(splitText(data.name), style: DesignTheme.primeText16,),
-                                Text(data.calory.toString() + " кКал     " +
-                                      data.squi.toString() + " Б     " +
-                                      data.fat.toString() + " Ж     " +
-                                      data.carboh.toString() + " У" ,
-                                  
-                                  style: DesignTheme.secondaryText,),
+                                Text( getKBGUText(data),style: DesignTheme.secondaryText,),
                               ]),
                                Align(
                                 alignment: Alignment.centerRight,
@@ -314,4 +294,11 @@ class _DayDatePageState extends State<DayDatePage> {
                                   }
 
   void addClick() {}
+}
+
+getKBGUText(data){
+  return data.calory.toString() + " кКал     " +
+                                      data.squi.toString() + " Б     " +
+                                      data.fat.toString() + " Ж     " +
+                                      data.carboh.toString() + " У" ;
 }

@@ -161,7 +161,8 @@ class _DayDatePageState extends State<DayDatePage> {
                                     InkWell(
                                       child: getProductCard(snapshot.data[i]) ,
                                      onTap: (){ addClick(); 
-                                        Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
+
+                                        Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/$intDate');
                                       },
                                     );
                                   },
@@ -255,7 +256,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/${intDate.toString}');
+                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/$intDate');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,

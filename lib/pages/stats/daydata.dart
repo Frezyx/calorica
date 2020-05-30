@@ -1,3 +1,4 @@
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
@@ -21,6 +22,8 @@ class DayDatePage extends StatefulWidget{
 class _DayDatePageState extends State<DayDatePage> {
   String date;
   _DayDatePageState(this.date);
+  var intDate;
+
   final _controller = NativeAdmobController();
 
   ScrollController scrollController;
@@ -33,8 +36,10 @@ class _DayDatePageState extends State<DayDatePage> {
 
 @override
   void initState() {
+    var intData = int.parse(date);
     super.initState();
-    DBDateProductsProvider.db.getPoductsIDsByDate(date).then((idList){
+    var dateInDT = DateTime.fromMillisecondsSinceEpoch(int.parse(date));
+    DBDateProductsProvider.db.getPoductsIDsByDate(dateInDT).then((idList){
       for (var i = 0; i < idList.length; i++) {
         DBUserProductsProvider.db.getProductById(idList[i]).then((product){
           setState(() {
@@ -98,7 +103,7 @@ class _DayDatePageState extends State<DayDatePage> {
                       padding: const EdgeInsets.all(0.0),
                       constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
                       child: FutureBuilder(
-                        future: DBUserProductsProvider.db.getProductsByDate(date),
+                        future: DBUserProductsProvider.db.getProductsByDate(intDate),
                         builder: (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
@@ -115,17 +120,19 @@ class _DayDatePageState extends State<DayDatePage> {
                                 );
                               } else {
                                   var count = snapshot.data.length;
+                                  var now = DateTime.now();
+                                  final yearsAgo30 = DateTime(now.year-30, now.month, now.day);
                                   if(count > 5){
-                                    snapshot.data.insert(5, UserProduct(date:"Реклама"));
+                                    snapshot.data.insert(5, UserProduct(date: yearsAgo30));
                                   }
                                   else if(count > 3){
-                                    snapshot.data.insert(3, UserProduct(date:"Реклама"));
+                                    snapshot.data.insert(3, UserProduct(date: yearsAgo30));
                                   }
                                   else if(count > 1){
-                                    snapshot.data.insert(1, UserProduct(date:"Реклама"));
+                                    snapshot.data.insert(1, UserProduct(date: yearsAgo30));
                                   }
                                   else{
-                                    snapshot.data.insert(0, UserProduct(date:"Реклама"));
+                                    snapshot.data.insert(0, UserProduct(date: yearsAgo30));
                                   }
                                 return StaggeredGridView.countBuilder(
                                   controller: scrollController,
@@ -135,7 +142,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                   crossAxisCount: 4,
                                   itemCount: snapshot.data.length,
                                   itemBuilder: (context, i){
-                                  return snapshot.data[i].date == "Реклама"?Card(
+                                  return snapshot.data[i].date == yearsAgo30?Card(
                                     shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(10.0)
                                           ),
@@ -150,7 +157,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                     InkWell(
                                       child: getProductCard(snapshot.data[i]) ,
                                      onTap: (){ addClick(); 
-                                        Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
+                                        Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
                                       },
                                     );
                                   },
@@ -244,7 +251,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/$date');
+                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/${intDate.toSTring}');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,
@@ -259,14 +266,6 @@ class _DayDatePageState extends State<DayDatePage> {
                         );
   }
 
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
-  }
-
-  Future<DateAndCalory> addProduct(UserProduct nowClient) async{
-      DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
-      return res;
-  }
 
   getParamText(double value, String name){
     return 

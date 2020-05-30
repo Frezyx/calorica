@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,6 +10,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:calory_calc/models/dbModels.dart';
 
 import 'dateHalper.dart';
+import 'dateHelpers/dateFromInt.dart';
 
 class DBUserProvider {
   DBUserProvider._();
@@ -228,7 +230,12 @@ class DBUserProductsProvider {
   firstCreateTable() async{
     final db = await database;
     int id = 0;
-    var now = getDateDayAgo(toStrDate(DateTime.now()));
+
+    var nowDate = DateTime.now();
+    var _date = DateTime(nowDate.year, nowDate.month, nowDate.day);
+    
+    int now = epochFromDate(_date);
+
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
         " VALUES (?,?,?,?,?,?,?,?)",
@@ -251,21 +258,21 @@ class DBUserProductsProvider {
           "squi DOUBLE,"
           "fat DOUBLE,"
           "carboh DOUBLE,"
-          "date TEXT" 
+          "date INTEGER" 
           ")");
     });
   }
 
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
-  }
-
   Future<DateAndCalory>addProduct(UserProduct product) async{
     final db = await database;
+
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM UserProducts");
     int id = table.first["id"];
-    var now = DateTime.now();
-    var strNow = toStrDate(now);
+    
+    var nowDate = DateTime.now();
+    var _date = DateTime(nowDate.year, nowDate.month, nowDate.day);
+
+    int now = epochFromDate(_date);
 
     var raw = await db.rawInsert(
         "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
@@ -277,9 +284,13 @@ class DBUserProductsProvider {
         product.squi,
         product.fat,
         product.carboh,
-        strNow,
+        now,
         ]);
-    return DateAndCalory(id:id,date:strNow);
+    
+    debugPrint(raw.toString());
+    debugPrint(now.toString());
+
+    return DateAndCalory(id:id, date: _date);
   }
 
   Future<UserProduct> getProductById(int id) async {
@@ -302,17 +313,24 @@ class DBUserProductsProvider {
 
   
   Future<List<UserProduct>> getTodayProducts() async{
-    var now = toStrDate(DateTime.now());
+    var nowDate = DateTime.now();
+    var date = DateTime(nowDate.year, nowDate.month, nowDate.day);
+
+    int now = epochFromDate(date);
+
     return await getProductsByDate(now);
   }
 
   Future<List<UserProduct>> getYesterdayProducts() async{
-    var yesterday = getDateDayAgo(toStrDate(DateTime.now()));
+    final now = DateTime.now();
+    int yesterday = epochFromDate(DateTime(now.year, now.month, now.day - 1));
+
     return await getProductsByDate(yesterday);
   }
 
-  Future<List<UserProduct>> getProductsByDate(String date) async {
+  Future<List<UserProduct>> getProductsByDate(int date) async {
         final db = await database;
+
         var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$date'");
         List<UserProduct> list =
             res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
@@ -333,8 +351,11 @@ class DBUserProductsProvider {
   Future<List<UserProduct>> getAllProducts() async {
         final db = await database;
 
-        var now = toStrDate(DateTime.now());
-        var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$now'");
+        final now = DateTime.now();
+        int today = epochFromDate(DateTime(now.year, now.month, now.day));
+
+
+        var res = await db.rawQuery("SELECT * FROM UserProducts WHERE date = '$today'");
         List<UserProduct> list =
             res.isNotEmpty ? res.map((c) => UserProduct.fromMap(c)).toList() : [];
         return list;
@@ -344,7 +365,6 @@ class DBUserProductsProvider {
         final db = await database;
 
         var result = List<DateAndCalory>();
-        var count = 0;
         var res = await db.rawQuery("SELECT * FROM UserProducts");
 
         List<UserProduct> list =
@@ -360,7 +380,7 @@ class DBUserProductsProvider {
 
 class DateAndCalory {
   int id;
-  String date;
+  DateTime date;
   double calory;
 
   DateAndCalory({
@@ -391,7 +411,7 @@ class DBDateProductsProvider {
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE DateProducts ("
           "id INTEGER PRIMARY KEY,"
-          "date TEXT,"
+          "date INTEGER,"
           "ids TEXT"
           ")");
     });
@@ -399,26 +419,35 @@ class DBDateProductsProvider {
 
   Future<DateProducts>addDateProducts(DateProducts dateProducts) async{
     final db = await database;
+    dateProducts.date = DateTime(dateProducts.date.day, dateProducts.date.month, dateProducts.date.day);
+
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
     int id = table.first["id"];
     var raw = await db.rawInsert(
         "INSERT Into DateProducts (id, date, ids)"
         " VALUES (?,?,?)",
         [id, 
-        dateProducts.date,
+        epochFromDate(dateProducts.date),
         dateProducts.ids,
         ]);
+
     var respons = DateProducts(
       id: id,
       date: dateProducts.date,
       ids: dateProducts.ids,
     );
+
     return respons;
   }
 
-  Future<List<int>> getPoductsIDsByDate(String date) async {
+  Future<List<int>> getPoductsIDsByDate(DateTime date) async {
     final db = await database;
-    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+
+    var dateByYMD = DateTime(date.year, date.month, date.day);
+    var dateInt = epochFromDate(dateByYMD);
+
+    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
+
     var item = res.first;
     var ids = item['ids'];
     var mass = ids.split(";");
@@ -429,40 +458,47 @@ class DBDateProductsProvider {
     return result;
   }
 
-  Future<DateProducts> getPoductsByDate(String date, int idToAdd) async {
+  Future<DateProducts> getPoductsByDate(DateTime date, int idToAdd) async {
     final db = await database;
+
+    var dateByYMD = DateTime(date.year, date.month, date.day);
+    var dateInt = epochFromDate(dateByYMD);
+
     DateProducts respons;
-    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$date'");
+    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
+
     if(res.length == 0){
-      var newDP = DateProducts(ids: idToAdd.toString(), date: toStrDate(DateTime.now()));
+      var newDP = DateProducts(ids: idToAdd.toString(), date: dateByYMD);
       addDateProducts(newDP).then((response){
         respons = DateProducts(id:response.id, ids: response.ids, date: response.date);
+
       });
     }
     else{
       var item = res.first;
-      respons = DateProducts(id:item['id'], ids: item['ids'], date: item['date']);
+      respons = DateProducts(id:item['id'], ids: item['ids'], date: DateTime.fromMillisecondsSinceEpoch(item['date']));
     }
+
+    debugPrint(dateInt.toString());
     return respons;
   }
   
   updateDateProducts(DateProducts products) async{
     final db = await database;
+
     int count = await db.rawUpdate(
       'UPDATE DateProducts SET ids = ? WHERE id = ?',
       ['${products.ids}', '${products.id}']);
+
+    debugPrint(products.toJson().toString());
   }
 
     Future<List<DateProducts>> getDates() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM DateProducts");
+
       List<DateProducts> list =
           res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
     return list;
-  }
-
-
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
   }
 }

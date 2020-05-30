@@ -213,22 +213,7 @@ class _ProductPageState extends State<ProductPage> {
                               );
 
                               addProduct(productSend).then((res){
-                                DBDateProductsProvider.db.getPoductsByDate(res.date, res.id).then((products){
-                                  try {
-                                    products.ids += ";" + res.id.toString();
-                                  } catch (e) {
-
-                                  }
-                                  DBDateProductsProvider.db.updateDateProducts(products);
-                                });
-
-                                var now = DateTime.now();
-                                var strNow = toStrDate(now);
-                                
-                                if(res.date == strNow){
-                                    Navigator.pushNamed(context, '/navigator/1');
-                                }
-
+                                if (res){ Navigator.pushNamed(context, '/navigator/1'); }
                               });
                         },
                         shapeRadius: BorderRadius.circular(50.0),
@@ -244,13 +229,11 @@ class _ProductPageState extends State<ProductPage> {
       );
   }
 
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
-  }
+  Future<bool> addProduct(UserProduct nowClient) async{
 
-  Future<DateAndCalory> addProduct(UserProduct nowClient) async{
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
-      return res;
+
+      return res != null;
   }
 
   getParamText(double value, String name){

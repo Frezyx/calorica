@@ -25,7 +25,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
   _AddedProductPageState(this.id, this.from);
 
   ScrollController scrollController;
-  UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date:"1.1.2020");
+  UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date: DateTime.now());
 
 
 

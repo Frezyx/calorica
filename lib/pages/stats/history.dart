@@ -1,5 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -125,7 +126,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                          onTap: (){ addClick(); 
-                            Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
+                            Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
                           },
                         );
                       },
@@ -158,7 +159,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
-                                  Text(splitText(data.date), style: DesignTheme.primeText16,),
+                                  Text(splitText(epochFromDate(data.date).toString()), style: DesignTheme.primeText16,),
                               ]),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -167,7 +168,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/daydata/${data.date.toString()}');
+                                      Navigator.pushNamed(context, '/daydata/${epochFromDate(data.date).toString()}');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,

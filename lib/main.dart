@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/auth.dart';
-import 'package:calory_calc/pages/home.dart';
 import 'package:calory_calc/pages/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';
 import 'package:calory_calc/pages/stats/history.dart';
@@ -58,8 +57,9 @@ class _MyAppState extends State<MyApp> {
         primaryColor: DesignTheme.mainColor,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: banner? '/auth' : '/navigator/1',
+      initialRoute: banner? '/auth' : '/homePage',
       routes: {
+        '/homePage': (BuildContext context) => NavigatorPage(index:1),
         '/auth': (BuildContext context) => AuthPage(prefs: prefs,),
         '/add' : (BuildContext context) => AddPage(),
         '/stats' : (BuildContext context) => MainStats(),
@@ -91,9 +91,7 @@ class _MyAppState extends State<MyApp> {
           return new MaterialPageRoute(builder: (context) => new AddedProductPage(id:path[2], from:path[3]),
           settings: RouteSettings);
         }
-
       }
-
     );
   }
 }

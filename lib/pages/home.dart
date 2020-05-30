@@ -65,9 +65,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-
     super.initState();
-      DBUserProvider.db.getUser().then((res){
+    if(this.mounted){
+    DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
 
           var diet = selectDiet(res);
@@ -112,6 +112,7 @@ class _HomeState extends State<Home> {
     for (var i = 0; i < 6; i++) {
         data.add(Data(id:i));
       }
+    }
   }
 
   @override

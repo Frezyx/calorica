@@ -1,15 +1,14 @@
-import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/localDataBaseProvider.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainStats extends StatefulWidget {
   final Widget child;

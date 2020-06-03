@@ -1,6 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/widgets/customRadio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

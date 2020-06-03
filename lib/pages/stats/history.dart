@@ -5,7 +5,7 @@ import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/localDataBaseProvider.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:intl/intl.dart';
 

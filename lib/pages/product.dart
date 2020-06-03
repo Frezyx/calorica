@@ -1,13 +1,14 @@
-import 'dart:math';
-
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/models/dateAndCalory.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/localDataBaseProvider.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 

@@ -7,6 +7,7 @@ import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/home.dart';
 import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'navigatorBody.dart';
@@ -68,23 +69,23 @@ class _NavigatorPageState extends State<NavigatorPage> {
               topRight: Radius.circular(30.0),
             ),
           ),
-          child: BubbleBottomBar(
-            
-            currentIndex: index,
-            backgroundColor: Colors.transparent,
-            onTap: (int i) {
-              if(isFromAnotherContext){
-                isFromAnotherContext = false;
-                _pageController.jumpToPage(index);
-              }
-              _pageController.jumpToPage(i);
-              addClick();
-            },
-            items: getBubbleBarBody(),
-            opacity: 1,
-            elevation: 0,
-          ),
+          child: FFNavigationBar(
+        theme: FFNavigationBarTheme(
+          barBackgroundColor: Colors.white,
+          selectedItemBorderColor: DesignTheme.mainColor,
+          selectedItemBackgroundColor: DesignTheme.mainColor,
+          selectedItemIconColor: Colors.white,
+          selectedItemLabelColor: Colors.black,
         ),
+        selectedIndex: index,
+        onSelectTab: (i) {
+          setState(() {
+            index = i;
+          });
+        },
+        items: getBubbleBarBody(),
+      ),
+      ),
     );
   }
 }

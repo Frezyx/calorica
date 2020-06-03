@@ -26,6 +26,7 @@ dependencies:
   carousel_slider: ^0.0.7
   flutter_config: ^1.0.7
   bubble_bottom_bar: ^1.2.0
+  ff_navigation_bar: ^0.1.4
 
 
 dev_dependencies:

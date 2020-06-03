@@ -68,6 +68,22 @@ class DesignTheme {
     color: blackColor,
   );
 
+  static const TextStyle bigErrorText = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: blackColor,
+  );
+
+  static const TextStyle lilErrorText = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: gray50Color,
+  );
+
   static const TextStyle blackText = TextStyle(
     fontFamily:
     'Montserrat',
@@ -118,8 +134,8 @@ class DesignTheme {
 
   static const TextStyle buttonText = TextStyle(
     fontFamily: fontMain,
-    fontWeight: FontWeight.w800,
-    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
     color: whiteColor,
   );
 

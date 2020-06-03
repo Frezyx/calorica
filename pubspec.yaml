@@ -44,6 +44,7 @@ flutter:
    - assets/bg.png
    - assets/bg2.png
    - assets/selector/slim.svg
+   - assets/svg/noMeal.svg
    - assets/selector/slimColor.png
    - assets/selector/slim.png
 

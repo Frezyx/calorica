@@ -2,7 +2,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:flutter/material.dart';
 
-Future<void> goodAllert(context) async {
+Future<void> goodAlert(context) async {
                     return showDialog<void>(
                       context: context,
                       barrierDismissible: false,

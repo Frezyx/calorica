@@ -2,6 +2,7 @@ import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
+import 'package:calory_calc/pages/edit/editUserDietParams.dart';
 import 'package:calory_calc/pages/edit/editUserParams.dart';
 import 'package:calory_calc/widgets/navigator/navigator.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         '/selectActiviti' : (BuildContext context) => ActivitiSelectPage(),
         '/editUser' : (BuildContext context) => EditUserPage(),
         '/editUserParams' : (BuildContext context) => EditUserParamsPage(),
+        '/editUserDietParams' : (BuildContext context) => EditDietParamsPage(),
       },
 
       onGenerateRoute: (RouteSettings){

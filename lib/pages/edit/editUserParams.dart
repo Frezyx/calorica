@@ -39,9 +39,11 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
     DBUserProvider.db.getUser().then((_user){
       setState((){
         user = _user;
+        
         _weightController.text = user.weight.toString();
         _heightController.text = user.height.toString();
         _ageController.text = user.age.toString();
+
         sampleData[0].isSelected = user.workFutureModel == 1; 
         sampleData[1].isSelected = user.workFutureModel == 2;
         sampleData[2].isSelected = user.workFutureModel == 3;
@@ -82,7 +84,8 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                           )
                     ),
                     validator: (value){
-                      if (value.isEmpty) return 'Введите ваш логин';
+                      if (value.isEmpty) return 'Введите ваш вес';
+                      if (!(double.parse(value) is double)) return 'Введите число';
                       else {
                         user.weight = double.parse(value);
                       }
@@ -102,7 +105,8 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                           )
                     ),
                     validator: (value){
-                      if (value.isEmpty) return 'Введите ваш логин';
+                      if (value.isEmpty) return 'Введите ваш рост';
+                      if (!(double.parse(value) is double)) return 'Введите число';
                       else {
                         user.height = double.parse(value);
                       }
@@ -122,7 +126,8 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                           )
                     ),
                     validator: (value){
-                      if (value.isEmpty) return 'Введите ваш логин';
+                      if (value.isEmpty) return 'Введите ваш возраст';
+                      if (!(double.parse(value) is double)) return 'Введите число';
                       else {
                         user.age = double.parse(value);
                       }
@@ -136,9 +141,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                     icon: Icon(Icons.arrow_downward, color: DesignTheme.mainColor,),
                     iconSize: 24,
                     elevation: 2,
-                    style: TextStyle(
-                      color: DesignTheme.gray50Color
-                    ),
+                    style: TextStyle( color: DesignTheme.gray50Color ),
                     underline: Container(
                       height: 2,
                       color: DesignTheme.mainColor,
@@ -196,6 +199,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height/6.5),
+
               getEditorSaveButton(_formKey, user, context),
         ])
       ),

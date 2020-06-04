@@ -85,8 +85,8 @@ class _EditUserPageState extends State<EditUserPage> {
       ),
       body: SingleChildScrollView(
         child:
-                  Stack(
-              children:<Widget>[ 
+    Stack(
+    children:<Widget>[ 
       new Form(key: _formKey, child: 
       Column(
         children:<Widget>[
@@ -226,47 +226,50 @@ class _EditUserPageState extends State<EditUserPage> {
                       })
                       .toList(),
                   ),
-            SizedBox(height: 10,),
-
-          
-
-                ]),
+              SizedBox(height: 10,),
+          ]),
         ),
         ]
       ),
-      Container(
-        
+          Container(
                 height: 150,
                 child:
-                CarouselSlider(
-                  
-          items: [0,1,2].map((index) {
-            return new Builder(
-              builder: (BuildContext context) {
+                CarouselSlider.builder(
+                  itemCount: 3,
+                  itemBuilder:  (context, index){
                     return new InkWell(
                       highlightColor: Colors.transparent,
                       focusColor: Colors.transparent,
-
                       splashColor: Colors.transparent,
-                    onTap: (){
-                        setState(() {
-                          sampleData.forEach((element) => element.isSelected = false);
-                          sampleData[index].isSelected = true;
-                          user.workFutureModel = sampleData[index].multiplaier;
-                        });
-                      },
                       child: new RadioItem(sampleData[index]),
-                    );
-                  },
-                );
-              }).toList(),
-              height: 150.0,
-              autoPlay: false,
-              autoPlayCurve: Curves.elasticIn,
-              autoPlayDuration: const Duration(milliseconds: 2800),
-            ),
-          
+                    );},
+                    options: CarouselOptions(
+                          initialPage: sampleData[1].isSelected ? 1 : sampleData[2].isSelected ? 2 : 3,
+                          height: 150.0,
+                          viewportFraction: 0.7,
+                          autoPlay: false,
+                          autoPlayCurve: Curves.elasticIn,
+                          onPageChanged: (index, reason) {
+                            print(index);
+                            setState(() {
+                              sampleData.forEach((element) => element.isSelected = false);
+                              sampleData[index].isSelected = true;
+                              user.workFutureModel = sampleData[index].multiplaier;
+                            });
+                          }
+                        //   onPageChanged: (i){
+                        //     print(i);
+                        //   // setState(() {
+
+                        //   //   sampleData.forEach((element) => element.isSelected = false);
+                        //   //   sampleData[index].isSelected = true;
+                        //   //   user.workFutureModel = sampleData[index].multiplaier;
+                        //   // });
+                        // }
+                    ),
+                  ),
               ),
+          
 
               SizedBox(height: 10),
 

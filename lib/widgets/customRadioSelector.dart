@@ -1,6 +1,8 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
+import 'package:calory_calc/utils/userDietSelector.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,10 +26,6 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
     sampleData.add(new RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal", "Сохранить вес", "Стандартное, здоровое питание", 5));
     sampleData.add(new RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong", "Набрать вес", "Диета для набора массы", 20));
   }
-  
-                  
-                      
-  
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +76,11 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                         ),
                         callback: () {
                            DBUserProvider.db.updateDateProducts("workFutureModel", workModel).then((count1){
+                             
+                              slectUserDiet().then((res){
+                                print(res);
+                              });
+
                               if(count1 == 1){
                                 _goodAllert(context);
                                 // Navigator.pushNamed(context, '/selectActiviti');

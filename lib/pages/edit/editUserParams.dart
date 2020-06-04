@@ -172,7 +172,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                 height: 150,
                 child:
                 CarouselSlider.builder(
-                  itemCount: 3,
+                  itemCount: sampleData.length,
                   itemBuilder:  (context, index){
                     return new InkWell(
                       highlightColor: Colors.transparent,
@@ -181,7 +181,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                       child: new RadioItem(sampleData[index]),
                     );},
                     options: CarouselOptions(
-                          initialPage: sampleData[1].isSelected ? 1 : sampleData[2].isSelected ? 2 : 3,
+                          initialPage: sampleData[0].isSelected? 0: sampleData[1].isSelected? 1 : 2,
                           height: 150.0,
                           viewportFraction: 0.7,
                           autoPlay: false,

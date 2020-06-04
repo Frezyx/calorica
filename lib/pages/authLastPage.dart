@@ -46,8 +46,3 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
     return CustomRadioSelector();
   }
 }
-
-  Future<bool> registrationAtLocalDB(User nowClient) async{
-      int res = await DBUserProvider.db.addUser(nowClient);
-      return(res == 0);
-  }

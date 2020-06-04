@@ -215,6 +215,13 @@ class DesignTheme {
     color: gray170Color,
   );
 
+  static const TextStyle labelTextBiggerBlack = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 20,
+    letterSpacing: 0.2,
+    color: blackColor,
+  );
+
   static const LinearGradient 
     gradient = LinearGradient(
       colors: [

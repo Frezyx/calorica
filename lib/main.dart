@@ -1,7 +1,8 @@
 import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
-import 'package:calory_calc/pages/editUser.dart';
+import 'package:calory_calc/pages/edit/editUser.dart';
+import 'package:calory_calc/pages/edit/editUserParams.dart';
 import 'package:calory_calc/widgets/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
         '/authSecondScreen': (BuildContext context) => SecondAuthPage(),
         '/selectActiviti' : (BuildContext context) => ActivitiSelectPage(),
         '/editUser' : (BuildContext context) => EditUserPage(),
+        '/editUserParams' : (BuildContext context) => EditUserParamsPage(),
       },
 
       onGenerateRoute: (RouteSettings){

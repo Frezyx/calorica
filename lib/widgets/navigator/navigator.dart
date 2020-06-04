@@ -1,7 +1,7 @@
 
 
 
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/home.dart';
@@ -79,6 +79,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
         ),
         selectedIndex: index,
         onSelectTab: (i) {
+          addClick();
           setState(() {
             index = i;
           });

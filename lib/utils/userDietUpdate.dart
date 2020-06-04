@@ -1,16 +1,14 @@
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
-import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 
-Future<bool>slectUserDiet() async{
+updateDiet(User user) async{
   bool result = true;
-  User user = await DBUserProvider.db.getUser();
-  
   DietParams dietParams = selectDiet(user);
 
   Diet diet = Diet(
+    id: 1,
     user_id: user.id,
     calory: dietParams.calory,
     fat: dietParams.fat,
@@ -19,7 +17,7 @@ Future<bool>slectUserDiet() async{
   );
 
   try{
-    await DBDietProvider.db.adddiet(diet);
+    await DBDietProvider.db.updateDiet(diet);
   }
   catch (error){
       result = false;

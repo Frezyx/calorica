@@ -200,7 +200,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
 
               SizedBox(height: MediaQuery.of(context).size.height/6.5),
 
-              getEditorSaveButton(_formKey, user, context),
+              getEditorSaveButton(_formKey, user, context, true),
         ])
       ),
           ],

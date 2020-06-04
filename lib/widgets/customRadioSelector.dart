@@ -5,7 +5,6 @@ import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/userDietSelector.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomRadioSelector extends StatefulWidget {
   @override
@@ -116,7 +115,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                                     child: Text('Открыть', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/navigator/1');
+                                      Navigator.popAndPushNamed(context, '/navigator/1');
                                     },
                                   ),
                                 ]

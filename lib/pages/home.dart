@@ -72,16 +72,21 @@ class _HomeState extends State<Home> {
         DBUserProductsProvider.db.getAllProducts().then((products){
 
           paddingTop = products.length > 0? paddingTop: 200;
+          Diet diet;
+          
+          DBDietProvider.db.getDietById(1).then((_diet){
+            diet = _diet;
 
-          var diet = selectDiet(res);
           if(this.mounted){
             setState(() {
               name = res.name;
+
               surname = res.surname;
               caloryLimit = diet.calory;
               squiLimit = diet.squi;
               fatLimit = diet.fat;
               carbohLimit = diet.carboh;
+
               isNameSurnameBig = !((name + " " + surname).length <= 11);
               isNameBiggerSurname = name.length > surname.length;
               emptyProduct.add(UserProduct(name: "Кнопка добавления"));
@@ -94,6 +99,7 @@ class _HomeState extends State<Home> {
               fatNow = roundDouble(fatNow + products[i].fat, 2);
               carbohNow = roundDouble(carbohNow + products[i].carboh, 2);
           }
+          
           if(this.mounted){
             setState(() {
               
@@ -113,6 +119,7 @@ class _HomeState extends State<Home> {
               carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
             });
           }
+          });
         });
       });
     for (var i = 0; i < 6; i++) {
@@ -262,27 +269,6 @@ class _HomeState extends State<Home> {
                   ),
                 ]
               ),
-            floatingActionButton: FloatingActionButton(
-                elevation: 0.0,
-                child: Icon(Icons.check, color: Colors.white),
-                backgroundColor: DesignTheme.mainColor,
-                onPressed: (){
-
-                  // DBDietProvider.db.getAllDiets().then((list){
-                  //   for (Diet item in list) {
-                  //     print(item.id);
-                  //   }
-                  // });
-
-                  // var user = User(id: 1);
-                  // DBDietProvider.db.getDietById(4).then((diet){
-                  //   DBDietProvider.db.updateDiet(Diet(id:4, user_id:0, calory:100, fat:100, carboh:100, squi:100)).then((res){
-                  //     print(res);
-                  //   });
-                  // });
-                  
-                }
-              )
             );
   }
   getIconButton(){

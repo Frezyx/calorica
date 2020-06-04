@@ -136,7 +136,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 getFlatNavigationButton("Выбрать диету", "/chooseDiet", context),
 
                 SizedBox(height: MediaQuery.of(context).size.height/3),
-                getEditorSaveButton(_formKey, user, context),
+                getEditorSaveButton(_formKey, user, context, false),
           ]),
         ),
         ]

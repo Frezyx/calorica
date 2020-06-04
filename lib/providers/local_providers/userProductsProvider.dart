@@ -87,7 +87,7 @@ class DBUserProductsProvider {
     debugPrint(raw.toString());
     debugPrint(now.toString());
 
-    var u =await getProductById(id);
+    var u = await getProductById(id);
     debugPrint(epochFromDate(u.date).toString());
 
     return DateAndCalory(id:id, date: _date);

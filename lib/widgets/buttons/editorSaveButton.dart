@@ -1,11 +1,13 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
+import 'package:calory_calc/utils/userDietUpdate.dart';
 import 'package:calory_calc/widgets/alerts/easyGoogAlert.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
-getEditorSaveButton(_formKey, User user, context){
+getEditorSaveButton(_formKey, User user, context, bool isParams){
   return        GradientButton(
                   increaseWidthBy: 60,
                   increaseHeightBy: 5,
@@ -20,7 +22,9 @@ getEditorSaveButton(_formKey, User user, context){
                   callback: () {
                     if(_formKey.currentState.validate()){
                       DBUserProvider.db.updateUser(user).then((count){
-                        debugPrint(user.toJson().toString());
+                        if(isParams){ 
+                          updateDiet(user);
+                        }
                         if(count == 1){
                           goodAllert(context);
                         }

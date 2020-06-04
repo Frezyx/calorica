@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/models/diet.dart';
+import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
@@ -14,8 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-
-import 'package:calory_calc/providers/localDataBaseProvider.dart';
 
 class Data{
   int id;
@@ -262,6 +262,27 @@ class _HomeState extends State<Home> {
                   ),
                 ]
               ),
+            floatingActionButton: FloatingActionButton(
+                elevation: 0.0,
+                child: Icon(Icons.check, color: Colors.white),
+                backgroundColor: DesignTheme.mainColor,
+                onPressed: (){
+
+                  // DBDietProvider.db.getAllDiets().then((list){
+                  //   for (Diet item in list) {
+                  //     print(item.id);
+                  //   }
+                  // });
+
+                  // var user = User(id: 1);
+                  // DBDietProvider.db.getDietById(4).then((diet){
+                  //   DBDietProvider.db.updateDiet(Diet(id:4, user_id:0, calory:100, fat:100, carboh:100, squi:100)).then((res){
+                  //     print(res);
+                  //   });
+                  // });
+                  
+                }
+              )
             );
   }
   getIconButton(){

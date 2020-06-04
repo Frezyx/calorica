@@ -8,7 +8,6 @@ import 'package:calory_calc/utils/doubleRounder.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/providers/localDataBaseProvider.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:intl/intl.dart';
 

@@ -1,9 +1,8 @@
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:flutter/material.dart';
+
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/providers/localDataBaseProvider.dart';
 
 List<String> productData = [
   "Баранина и дичь;Антилопа;114;22,38;2,03;0",

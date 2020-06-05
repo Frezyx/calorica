@@ -41,8 +41,6 @@ class DBDateProductsProvider {
     dateProducts.date = DateTime(dateProducts.date.year, dateProducts.date.month, dateProducts.date.day);
     var intDate =epochFromDate(dateProducts.date);
 
-    debugPrint(intDate.toString());
-
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
     int id = table.first["id"];
 
@@ -91,8 +89,6 @@ class DBDateProductsProvider {
     bool resp = false;
     var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
 
-    debugPrint(res.toList().toString());
-
     if(res.length == 0){
       var newDP = DateProducts(ids: idToAdd.toString(), date: dateByYMD);
       var response = await addDateProducts(newDP);
@@ -118,8 +114,6 @@ class DBDateProductsProvider {
     int count = await db.rawUpdate(
       'UPDATE DateProducts SET ids = ? WHERE id = ?',
       ['${products.ids}', '${products.id}']);
-
-    debugPrint(products.toJson().toString());
   }
 
     Future<List<DateProducts>> getDates() async {

@@ -77,17 +77,21 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                            DBUserProvider.db.updateDateProducts("workFutureModel", workModel).then((count1){
                              
                               slectUserDiet().then((res){
-                                print(res);
+                                if(res){
+                                  if(count1 == 1){
+                                    _goodAllert(context);
+                                    // Navigator.pushNamed(context, '/selectActiviti');
+                                  }
+                                  else{
+                                    _badAllert(context);
+                                    // Implement
+                                  }
+                                }
+                                else{
+                                  _badAllert(context);
+                                    // Implement
+                                }
                               });
-
-                              if(count1 == 1){
-                                _goodAllert(context);
-                                // Navigator.pushNamed(context, '/selectActiviti');
-                              }
-                              else{
-                                _badAllert(context);
-                                // Implement
-                              }
                           });
                         },
                         shapeRadius: BorderRadius.circular(50.0),

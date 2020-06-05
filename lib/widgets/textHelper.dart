@@ -37,14 +37,14 @@ getStartText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL)
 }
 
 getParamText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL){
-  
+
   var yesterdayCalory = yesterdayParams == null? 0.0 : yesterdayParams.calory;
   var todayCalory = todayParams == null? 0.0 : todayParams.calory;
   bool bigCondition = todayCalory <= caloryLimitDeltaR && todayCalory >= caloryLimitDeltaL;
   Color _color = DesignTheme.redColor;
 
   if(todayCalory == 0.0){
-    _color = DesignTheme.secondColor;
+    _color = DesignTheme.redColor;
   }
   else if(todayCalory < yesterdayCalory && bigCondition){
     _color = DesignTheme.secondColor;
@@ -56,7 +56,7 @@ getParamText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL)
     _color = DesignTheme.secondColor;
   }
   else if(todayCalory <= caloryLimitDeltaR){
-    _color = DesignTheme.secondColor;
+    _color = DesignTheme.redColor;
   }
   else if(todayCalory > caloryLimitDeltaR){
     _color = DesignTheme.redColor;

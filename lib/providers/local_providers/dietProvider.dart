@@ -106,7 +106,6 @@ class DBDietProvider {
         now,
         ]);
 
-      print(raw);
       return raw;
   }
 

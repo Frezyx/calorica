@@ -1,6 +1,7 @@
 import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
+import 'package:calory_calc/pages/edit/choiceDiet.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
 import 'package:calory_calc/pages/edit/editUserDietParams.dart';
 import 'package:calory_calc/pages/edit/editUserParams.dart';
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         '/editUser' : (BuildContext context) => EditUserPage(),
         '/editUserParams' : (BuildContext context) => EditUserParamsPage(),
         '/editUserDietParams' : (BuildContext context) => EditDietParamsPage(),
+        '/choiseDiet' : (BuildContext context) => ChoiseDietPage(),
       },
 
       onGenerateRoute: (RouteSettings){

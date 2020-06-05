@@ -187,7 +187,6 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                           autoPlay: false,
                           autoPlayCurve: Curves.elasticIn,
                           onPageChanged: (index, reason) {
-                            print(index);
                             setState(() {
                               sampleData.forEach((element) => element.isSelected = false);
                               sampleData[index].isSelected = true;

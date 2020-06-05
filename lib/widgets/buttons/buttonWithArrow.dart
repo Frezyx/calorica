@@ -2,7 +2,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton{
-  static getButtonArrowForward(String text, String router, context){
+  static getButtonArrowForward(String router, IconData icon, String buttonText, context){
     return FlatButton(
                 color: Colors.transparent,
                 padding: EdgeInsets.all(0.0),
@@ -14,8 +14,8 @@ class CustomButton{
                 child: Row( 
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.add, color: DesignTheme.mainColor,),
-                    Text(text, style: TextStyle(color: DesignTheme.mainColor,))
+                    Icon(icon, color: DesignTheme.mainColor,),
+                    Text(buttonText, style: TextStyle(color: DesignTheme.mainColor,))
                   ],
                 ),
               );

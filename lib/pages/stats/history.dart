@@ -1,11 +1,13 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget{
   @override
@@ -22,7 +24,6 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {
       isSaerching = true;
       searchText = text;
-      // print("Слушатель ответил:"+isSaerching.toString()+"Выслушал текст:"+searchText);
     });
   }
 
@@ -37,14 +38,13 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){ addClick();
-              Navigator.pushNamed(context, "/stats");
+              Navigator.popAndPushNamed(context, "/navigator/0");
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("История питания", style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
 
 
@@ -59,22 +59,10 @@ class _HistoryPageState extends State<HistoryPage> {
             padding: EdgeInsets.only(top: 15, bottom: 20),
             child: 
             Container(
-              // padding: build(),
                 decoration: BoxDecoration(
                   color: DesignTheme.whiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20.0, // has the effect of softening the shadow
-                      spreadRadius: 2.0, // has the effect of extending the shadow
-                      offset: Offset(
-                        10.0, // horizontal, move right 10
-                        10.0, // vertical, move down 10
-                      ),
-                    )
-                  ],
+                  boxShadow: [DesignTheme.originalShadow]
                 ),
                 child: 
                 TextFormField(
@@ -136,11 +124,10 @@ class _HistoryPageState extends State<HistoryPage> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
                         return 
-                        //Изменить
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                          onTap: (){ addClick(); 
-                            Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
+                            Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
                           },
                         );
                       },
@@ -151,35 +138,6 @@ class _HistoryPageState extends State<HistoryPage> {
             })),),
 
       ]),),
-
-      // bottomNavigationBar: CurvedNavigationBar(
-      //       buttonBackgroundColor:DesignTheme.mainColor,
-      //           height: 50.0,
-      //       backgroundColor: Colors.transparent,
-      //       animationDuration: Duration(microseconds: 1000),
-      //       items: <Widget>[
-      //         Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
-      //         Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-      //         Padding(
-      //           child:
-      //             Icon(Icons.add, size: 30, color: DesignTheme.whiteColor),
-      //             padding: EdgeInsets.all(3.0),
-      //         ),
-      //       ],
-      //       index: 2,
-      //       animationCurve: Curves.easeInExpo,
-      //       onTap: (index) {
-      //         if(index == 0){
-      //           Navigator.pushNamed(context, '/stats');
-      //         }
-      //         if(index == 1){
-      //           Navigator.pushNamed(context, '/');
-      //         }
-      //         if(index == 2){
-      //           Navigator.pushNamed(context, '/add');
-      //         }
-      //       },
-      //     ),
         ),
     );
   }
@@ -202,9 +160,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
-                                  Text(splitText(data.date), style: DesignTheme.primeText16,),
-                                  // Text(data.calory.toString() + " кКал",
-                                  // style: DesignTheme.secondaryText,),
+                                  //TYT
+                                  Text(splitText(DateFormat('yyyy-MM-dd').format(data.date)), style: DesignTheme.primeText16,),
                               ]),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -213,8 +170,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      // print("Id:" + data.id.toString());
-                                      Navigator.pushNamed(context, '/daydata/${data.date.toString()}');
+                                      Navigator.pushNamed(context, '/daydata/${epochFromDate(data.date).toString()}');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,

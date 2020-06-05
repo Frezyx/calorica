@@ -1,5 +1,7 @@
-import 'dart:math';
-
+import 'package:calory_calc/providers/local_providers/dateProvider.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
@@ -8,8 +10,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/textMonth.dart';
+import 'package:intl/intl.dart';
 
 class DayDatePage extends StatefulWidget{
   String _date;
@@ -22,34 +24,34 @@ class DayDatePage extends StatefulWidget{
 class _DayDatePageState extends State<DayDatePage> {
   String date;
   _DayDatePageState(this.date);
+  var intDate;
+
   final _controller = NativeAdmobController();
 
   ScrollController scrollController;
-  // Product product = new Product();
-  double calory = -1.0; 
-  double squi = -1.0; 
-  double fat = -1.0; 
-  double carboh = -1.0; 
+  double calory = 0.0; 
+  double squi = 0.0; 
+  double fat = 0.0; 
+  double carboh = 0.0; 
+  int dateInt;
 
-  double roundDouble(double value, int places){ 
-    double mod = pow(10.0, places); 
-    return ((value * mod).round().toDouble() / mod); 
-  }
+
 
 @override
   void initState() {
+    intDate = int.parse(date);
     super.initState();
-    print("Пришла Дата " + date);
-    DBDateProductsProvider.db.getPoductsIDsByDate(date).then((idList){
-      for (var i = 0; i < idList.length; i++) {
-        DBUserProductsProvider.db.getProductById(idList[i]).then((product){
+
+    dateInt = int.parse(date);
+
+    DBUserProductsProvider.db.getProductsByDate(dateInt).then((products){
+      for (var product in products){
           setState(() {
             calory += product.calory;
             squi += product.squi;
             fat += product.fat;
             carboh += product.carboh;
           });
-        });
       }
     });
   }
@@ -68,61 +70,137 @@ class _DayDatePageState extends State<DayDatePage> {
         elevation: 5.0,
         backgroundColor: DesignTheme.whiteColor,
         title: Text("История дня",
-          // product.name == null? 'Загрузка...' : splitText(product.name),
            style: TextStyle(fontWeight: FontWeight.w700),),
-        // automaticallyImplyLeading: false,
       ),
       body:
         Padding(
           padding:EdgeInsets.only(
             top: 0,
-                // right: 15, left: 15,
-                // top: 30,
-                // bottom: MediaQuery.of(context).size.height/4,
                 ),
           child: 
-              // Flexible(
-              //       child:
             Container(
 
               padding: const EdgeInsets.all(0.0),
               constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(15.0)
-              //   ),
-              // elevation: 1.0,
               child: 
               Padding(
                 padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
                 child: 
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  
                   children: <Widget>[
+                    getDayCard(),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0, bottom: 0.0, left: 20),
+                    child: 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                      Text("В этот день вы съели:", style: DesignTheme.lilGrayText,),
+                    ],),
+                  ),
+                    Flexible(
+                      child:
                     Container(
+                      padding: const EdgeInsets.all(0.0),
+                      constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
+                      child: FutureBuilder(
+                        future: DBUserProductsProvider.db.getProductsByDate(intDate),
+                        builder: (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return new Text('Input a URL to start');
+                            case ConnectionState.waiting:
+                              return new Center(child: new CircularProgressIndicator());
+                            case ConnectionState.active:
+                              return new Text('');
+                            case ConnectionState.done:
+                              if (snapshot.hasError) {
+                                return new Text(
+                                  '${snapshot.error}',
+                                  style: TextStyle(color: Colors.red),
+                                );
+                              } else {
+                                  var count = snapshot.data.length;
+                                  var now = DateTime.now();
+                                  final yearsAgo30 = DateTime(now.year-30, now.month, now.day);
+                                  if(count > 5){
+                                    snapshot.data.insert(5, UserProduct(date: yearsAgo30));
+                                  }
+                                  else if(count > 3){
+                                    snapshot.data.insert(3, UserProduct(date: yearsAgo30));
+                                  }
+                                  else if(count > 1){
+                                    snapshot.data.insert(1, UserProduct(date: yearsAgo30));
+                                  }
+                                  else{
+                                    snapshot.data.insert(0, UserProduct(date: yearsAgo30));
+                                  }
+                                return StaggeredGridView.countBuilder(
+                                  controller: scrollController,
+                                  padding: const EdgeInsets.all(7.0),
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 0,
+                                  crossAxisCount: 4,
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, i){
+                                  return snapshot.data[i].date == yearsAgo30?Card(
+                                    shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0)
+                                          ),
+                                          elevation: 1.0,
+                                    child:Container(
+                                    height: 330,
+                                    child:
+                                    NativeAdmob(
+                                      adUnitID: AdMobConfig.NATIVE_ADMOB_UNIT_ID,
+                                      controller: _controller,
+                                    ))):
+                                    InkWell(
+                                      child: getProductCard(snapshot.data[i]) ,
+                                     onTap: (){ addClick(); 
+
+                                        Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/$intDate');
+                                      },
+                                    );
+                                  },
+                                  staggeredTileBuilder: (int i) => 
+                                    StaggeredTile.count(4,1));
+                              }
+                          }
+                        })
+                      ),
+                    ),
+                  ],
+                ) 
+              ),
+            ),
+          ),
+      );
+  }
+
+  getDayCard(){
+              return Container(
                       decoration: BoxDecoration(
                         color: DesignTheme.whiteColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         
                         boxShadow: [DesignTheme.originalShadow],
                       ),
-                      child:                    
-                      Padding(
+                      child:Padding(
                         padding:EdgeInsets.only(left:15, right: 15, bottom: 20, top: 20),
                         child:
-                        
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                          
-                          Text(getTextMonth(date),
-                            // product == null? 'Загрузка...' : product.name,
-                            style: isStringOverSize("Привет")? DesignTheme.bigText: DesignTheme.blackText,
+
+                          Text(DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(dateInt)),
+
+                            style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),
-
                           SizedBox(height:30),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children:<Widget>[
@@ -143,98 +221,10 @@ class _DayDatePageState extends State<DayDatePage> {
                           ]),
                         ]),
                       ),
-                    ),
-
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.0, bottom: 0.0, left: 20),
-                    child: 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                      Text("В этот день вы съели:", style: DesignTheme.lilGrayText,),
-                    ],),
-                  ),
-                  // ),
-                    Flexible(
-                      child:
-                    Container(
-                      padding: const EdgeInsets.all(0.0),
-                      constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
-                      child: FutureBuilder(
-                        future: DBUserProductsProvider.db.getProductsByDate(date),
-                        builder: (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return new Text('Input a URL to start');
-                            case ConnectionState.waiting:
-                              return new Center(child: new CircularProgressIndicator());
-                            case ConnectionState.active:
-                              return new Text('');
-                            case ConnectionState.done:
-                              if (snapshot.hasError) {
-                                return new Text(
-                                  '${snapshot.error}',
-                                  style: TextStyle(color: Colors.red),
-                                );
-                              } else {
-                                  var count = snapshot.data.length;
-                                  if(count > 5){
-                                    snapshot.data.insert(5, UserProduct(date:"Реклама"));
-                                  }
-                                  else if(count > 3){
-                                    snapshot.data.insert(3, UserProduct(date:"Реклама"));
-                                  }
-                                  else if(count > 1){
-                                    snapshot.data.insert(1, UserProduct(date:"Реклама"));
-                                  }
-                                  else{
-                                    snapshot.data.insert(0, UserProduct(date:"Реклама"));
-                                  }
-                                return StaggeredGridView.countBuilder(
-                                  controller: scrollController,
-                                  padding: const EdgeInsets.all(7.0),
-                                  mainAxisSpacing: 3,
-                                  crossAxisSpacing: 0,
-                                  crossAxisCount: 4,
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder: (context, i){
-                                  return snapshot.data[i].date == "Реклама"?Card(
-                                    shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0)
-                                          ),
-                                          elevation: 1.0,
-                                    child:Container(
-                                    height: 330,
-                                    child:
-                                    NativeAdmob(
-                                      adUnitID: AdMobConfig.NATIVE_ADMOB_UNIT_ID,
-                                      controller: _controller,
-                                    ))):
-                                    //Изменить
-                                    InkWell(
-                                      child: getCard(snapshot.data[i]) ,
-                                     onTap: (){ addClick(); 
-                                        Navigator.pushNamed(context, '/daydata/${snapshot.data[i].date}');
-                                      },
-                                    );
-                                  },
-                                  staggeredTileBuilder: (int i) => 
-                                    StaggeredTile.count(4,1));
-                              }
-                          }
-                        })
-                      ),
-                    ),
-                  ],
-                ) 
-              ),
-            ),
-          ),
-        // ),
-      );
+                    );
   }
 
-    getCard(UserProduct data){
+    getProductCard(UserProduct data){
                     return  
                     Padding(
                     padding: EdgeInsets.only(top: 0.0, bottom: 5.0),
@@ -243,18 +233,7 @@ class _DayDatePageState extends State<DayDatePage> {
                       decoration: BoxDecoration(
                         color: DesignTheme.whiteColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
-                        
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12.withOpacity(0.05),
-                            blurRadius: 5.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
-                            offset: Offset(
-                              0.0, // horizontal, move right 10
-                              5.0, // vertical, move down 10
-                            ),
-                          )
-                        ],
+                        boxShadow: DesignTheme.shadowByOpacity(0.05),
                       ),
                       child:
                           Padding(
@@ -269,12 +248,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children:<Widget>[
                                 Text(splitText(data.name), style: DesignTheme.primeText16,),
-                                Text(data.calory.toString() + " кКал     " +
-                                      data.squi.toString() + " Б     " +
-                                      data.fat.toString() + " Ж     " +
-                                      data.carboh.toString() + " У" ,
-                                  
-                                  style: DesignTheme.secondaryText,),
+                                Text(getKBGUText(data),style: DesignTheme.secondaryText,),
                               ]),
                                Align(
                                 alignment: Alignment.centerRight,
@@ -283,8 +257,7 @@ class _DayDatePageState extends State<DayDatePage> {
                                     splashColor: DesignTheme.mainColor,
                                     hoverColor: DesignTheme.secondColor,
                                     onPressed: (){ addClick();
-                                      // print("Id:" + data.id.toString());
-                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/$date');
+                                      Navigator.pushNamed(context, '/addedProduct/${data.id}/$intDate');
                                     }, 
                                   icon: Icon(
                                     Icons.arrow_forward,
@@ -299,15 +272,6 @@ class _DayDatePageState extends State<DayDatePage> {
                         );
   }
 
-  toStrDate(DateTime date){
-    return date.day.toString()+'.'+date.month.toString()+'.'+date.year.toString();
-  }
-
-  Future<DateAndCalory> addProduct(UserProduct nowClient) async{
-      // print(nowClient.name + " --- " + nowClient.surname);
-      DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
-      return res;
-  }
 
   getParamText(double value, String name){
     return 
@@ -335,4 +299,11 @@ class _DayDatePageState extends State<DayDatePage> {
                                   }
 
   void addClick() {}
+}
+
+getKBGUText(data){
+  return data.calory.toString() + " кКал     " +
+                                      data.squi.toString() + " Б     " +
+                                      data.fat.toString() + " Ж     " +
+                                      data.carboh.toString() + " У" ;
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/widgets/customRadioSelector.dart';
 
 class ActivitiSelectPage extends StatefulWidget {
@@ -18,7 +18,6 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
      onTap: (){ addClick(); 
-        // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(
             decoration: BoxDecoration(
@@ -47,9 +46,3 @@ class _ActivitiSelectPageState extends State<ActivitiSelectPage> {
     return CustomRadioSelector();
   }
 }
-
-  Future<bool> registrationAtLocalDB(User nowClient) async{
-      print(nowClient.name + " --- " + nowClient.surname);
-      int res = await DBUserProvider.db.addUser(nowClient);
-      return(res == 0);
-  }

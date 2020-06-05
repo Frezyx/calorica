@@ -1,6 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/widgets/customRadio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,7 +28,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
      onTap: (){ addClick(); 
-        // setDefStateBg();
         FocusScope.of(context).requestFocus(new FocusNode());
       },child: new Container(
             decoration: BoxDecoration(
@@ -66,7 +65,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                               labelStyle: DesignTheme.label,
                               suffixIcon: Icon(
                                   FontAwesomeIcons.ruler
-                                  // color: DesignTheme.blackColor,
                                 )
                           ),
                           validator: (value){
@@ -74,7 +72,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _weight = double.parse(value);
-                              // print(_weight);
                             }
                         },
                       ),
@@ -96,7 +93,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _height = double.parse(value);
-                              // print(_height);
                             }
                         },
                       ),
@@ -127,7 +123,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                                   }
                                 });
                               });
-                              // print("------------Все хорошо-------------" +_weight.toString() +" "+ _height.toString());
                             }
                           }
                         },
@@ -151,14 +146,10 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                           new TextFormField(
                             cursorColor: DesignTheme.mainColor,
                             decoration: InputDecoration(
-                              // focusColor: DesignTheme.mainColor,
-                              // fillColor: DesignTheme.mainColor,
-                              // hoverColor: DesignTheme.mainColor,
                               labelText: 'Сколько вам лет ?',
                               labelStyle: DesignTheme.label,
                               suffixIcon: Icon(
                                   Icons.calendar_today
-                                  // color: DesignTheme.blackColor,
                                 )
                           ),
                           validator: (value){
@@ -166,7 +157,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                             else if(!(double.parse(value) is double)) return 'Введите число, а не строку';
                             else {
                               _age = double.parse(value);
-                              // print(_weight);
                             }
                         },
                       ),
@@ -232,7 +222,6 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                                   }
                                 });
                               });
-                              // print("------------Все хорошо-------------" +_weight.toString() +" "+ _height.toString());
                             }
                           }
                         },

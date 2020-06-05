@@ -1,13 +1,11 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:calory_calc/config/adMobConfig.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
@@ -128,7 +126,7 @@ class _AddPageState extends State<AddPage> {
                   } else {
                     var count = snapshot.data.length;
                     if(count > 5){
-                      snapshot.data.insert(5, Product(name:"Реклама"));
+                      snapshot.data.insert(4, Product(name:"Реклама"));
                     }
                     else if(count > 3){
                       snapshot.data.insert(3, Product(name:"Реклама"));
@@ -172,41 +170,9 @@ class _AddPageState extends State<AddPage> {
                   }
               }
             })),),
-
-      ]),),
-
-      bottomNavigationBar: CurvedNavigationBar(
-            buttonBackgroundColor:DesignTheme.whiteColor,
-                height: 50.0,
-            backgroundColor: Colors.transparent,
-            animationDuration: Duration(microseconds: 1000),
-            items: <Widget>[
-              Icon(Icons.pie_chart_outlined, size: 28, color: Colors.black54,),
-              Icon(FontAwesomeIcons.userAlt, size: 23, color: Colors.black54,),
-              Padding(
-                child:
-                  Icon(Icons.add, size: 27, color: DesignTheme.mainColor),
-                  padding: EdgeInsets.all(3.0),
-              ),
-            ],
-            index: 2,
-            animationCurve: Curves.easeInExpo,
-            onTap: (index) {
-              if(index == 0){
-                addClick();
-                Navigator.pushNamed(context, '/stats');
-              }
-              if(index == 1){
-                addClick();
-                Navigator.pushNamed(context, '/');
-              }
-              if(index == 2){
-                addClick();
-                Navigator.pushNamed(context, '/add');
-              }
-            },
-          ),
+          ]),
         ),
+      ),
     );
   }
 

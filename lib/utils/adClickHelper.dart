@@ -1,6 +1,6 @@
 import 'package:firebase_admob/firebase_admob.dart';
 
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
 
 const String testDevice = 'MobileId';

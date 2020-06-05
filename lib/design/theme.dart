@@ -30,6 +30,8 @@ class DesignTheme {
   static const Color selectorGray2 = Color.fromRGBO(132, 132, 132, 1);
   static const Color selectorGray3 = Color.fromRGBO(72, 72, 72, 1);
 
+  static const Color darkBlue = Color.fromRGBO(29, 23, 48, 1);
+
   static const TextStyle selectorBigText = TextStyle( 
     fontFamily:
     'Montserrat',
@@ -66,6 +68,46 @@ class DesignTheme {
     fontWeight: FontWeight.bold,
     fontSize: 36,
     color: blackColor,
+  );
+
+  static const TextStyle bigText1 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 36,
+    color: blackColor,
+  );
+
+  static const TextStyle bigText2 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 30,
+    color: blackColor,
+  );
+
+  static const TextStyle bigText3 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: blackColor,
+  );
+
+  static const TextStyle bigErrorText = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: blackColor,
+  );
+
+  static const TextStyle lilErrorText = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: gray50Color,
   );
 
   static const TextStyle blackText = TextStyle(
@@ -108,6 +150,14 @@ class DesignTheme {
     color: mainColor,
   );
 
+  static const TextStyle midleMainTextBig = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: mainColor,
+  );
+
   static const TextStyle bigWhiteText = TextStyle(
     fontFamily:
     'Montserrat',
@@ -118,8 +168,8 @@ class DesignTheme {
 
   static const TextStyle buttonText = TextStyle(
     fontFamily: fontMain,
-    fontWeight: FontWeight.w800,
-    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
     color: whiteColor,
   );
 
@@ -192,11 +242,26 @@ class DesignTheme {
     color: Colors.black54,
   );
 
+  static const TextStyle labelSearchTextBig = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 18,
+    letterSpacing: 0.2,
+    color: Colors.black54,
+  );
+  
+
   static const TextStyle labelSearchTextBigger = TextStyle(
     fontWeight: FontWeight.w300,
     fontSize: 20,
     letterSpacing: 0.2,
     color: gray170Color,
+  );
+
+  static const TextStyle labelTextBiggerBlack = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 20,
+    letterSpacing: 0.2,
+    color: blackColor,
   );
 
   static const LinearGradient 
@@ -231,13 +296,36 @@ class DesignTheme {
                       ),
                     );
 
+
+  static shadowByOpacity(double opacity){
+    return  [BoxShadow(
+      color: Colors.black12.withOpacity(opacity),
+      blurRadius: 5.0, 
+      spreadRadius: 2.0, 
+      offset: Offset(
+      0.0, 5.0, 
+      ),
+    )]; 
+  }
+                        
+
   static const BoxShadow originalShadow = BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 20.0, // has the effect of softening the shadow
-                            spreadRadius: 2.0, // has the effect of extending the shadow
+                            blurRadius: 20.0,
+                            spreadRadius: 2.0,
                             offset: Offset(
-                              10.0, // horizontal, move right 10
-                              10.0, // vertical, move down 10
+                              10.0,
+                              10.0,
+                            ),
+                          );
+
+    static const BoxShadow originalShadowLil = BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 14.0,
+                            spreadRadius: 2.0,
+                            offset: Offset(
+                              0.0,
+                              4.0,
                             ),
                           );
   }

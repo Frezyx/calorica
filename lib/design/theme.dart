@@ -294,6 +294,16 @@ class DesignTheme {
                               10.0,
                             ),
                           );
+
+    static const BoxShadow originalShadowLil = BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 14.0,
+                            spreadRadius: 2.0,
+                            offset: Offset(
+                              0.0,
+                              4.0,
+                            ),
+                          );
   }
 
 

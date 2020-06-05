@@ -7,7 +7,7 @@ Future<List<UserProduct>> getProductsCaloryByDateList() async{
 
     var productsByDateList = <UserProduct>[];
 
-    for(int i = 0; i < 7; i++){
+    for(int i = 6; i >= 0; i--){
 
         int date = epochFromDate(DateTime(now.year, now.month, now.day - i));
         var userProduct = new UserProduct(id:i, calory: 0.0, squi: 0.0, fat: 0.0, carboh: 0.0, grams: 0.0, date: DateTime.fromMillisecondsSinceEpoch(date));

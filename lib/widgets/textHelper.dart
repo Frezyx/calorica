@@ -79,3 +79,24 @@ checkThousands(double value) {
   }
   return value;
 }
+
+getOtherParamText(todayParam, yesterdayParam){
+  Color _color = DesignTheme.redColor;
+
+  if(todayParam == 0.0 || todayParam > yesterdayParam){
+    _color = DesignTheme.redColor;
+  }
+  else {
+    _color = DesignTheme.secondColor;
+  }
+
+  return             Text((todayParam < yesterdayParam )? 
+                       "-" + (roundDouble((todayParam - yesterdayParam),1).abs()).toString()
+                     : "+" + (roundDouble((todayParam - yesterdayParam),1).abs()).toString(),
+                      textAlign: TextAlign.start,
+                      
+                      style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
+                        color: _color,
+                      ),
+                    );
+}

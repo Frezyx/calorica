@@ -26,7 +26,6 @@ getLineGraph(context, chartData){
                           children: <Widget>[
                             Expanded(
                               child: charts.OrdinalComboChart(
-
                               chartData,
                               animate: true,
                               defaultRenderer: new charts.LineRendererConfig(),

@@ -11,6 +11,8 @@ import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/stats/prepareDataByDay.dart';
 import 'package:calory_calc/utils/stats/prepareDataByWeek.dart';
+import 'package:calory_calc/widgets/stats/caloryTextColumn.dart';
+import 'package:calory_calc/widgets/stats/paramTextColumn.dart';
 import 'package:calory_calc/widgets/textHelper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,8 @@ class _MainStatsState extends State<MainStats> {
   var caloryLimit = 0.0;
   var caloryLimitDeltaL = 0.0;
   var caloryLimitDeltaR = 0.0;
-  var chartsWidgetList = [];
+  List<Widget> chartsWidgetList = [CircularProgressIndicator()];
+  List<Widget> lineTextList = [CircularProgressIndicator()];
 
   bool isAutoPlay = true;
 
@@ -71,9 +74,17 @@ class _MainStatsState extends State<MainStats> {
               _chartData = createSampleData(weekStats);
               _seriesData = generateData(yesterdayParams, todayParams, caloryLimitDeltaR , caloryLimitDeltaL );
 
+              chartsWidgetList.removeLast();
+              lineTextList.removeLast();
+
               chartsWidgetList.add(getBarGraph(context, _seriesData, caloryLimitDeltaL, caloryLimitDeltaR, todayParams, yesterdayParams));
               chartsWidgetList.add(getLineGraph(context, _chartData));
               chartsWidgetList.add(AdMobHelper.getAdMobGraphBaner(context));
+              lineTextList.add(getCaloryTextColumn(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL));
+              lineTextList.add(getOtherParamTextColumn(todayParams.squi, yesterdayParams.squi, " г. белков"));
+              lineTextList.add(getOtherParamTextColumn(todayParams.fat, yesterdayParams.fat, " г. жиров"));
+              lineTextList.add(getOtherParamTextColumn(todayParams.carboh, yesterdayParams.carboh, " г. углеводов"));
+              lineTextList.add(getOtherParamTextColumn(todayParams.grams, yesterdayParams.grams, " грамм"));
             });
         });
       });
@@ -143,29 +154,26 @@ class _MainStatsState extends State<MainStats> {
                     )
                   )
                 ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 5, top: 10, left: 30, right: 20),
-                child:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children:<Widget>[
-                    getParamText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL),
-                    Text(' кКалорий',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.w600, color: DesignTheme.gray170Color),
-                    ),
-                ])
-              ),
 
-              Padding(
-                padding: EdgeInsets.only(bottom: 10, top: 0, left: 45, right: 20),
-                child:
-                  Text('По сравнению с вчерашним днём',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w400, color: DesignTheme.gray50Color),
-                  ),
-              ),
+                Container(
+                  height: 93.0,
+                  child:
+                  CarouselSlider.builder(
+                    itemCount: lineTextList.length,
+                    itemBuilder:  (context, index){
+                      return lineTextList[index];
+                      },
+                      options: CarouselOptions(
+                            height: 93.0,
+                            viewportFraction: 1,
+                            autoPlay: isAutoPlay,
+                            autoPlayCurve: Curves.easeInExpo,
+                            autoPlayInterval: const Duration(seconds: 6),
+                            onPageChanged: (index, reason) {
+                            }
+                      ),
+                    ),
+                ),
 
               Container(
                   height: 300.0,

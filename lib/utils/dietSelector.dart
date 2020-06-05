@@ -45,8 +45,6 @@ class DietParams {
   static DietParams fromJson(String source) => fromMap(json.decode(source));
 }
 
-
-
 DietParams selectDiet(User user){
   var diet = DietParams();
 

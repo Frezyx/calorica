@@ -1,11 +1,11 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:intl/intl.dart';
 
@@ -127,7 +127,6 @@ class _HistoryPageState extends State<HistoryPage> {
                         InkWell(
                           child: getCard(snapshot.data[i]) ,
                          onTap: (){ addClick(); 
-                            print('/daydata/${epochFromDate(snapshot.data[i].date)}');
                             Navigator.pushNamed(context, '/daydata/${epochFromDate(snapshot.data[i].date)}');
                           },
                         );

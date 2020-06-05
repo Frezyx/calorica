@@ -1,3 +1,5 @@
+import 'package:calory_calc/providers/local_providers/dateProvider.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/textMonth.dart';
 import 'package:intl/intl.dart';
 
@@ -32,7 +33,7 @@ class _DayDatePageState extends State<DayDatePage> {
   double squi = 0.0; 
   double fat = 0.0; 
   double carboh = 0.0; 
-  DateTime dateInDT;
+  int dateInt;
 
 
 
@@ -41,18 +42,16 @@ class _DayDatePageState extends State<DayDatePage> {
     intDate = int.parse(date);
     super.initState();
 
-    dateInDT = DateTime.fromMillisecondsSinceEpoch(int.parse(date));
+    dateInt = int.parse(date);
 
-    DBDateProductsProvider.db.getPoductsIDsByDate(dateInDT).then((idList){
-      for (var i = 0; i < idList.length; i++) {
-        DBUserProductsProvider.db.getProductById(idList[i]).then((product){
+    DBUserProductsProvider.db.getProductsByDate(dateInt).then((products){
+      for (var product in products){
           setState(() {
             calory += product.calory;
             squi += product.squi;
             fat += product.fat;
             carboh += product.carboh;
           });
-        });
       }
     });
   }
@@ -195,7 +194,9 @@ class _DayDatePageState extends State<DayDatePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                          Text(DateFormat('yyyy-MM-dd').format(dateInDT),
+
+                          Text(DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(dateInt)),
+
                             style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),

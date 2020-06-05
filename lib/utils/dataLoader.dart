@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
+
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
 
 List<String> productData = [
   "Баранина и дичь;Антилопа;114;22,38;2,03;0",
@@ -11168,8 +11169,8 @@ List<String> productData = [
 ];
 
 startLoadData() async{
-  await DBProductProvider.db.firstCreateTable();
-  await DBUserProductsProvider.db.firstCreateTable();
+  // await DBProductProvider.db.firstCreateTable();
+  // await DBUserProductsProvider.db.firstCreateTable();
   
   for (var i = 0; i < productData.length; i++) {
     var data = productData[i].split(";");

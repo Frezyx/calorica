@@ -2,20 +2,22 @@ import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/models/diet.dart';
+import 'package:calory_calc/providers/local_providers/dietProvider.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
+import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/widgets/error/errorScreens.dart';
 import 'package:calory_calc/widgets/range.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:firebase_admob/firebase_admob.dart';
-
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 
 class Data{
   int id;
@@ -54,6 +56,8 @@ class _HomeState extends State<Home> {
   List<Data> data = [];
   List<UserProduct> emptyProduct = [];
 
+  double paddingTop = 280;
+
 
 
   RangeGraphData calory = RangeGraphData( name: "кКалории",percent: 0.0,weigth: 0);
@@ -66,23 +70,30 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    if(this.mounted){
     DBUserProvider.db.getUser().then((res){
         DBUserProductsProvider.db.getAllProducts().then((products){
 
-          var diet = selectDiet(res);
+          paddingTop = products.length > 0? paddingTop: 200;
+          Diet diet;
+          
+          DBDietProvider.db.getDietById(1).then((_diet){
+            diet = _diet;
 
-          setState(() {
-            name = res.name;
-            surname = res.surname;
-            caloryLimit = diet.calory;
-            squiLimit = diet.squi;
-            fatLimit = diet.fat;
-            carbohLimit = diet.carboh;
-            isNameSurnameBig = !((name + " " + surname).length <= 11);
-            isNameBiggerSurname = name.length > surname.length;
-            emptyProduct.add(UserProduct(name: "Кнопка добавления"));
-          });
+          if(this.mounted){
+            setState(() {
+              name = res.name;
+
+              surname = res.surname;
+              caloryLimit = diet.calory;
+              squiLimit = diet.squi;
+              fatLimit = diet.fat;
+              carbohLimit = diet.carboh;
+
+              isNameSurnameBig = !((name + " " + surname).length <= 11);
+              isNameBiggerSurname = name.length > surname.length;
+              emptyProduct.add(UserProduct(name: "Кнопка добавления"));
+            });
+          }
 
           for (var i = 0; i < products.length; i++) {
               caloryNow = roundDouble(caloryNow + products[i].calory, 2);
@@ -90,22 +101,26 @@ class _HomeState extends State<Home> {
               fatNow = roundDouble(fatNow + products[i].fat, 2);
               carbohNow = roundDouble(carbohNow + products[i].carboh, 2);
           }
-          setState(() {
-            
-            calory.weigth = caloryNow;
-            fat.weigth = fatNow;
-            squi.weigth = squiNow;
-            carboh.weigth = carbohNow;
+          
+          if(this.mounted){
+            setState(() {
+              
+              calory.weigth = caloryNow;
+              fat.weigth = fatNow;
+              squi.weigth = squiNow;
+              carboh.weigth = carbohNow;
 
-            calory.limit = caloryLimit;
-            fat.limit = fatLimit;
-            squi.limit = squiLimit;
-            carboh.limit = carbohLimit;
+              calory.limit = caloryLimit;
+              fat.limit = fatLimit;
+              squi.limit = squiLimit;
+              carboh.limit = carbohLimit;
 
-            calory.percent = (caloryNow/caloryLimit)*100 <= 100? (caloryNow/caloryLimit)*100 : 100;
-            fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
-            squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;
-            carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
+              calory.percent = (caloryNow/caloryLimit)*100 <= 100? (caloryNow/caloryLimit)*100 : 100;
+              fat.percent = (fatNow/fatLimit)*100 <= 100? (fatNow/fatLimit)*100 : 100;
+              squi.percent = (squiNow/squiLimit)*100 <= 100? (squiNow/squiLimit)*100 : 100;
+              carboh.percent = (carbohNow/carbohLimit)*100 <= 100? (carbohNow/carbohLimit)*100 : 100;
+            });
+          }
           });
         });
       });
@@ -113,7 +128,6 @@ class _HomeState extends State<Home> {
         data.add(Data(id:i));
       }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +186,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top:280, left: 30, right: 30),
+                  margin: EdgeInsets.only(top:paddingTop, left: 30, right: 30),
                   constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height-280),
                   child: 
                     FutureBuilder<List<UserProduct>>(
@@ -180,71 +194,73 @@ class _HomeState extends State<Home> {
                       future: DBUserProductsProvider.db.getAllProducts(),
                       builder:
                       (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
-                        snapshot.data.add(UserProduct(name: "Кнопка добавления"));
                       switch (snapshot.connectionState) {
                                       case ConnectionState.none:
-                                        return new Text('Input a URL to start');
+                                        return ErrorScreens.getNoMealScreen(context);
                                       case ConnectionState.waiting:
                                         return new Center(child: new CircularProgressIndicator());
                                       case ConnectionState.active:
                                         return new Text('');
                                       case ConnectionState.done:
                                         if (snapshot.hasError) {
-                                          return new Text(
-                                            '${snapshot.error}',
-                                            style: TextStyle(color: Colors.red),
-                                          );
+                                          return ErrorScreens.getNoMealScreen(context);
                                         } else{
-                          return StaggeredGridView.countBuilder(
-                            controller: scrollController,
-                            padding: const EdgeInsets.all(7.0),
-                            mainAxisSpacing: 3.0,
-                            crossAxisSpacing: 3.0,
-                            crossAxisCount: 6,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, i){
-                              return 
-                              InkWell(
-                          child: 
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)
-                                ),
-                                elevation: 1.0,
-                                child: snapshot.data[i].name == "Кнопка добавления" ?
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
-                                        ]
-                                      ):
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child:
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
-                                          Text(snapshot.data[i].calory.toString() + " кКал  ", style: DesignTheme.secondaryText,)
-                                        ]
-                                      ),
-                                  ),
-                                ),
-                                onTap: snapshot.data[i].name != "Кнопка добавления" ?
-                                (){
-                                  addClick();
-                                  Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
-                                }:
-                                (){
-                                  addClick();
-                                  Navigator.popAndPushNamed(context, '/navigator/2');
-                                }
-                              );
-                            },
-                            staggeredTileBuilder: (int i) => 
-                              StaggeredTile.count(3,2));
+                                          if(snapshot.data.length > 0){
+                                            snapshot.data.add(UserProduct(name: "Кнопка добавления"));
+                                          return StaggeredGridView.countBuilder(
+                                            controller: scrollController,
+                                            padding: const EdgeInsets.all(7.0),
+                                            mainAxisSpacing: 3.0,
+                                            crossAxisSpacing: 3.0,
+                                            crossAxisCount: 6,
+                                            itemCount: snapshot.data.length,
+                                            itemBuilder: (context, i){
+                                              return 
+                                              InkWell(
+                                          child: 
+                                              Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10.0)
+                                                ),
+                                                elevation: 1.0,
+                                                child: snapshot.data[i].name == "Кнопка добавления" ?
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Icon(Icons.add, size: 36,color: DesignTheme.mainColor,)
+                                                        ]
+                                                      ):
+                                                  Padding(
+                                                    padding: EdgeInsets.only(left: 10),
+                                                    child:
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Text(splitText(snapshot.data[i].name), style: DesignTheme.primeText,),
+                                                          Text(snapshot.data[i].calory.toString() + " кКал  ", style: DesignTheme.secondaryText,)
+                                                        ]
+                                                      ),
+                                                  ),
+                                                ),
+                                                onTap: snapshot.data[i].name != "Кнопка добавления" ?
+                                                (){
+                                                  addClick();
+                                                  Navigator.pushNamed(context, '/addedProduct/${snapshot.data[i].id}/home');
+                                                }:
+                                                (){
+                                                  addClick();
+                                                  Navigator.popAndPushNamed(context, '/navigator/2');
+                                                }
+                                              );
+                                            },
+                                            staggeredTileBuilder: (int i) => 
+                                              StaggeredTile.count(3,2));
+                                          }
+                                          else{
+                                            return ErrorScreens.getNoMealScreen(context);
+                                          }
                         }
                         }
                       }
@@ -252,6 +268,20 @@ class _HomeState extends State<Home> {
                   ),
                 ]
               ),
+              // floatingActionButton: FloatingActionButton.extended(
+              //   onPressed: () {
+
+              //     UserProduct up = UserProduct(name:"s", category: "d", grams: 120, calory: -430, fat: 120, squi: 120, carboh: 120, productId: 1200);
+              //     var nowDate = DateTime.now();
+              //     var _date = DateTime(nowDate.year, nowDate.month, nowDate.day - 5);
+              //     up.date = _date;
+                  
+              //     DBUserProductsProvider.db.addProductWithDate(up);
+              //   },
+              //   label: Text('Approve'),
+              //   icon: Icon(Icons.thumb_up),
+              //   backgroundColor: Colors.pink,
+              // ),
             );
   }
   getIconButton(){
@@ -283,9 +313,9 @@ class _HomeState extends State<Home> {
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        Text( splitBigTxt(name) ,
+                                        Text( splitBigTxt(name)+ " " +splitBigTxt(surname),
                                           style: TextStyle(    fontWeight: FontWeight.w600,
-                                          fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
+                                          fontSize: MediaQuery.of(context).size.width*0.11*(name+" "+surname).length*0.04,
                                           color: Colors.white
                                           ),
                                           overflow: TextOverflow.ellipsis,
@@ -293,17 +323,6 @@ class _HomeState extends State<Home> {
                                         isNameBiggerSurname ? Container() : getIconButton(),
                                       ],
                                     ),
-                                    Row(
-                                      children: <Widget>[
-                                      Text( splitBigTxt(surname) ,
-                                        style: TextStyle(    fontWeight: FontWeight.w600,
-                                        fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
-                                        color: Colors.white
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      isNameBiggerSurname ? getIconButton() : Container(),
-                                    ])
                                   ]);
     }
   }

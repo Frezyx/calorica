@@ -1,9 +1,10 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
+import 'package:calory_calc/utils/userDietSelector.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomRadioSelector extends StatefulWidget {
   @override
@@ -24,10 +25,6 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
     sampleData.add(new RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal", "Сохранить вес", "Стандартное, здоровое питание", 5));
     sampleData.add(new RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong", "Набрать вес", "Диета для набора массы", 20));
   }
-  
-                  
-                      
-  
 
   @override
   Widget build(BuildContext context) {
@@ -78,14 +75,23 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                         ),
                         callback: () {
                            DBUserProvider.db.updateDateProducts("workFutureModel", workModel).then((count1){
-                              if(count1 == 1){
-                                _goodAllert(context);
-                                // Navigator.pushNamed(context, '/selectActiviti');
-                              }
-                              else{
-                                _badAllert(context);
-                                // Implement
-                              }
+                             
+                              slectUserDiet().then((res){
+                                if(res){
+                                  if(count1 == 1){
+                                    _goodAllert(context);
+                                    // Navigator.pushNamed(context, '/selectActiviti');
+                                  }
+                                  else{
+                                    _badAllert(context);
+                                    // Implement
+                                  }
+                                }
+                                else{
+                                  _badAllert(context);
+                                    // Implement
+                                }
+                              });
                           });
                         },
                         shapeRadius: BorderRadius.circular(50.0),
@@ -113,7 +119,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                                     child: Text('Открыть', style: TextStyle(color: DesignTheme.mainColor ),),
                                     
                                     onPressed: (){ addClick();
-                                      Navigator.pushNamed(context, '/navigator/1');
+                                      Navigator.popAndPushNamed(context, '/navigator/1');
                                     },
                                   ),
                                 ]

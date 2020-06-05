@@ -1,9 +1,9 @@
+import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:calory_calc/design/theme.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/databaseHelper.dart';
 import 'package:calory_calc/utils/dataLoader.dart';
 
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
   },child: new Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: state_bg == 0? AssetImage("assets/bg.png") :AssetImage("assets/bg2.png")
+                image: AssetImage("assets/bg2.png")
                 , fit: BoxFit.cover)),
         child: Scaffold(
           backgroundColor: Colors.transparent,

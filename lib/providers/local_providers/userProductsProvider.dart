@@ -73,6 +73,30 @@ class DBUserProductsProvider {
     return DateAndCalory(id:id, date: _date);
   }
 
+    addProductWithDate(UserProduct product) async{
+    final db = await database;
+
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM UserProducts");
+    int id = table.first["id"];
+    
+    int now = epochFromDate(product.date);
+
+    var raw = await db.rawInsert(
+        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date, grams, productId)"
+        " VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [id, 
+        product.name,
+        product.category,
+        product.calory,
+        product.squi,
+        product.fat,
+        product.carboh,
+        now,
+        product.grams,
+        product.productId
+        ]);
+  }
+
   Future<UserProduct> getProductById(int id) async {
     final db = await database;
 

@@ -127,10 +127,10 @@ class _EditUserPageState extends State<EditUserPage> {
                 ),
 
                 new SizedBox(height: 30),
-                getFlatNavigationButton("Параметры Диеты", "/editUserDietParams", context),
+                getFlatNavigationButton("Личные параметры", "/editUserParams", context),
 
                 new SizedBox(height: 20),
-                getFlatNavigationButton("Параметры тела", "/editUserParams", context),
+                getFlatNavigationButton("Параметры диеты", "/editUserDietParams", context),
 
                 new SizedBox(height: 20),
                 getFlatNavigationButton("Выбрать диету", "/chooseDiet", context),

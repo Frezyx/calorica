@@ -70,6 +70,30 @@ class DesignTheme {
     color: blackColor,
   );
 
+  static const TextStyle bigText1 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 36,
+    color: blackColor,
+  );
+
+  static const TextStyle bigText2 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 30,
+    color: blackColor,
+  );
+
+  static const TextStyle bigText3 = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: blackColor,
+  );
+
   static const TextStyle bigErrorText = TextStyle(
     fontFamily:
     'Montserrat',

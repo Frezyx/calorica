@@ -4,8 +4,10 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/error/errorScreens.dart';
@@ -269,6 +271,20 @@ class _HomeState extends State<Home> {
                   ),
                 ]
               ),
+              // floatingActionButton: FloatingActionButton.extended(
+              //   onPressed: () {
+
+              //     UserProduct up = UserProduct(name:"s", category: "d", grams: 120, calory: -430, fat: 120, squi: 120, carboh: 120, productId: 1200);
+              //     var nowDate = DateTime.now();
+              //     var _date = DateTime(nowDate.year, nowDate.month, nowDate.day - 5);
+              //     up.date = _date;
+                  
+              //     DBUserProductsProvider.db.addProductWithDate(up);
+              //   },
+              //   label: Text('Approve'),
+              //   icon: Icon(Icons.thumb_up),
+              //   backgroundColor: Colors.pink,
+              // ),
             );
   }
   getIconButton(){

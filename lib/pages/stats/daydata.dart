@@ -33,7 +33,7 @@ class _DayDatePageState extends State<DayDatePage> {
   double squi = 0.0; 
   double fat = 0.0; 
   double carboh = 0.0; 
-  DateTime dateInDT;
+  int dateInt;
 
 
 
@@ -42,18 +42,16 @@ class _DayDatePageState extends State<DayDatePage> {
     intDate = int.parse(date);
     super.initState();
 
-    dateInDT = DateTime.fromMillisecondsSinceEpoch(int.parse(date));
+    dateInt = int.parse(date);
 
-    DBDateProductsProvider.db.getPoductsIDsByDate(dateInDT).then((idList){
-      for (var i = 0; i < idList.length; i++) {
-        DBUserProductsProvider.db.getProductById(idList[i]).then((product){
+    DBUserProductsProvider.db.getProductsByDate(dateInt).then((products){
+      for (var product in products){
           setState(() {
             calory += product.calory;
             squi += product.squi;
             fat += product.fat;
             carboh += product.carboh;
           });
-        });
       }
     });
   }
@@ -196,7 +194,9 @@ class _DayDatePageState extends State<DayDatePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                          Text(DateFormat('yyyy-MM-dd').format(dateInDT),
+
+                          Text(DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(dateInt)),
+
                             style: isStringOverSize(date)? DesignTheme.bigText: DesignTheme.blackText,
                             textAlign: TextAlign.start,
                             ),

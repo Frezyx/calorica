@@ -10,6 +10,7 @@ import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/stats/prepareDataByDay.dart';
 import 'package:calory_calc/utils/stats/prepareDataByWeek.dart';
+import 'package:calory_calc/widgets/textHelper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -23,21 +24,23 @@ class MainStats extends StatefulWidget {
 }
 
 class _MainStatsState extends State<MainStats> {
+
   List<charts.Series<GraphData, String>> _seriesData = [];
-  List<charts.Series<GraphLinarData, int>> _chartData = [];
+  List<charts.Series<GraphLinarData, String>> _chartData = [];
 
   List<UserProduct> userTodayProducts;
   List<UserProduct> userYesterdayProducts;
 
-  UserProduct todayParams = new UserProduct();
-  UserProduct yesterdayParams = new UserProduct();
+  UserProduct todayParams = null;
+  UserProduct yesterdayParams = null;
   List<UserProduct> weekStats;
 
-  var caloryLimit = 2900.0;
-  var caloryLimitDeltaL = 2300.0;
-  var caloryLimitDeltaR = 3100.0;
-
+  var caloryLimit = 0.0;
+  var caloryLimitDeltaL = 0.0;
+  var caloryLimitDeltaR = 0.0;
   var chartsWidgetList = [];
+
+  bool isAutoPlay = false;
 
   @override
   void initState() {
@@ -78,15 +81,14 @@ class _MainStatsState extends State<MainStats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Column(
+          body: SingleChildScrollView(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children:<Widget>[
               
               Padding(
-                padding: EdgeInsets.only(bottom: 10, top: 50, left: 20, right: 20),
-                child:Text(
-                  (todayParams.calory < yesterdayParams.calory || todayParams.calory <= caloryLimitDeltaR && todayParams.calory >= caloryLimitDeltaL )? "Сегодня вы - молодец! " : "Старайтесь лучше!" ,style: DesignTheme.bigText,
-                )
+                padding: EdgeInsets.only(bottom: 10, top: 50, left: 30, right: 20),
+                child: getStartText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL),
               ),
 
               Padding(
@@ -146,15 +148,7 @@ class _MainStatsState extends State<MainStats> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:<Widget>[
-
-                    Text((todayParams.calory < yesterdayParams.calory )? "-" + checkThousands((todayParams.calory - yesterdayParams.calory).abs()).toString()
-                     : "+" + checkThousands((todayParams.calory - yesterdayParams.calory).abs()).toString(),
-                      textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 38.0,fontWeight: FontWeight.w900, 
-                        color: (todayParams.calory < yesterdayParams.calory || todayParams.calory <= caloryLimitDeltaR && todayParams.calory >= caloryLimitDeltaL ) ? DesignTheme.secondColor : DesignTheme.redColor,
-                      ),
-                    ),
-
+                    getParamText(todayParams, yesterdayParams, caloryLimitDeltaR, caloryLimitDeltaL),
                     Text(' кКалорий',
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.w600, color: DesignTheme.gray170Color),
@@ -170,44 +164,29 @@ class _MainStatsState extends State<MainStats> {
                     style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w400, color: DesignTheme.gray50Color),
                   ),
               ),
-              
-        Container(
-                height: 300.0,
-                child:
-                CarouselSlider.builder(
-                  itemCount: 2,
-                  itemBuilder:  (context, index){
-                    return new InkWell(
-                      highlightColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      child: chartsWidgetList[index],
-                      // getLineGraph(context, _chartData),
-                      // getBarGraph(context, _seriesData, caloryLimitDeltaL, caloryLimitDeltaR, todayParams.calory, yesterdayParams.calory),
-                    );},
-                    options: CarouselOptions(
-                          height: 300.0,
-                          viewportFraction: 1,
-                          autoPlay: false,
-                          autoPlayCurve: Curves.easeInExpo,
-                          autoPlayInterval: const Duration(seconds: 5),
-                          onPageChanged: (index, reason) {
 
-                          }
+              Container(
+                  height: 300.0,
+                  child:
+                  CarouselSlider.builder(
+                    itemCount: 2,
+                    itemBuilder:  (context, index){
+                      return chartsWidgetList[index];
+                      },
+                      options: CarouselOptions(
+                            height: 300.0,
+                            viewportFraction: 1,
+                            autoPlay: isAutoPlay,
+                            autoPlayCurve: Curves.easeInExpo,
+                            autoPlayInterval: const Duration(seconds: 8),
+                            onPageChanged: (index, reason) {
+                            }
+                      ),
                     ),
-                  ),
-              ),
+                ),
           ]
         ),
+      )
     );
   }
-}
-
-
-
-checkThousands(double value) {
-  if(value > 1000){
-    return roundDouble(value/1000, 1).toString() + "К";
-  }
-  return value;
 }

@@ -24,24 +24,6 @@ class DBUserProductsProvider {
     return _database;
   }
   
-  firstCreateTable() async{
-    final db = await database;
-    int id = 0;
-
-    var nowDate = DateTime.now();
-    var _date = DateTime(nowDate.year, nowDate.month, nowDate.day);
-    
-    int now = epochFromDate(_date);
-
-    var raw = await db.rawInsert(
-        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
-        " VALUES (?,?,?,?,?,?,?,?)",
-        [id,'Говядина отборная', 'Говядина и телятина', 0, 0.0, 0, 0, now]
-        );
-    return(raw);
-  }
-
-
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "UserProducts.db");
@@ -55,7 +37,9 @@ class DBUserProductsProvider {
           "squi DOUBLE,"
           "fat DOUBLE,"
           "carboh DOUBLE,"
-          "date INTEGER" 
+          "date INTEGER,"
+          "grams DOUBLE,"
+          "productId INTEGER" 
           ")");
     });
   }
@@ -72,8 +56,8 @@ class DBUserProductsProvider {
     int now = epochFromDate(_date);
 
     var raw = await db.rawInsert(
-        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date)"
-        " VALUES (?,?,?,?,?,?,?,?)",
+        "INSERT Into UserProducts (id, name, category, calory, squi, fat, carboh, date, grams, productId)"
+        " VALUES (?,?,?,?,?,?,?,?,?,?)",
         [id, 
         product.name,
         product.category,
@@ -82,13 +66,9 @@ class DBUserProductsProvider {
         product.fat,
         product.carboh,
         now,
+        product.grams,
+        product.productId
         ]);
-    
-    debugPrint(raw.toString());
-    debugPrint(now.toString());
-
-    var u = await getProductById(id);
-    debugPrint(epochFromDate(u.date).toString());
 
     return DateAndCalory(id:id, date: _date);
   }
@@ -108,9 +88,20 @@ class DBUserProductsProvider {
         fat: item["fat"],
         carboh: item["carboh"],
         date: DateTime.fromMillisecondsSinceEpoch(item["date"]),
+        grams: item["grams"],
+        productId: item["productId"],
       );
 
     return product;
+  }
+
+  Future<bool>updateProduct(UserProduct product) async{
+    final db = await database;
+    int count = await db.rawUpdate(
+      'UPDATE UserProducts SET name = ?, category = ?, calory = ?, squi = ?, fat = ?, carboh = ?, date = ?, grams = ?, productId = ? WHERE id = ?',
+      ['${product.name}' , '${product.category}', '${product.calory}', '${product.squi}', '${product.fat}', '${product.carboh}',
+       '${epochFromDate(product.date)}', '${product.grams}', '${product.productId}', '${product.id}',]);
+    return count == 1;
   }
 
   

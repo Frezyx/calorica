@@ -11169,8 +11169,8 @@ List<String> productData = [
 ];
 
 startLoadData() async{
-  await DBProductProvider.db.firstCreateTable();
-  await DBUserProductsProvider.db.firstCreateTable();
+  // await DBProductProvider.db.firstCreateTable();
+  // await DBUserProductsProvider.db.firstCreateTable();
   
   for (var i = 0; i < productData.length; i++) {
     var data = productData[i].split(";");

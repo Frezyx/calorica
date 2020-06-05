@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/widgets/alerts/badEditionAlert.dart';
 
 import 'package:flutter/material.dart';
 
@@ -25,6 +27,10 @@ class AddedProductPage extends StatefulWidget{
 class _AddedProductPageState extends State<AddedProductPage> {
   String id;
   String from;
+  String productParamTxt = "";
+  bool isEdited = false;
+  var productParams = new Product();
+  final _formKey = GlobalKey<FormState>();
   _AddedProductPageState(this.id, this.from);
 
   ScrollController scrollController;
@@ -38,6 +44,12 @@ class _AddedProductPageState extends State<AddedProductPage> {
     DBUserProductsProvider.db.getProductById(int.parse(id)).then((prod){
       setState(() {
         product = prod;
+        productParamTxt = product.grams.toString();
+      });
+      DBProductProvider.db.getProductById(product.productId).then((res){
+        setState(() {
+          productParams = res;
+        });
       });
     });
   }
@@ -93,9 +105,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             style: isStringOverSize(product.name)? DesignTheme.bigText20: DesignTheme.bigText24,
                             textAlign: TextAlign.start,
                             ),
-                          SizedBox(height:30),
+                          SizedBox(height:5),
 
-                          Text("Добавлено" + DateFormat('yyyy-MM-dd').format(product.date)),
+                          isEdited? getTextForm() : getBigParamText(product.grams," грамм"),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,11 +128,215 @@ class _AddedProductPageState extends State<AddedProductPage> {
                             ])
                           ]),
 
+                          // SizedBox(height:5),
+                          
+                          // Text("Добавлено:   " + DateFormat('yyyy-MM-dd').format(product.date), style: DesignTheme.labelSearchText),
+
                         ]),
                       ),
                     ),
+
+                    isEdited ? getSaveButton(_formKey): getDeleteButton(), 
+                    isEdited ? getChangeEditButton() : getEditingButton(),
+                  ],
+                ) 
+              ),
+            ),
+          ),
+      );
+  }
+
+  getTextForm(){
+    final TextEditingController _ageController = new TextEditingController( );
+    _ageController.text = productParamTxt;
+
+    return Padding(
+            padding:EdgeInsets.only(left:5, right: 5, bottom: 10),
+            child:Form(key: _formKey, child: TextFormField(
+                      cursorColor: DesignTheme.mainColor,
+                      decoration: InputDecoration(
+                        labelText: 'Кол-во грамм',
+                        labelStyle: DesignTheme.selectorLabel,
+                    ),
+
+                    onChanged: (text){
+                      if(_formKey.currentState.validate()){}
+                      multiData(double.parse(text));
+                    },
+
+                    validator: (value){
+                      if (value.isEmpty) return 'Введите кол-во грамм приема пищи';
+                      if (!(double.parse(value) is double)) return 'Введите число';
+                      else {
+                        product.grams = double.parse(value);
+                      }
+                  },
+                )));
+  }
+
+  void multiData(double grams){
+    double multiplier = grams / 100;
+     setState(() {
+       product.calory = roundDouble(productParams.calory * multiplier,2);
+       product.squi = roundDouble(productParams.squi * multiplier, 2);
+       product.fat = roundDouble(productParams.fat * multiplier, 2);
+       product.carboh = roundDouble(productParams.carboh * multiplier, 2);
+     });
+  }
+
+  getChangeEditButton(){
+        return  Padding(
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10),
+                        child:
+                    OutlineButton(
+                      hoverColor: Colors.white,
+                      focusColor: Colors.white,
+                      highlightColor: Colors.white,
+                      splashColor: Colors.red,
+                      onPressed: (){ addClick();
+                        setState((){
+                          isEdited = false;
+                        });
+                      },
+                      child: 
                       Padding(
-                        padding:EdgeInsets.only(left:10, right: 10, bottom: 20, top: 30),
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top: 13),
+                        child:Stack(
+                          children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(Icons.close, color:Colors.red)
+                              ),
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      "Отменить",
+                                      style: TextStyle(
+                                        color:Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600
+                                        ),
+                                      textAlign: TextAlign.center,
+                                  )
+                              )
+                          ],
+                      ),
+                      ),
+                      highlightedBorderColor: Colors.red,
+                      borderSide: new BorderSide(color: Colors.red),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0)
+                      )
+                  )
+                  );
+  }
+
+  getEditingButton(){
+    return    Padding(
+                padding:EdgeInsets.only(left:10, right: 10, bottom: 20),
+                child:
+                    OutlineButton(
+                      hoverColor: Colors.white,
+                      focusColor: Colors.white,
+                      highlightColor: Colors.white,
+                      splashColor: DesignTheme.darkBlue,
+                      onPressed: (){ addClick();
+                        setState((){
+                          isEdited = true;
+                        });
+                      },
+                      child: 
+                      Padding(
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top: 13),
+                        child:Stack(
+                          children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(Icons.edit, color: DesignTheme.darkBlue)
+                              ),
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      "Редактировать",
+                                      style: TextStyle(
+                                        color:DesignTheme.darkBlue,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600
+                                        ),
+                                      textAlign: TextAlign.center,
+                                  )
+                              )
+                          ],
+                      ),
+                      ),
+                      highlightedBorderColor: DesignTheme.darkBlue,
+                      borderSide: new BorderSide(color:DesignTheme.darkBlue),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0)
+                      )
+                  )
+                  );
+  }
+
+  getSaveButton(_formKey){
+    return  Padding(
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top:30),
+                        child:
+                    OutlineButton(
+                      hoverColor: Colors.white,
+                      focusColor: Colors.white,
+                      highlightColor: Colors.white,
+                      splashColor: DesignTheme.mainColor,
+                      onPressed: (){ addClick();
+                      if(_formKey.currentState.validate()){
+                        DBUserProductsProvider.db.updateProduct(product).then((res){
+                          if(res){
+                            setState((){
+                              isEdited = false;
+                            });
+                          }
+                          else{
+                            badEditAlert(context);
+                          }
+                        });
+                        }
+                      },
+                      child: 
+                      Padding(
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top: 13),
+                        child:Stack(
+                          children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(Icons.check, color:DesignTheme.mainColor)
+                              ),
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      "Сохранить",
+                                      style: TextStyle(
+                                        color:DesignTheme.mainColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600
+                                        ),
+                                      textAlign: TextAlign.center,
+                                  )
+                              )
+                          ],
+                      ),
+                      ),
+                      highlightedBorderColor: DesignTheme.mainColor,
+                      borderSide: new BorderSide(color: DesignTheme.mainColor),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0)
+                      )
+                  )
+                  );
+  }
+
+    getDeleteButton(){
+    return  Padding(
+                        padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top: 30),
                         child:
                     OutlineButton(
                       hoverColor: Colors.white,
@@ -160,14 +376,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                           borderRadius: new BorderRadius.circular(10.0)
                       )
                   )
-                  )
-
-                  ],
-                ) 
-              ),
-            ),
-          ),
-      );
+                  );
   }
 
                   Future<void> _badAllert(context, id) async {
@@ -185,6 +394,12 @@ class _AddedProductPageState extends State<AddedProductPage> {
                                       DBUserProductsProvider.db.deleteById(id).then((response){
                                         Navigator.popAndPushNamed(context, from == 'home'? '/navigator/1': '/daydata/'+from);
                                       });
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('Нет', style: DesignTheme.midleMainText,),
+                                    onPressed: (){ addClick();
+                                      Navigator.pop(context);
                                     },
                                   ),
                             ]
@@ -209,6 +424,20 @@ class _AddedProductPageState extends State<AddedProductPage> {
       Text(name, style: DesignTheme.labelSearchText,),
       ]));
   }
+
+    getBigParamText(double value, String name){
+    return 
+    Padding(
+      padding: EdgeInsets.only(left:5, top:10, bottom: 20),
+      child:
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children:<Widget>[
+      Text(value.toString(), style: DesignTheme.midleMainTextBig,),
+      Text(name, style: DesignTheme.labelSearchTextBig,),
+      ]));
+  }
+
                                       String splitText(String text) {
                                     if(text.length <= 20){
                                       return text;
@@ -222,3 +451,4 @@ class _AddedProductPageState extends State<AddedProductPage> {
                                     return true;
                                   }
 }
+

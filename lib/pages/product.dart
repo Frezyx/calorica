@@ -32,6 +32,7 @@ class _ProductPageState extends State<ProductPage> {
   double squi = 0.0; double squiConst = 0.0;
   double fat = 0.0; double fatConst = 0.0;
   double carboh = 0.0; double carbohConst = 0.0;
+  double gramsEditing = 100;
   BannerAd _bannerAd;
 
   bool canWriteInDB = true;
@@ -63,6 +64,7 @@ class _ProductPageState extends State<ProductPage> {
   void multiData(double grams){
     double multiplier = grams / 100;
      setState(() {
+       gramsEditing = roundDouble(grams,1);
        calory = roundDouble(product.calory * multiplier,2);
        squi = roundDouble(product.squi * multiplier, 2);
        fat = roundDouble(product.fat * multiplier, 2);
@@ -211,6 +213,8 @@ class _ProductPageState extends State<ProductPage> {
                                 carboh: carboh,
                                 squi: squi,
                                 fat: fat,
+                                grams: gramsEditing,
+                                productId: int.parse(id),
                               );
 
                               addProduct(productSend).then((res){

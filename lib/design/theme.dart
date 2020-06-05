@@ -30,6 +30,8 @@ class DesignTheme {
   static const Color selectorGray2 = Color.fromRGBO(132, 132, 132, 1);
   static const Color selectorGray3 = Color.fromRGBO(72, 72, 72, 1);
 
+  static const Color darkBlue = Color.fromRGBO(29, 23, 48, 1);
+
   static const TextStyle selectorBigText = TextStyle( 
     fontFamily:
     'Montserrat',
@@ -124,6 +126,14 @@ class DesignTheme {
     color: mainColor,
   );
 
+  static const TextStyle midleMainTextBig = TextStyle(
+    fontFamily:
+    'Montserrat',
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: mainColor,
+  );
+
   static const TextStyle bigWhiteText = TextStyle(
     fontFamily:
     'Montserrat',
@@ -207,6 +217,14 @@ class DesignTheme {
     letterSpacing: 0.2,
     color: Colors.black54,
   );
+
+  static const TextStyle labelSearchTextBig = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 18,
+    letterSpacing: 0.2,
+    color: Colors.black54,
+  );
+  
 
   static const TextStyle labelSearchTextBigger = TextStyle(
     fontWeight: FontWeight.w300,

@@ -114,9 +114,11 @@ class UserProduct {
   double fat;
   double carboh;
   DateTime date;
+  double grams;
+  int productId;
 
   UserProduct({
-		this.id,
+    this.id,
     this.name,
     this.category,
     this.calory,
@@ -124,6 +126,8 @@ class UserProduct {
     this.fat,
     this.carboh,
     this.date,
+    this.grams,
+    this.productId,
   });
 
   factory UserProduct.fromMap(Map<String, dynamic> json) => new UserProduct(
@@ -135,6 +139,8 @@ class UserProduct {
         fat: json["fat"],
         carboh: json["carboh"],
         date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
+        grams: json['grams'],
+        productId: json["productId"],
       );
       
   Map<String, dynamic> toMap() => {
@@ -146,6 +152,8 @@ class UserProduct {
         "fat": fat,
         "carboh": carboh,
         "date": epochFromDate(date) ,
+        "grams": grams,
+        "productId" : productId,
       };
 }
 

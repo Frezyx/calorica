@@ -5,6 +5,7 @@ import 'package:calory_calc/pages/stats/barGraph.dart';
 import 'package:calory_calc/pages/stats/lineWeekGraph.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
@@ -40,7 +41,7 @@ class _MainStatsState extends State<MainStats> {
   var caloryLimitDeltaR = 0.0;
   var chartsWidgetList = [];
 
-  bool isAutoPlay = false;
+  bool isAutoPlay = true;
 
   @override
   void initState() {
@@ -70,8 +71,9 @@ class _MainStatsState extends State<MainStats> {
               _chartData = createSampleData(weekStats);
               _seriesData = generateData(yesterdayParams, todayParams, caloryLimitDeltaR , caloryLimitDeltaL );
 
-              chartsWidgetList.add(getLineGraph(context, _chartData));
               chartsWidgetList.add(getBarGraph(context, _seriesData, caloryLimitDeltaL, caloryLimitDeltaR, todayParams, yesterdayParams));
+              chartsWidgetList.add(getLineGraph(context, _chartData));
+              chartsWidgetList.add(AdMobHelper.getAdMobGraphBaner(context));
             });
         });
       });
@@ -169,7 +171,7 @@ class _MainStatsState extends State<MainStats> {
                   height: 300.0,
                   child:
                   CarouselSlider.builder(
-                    itemCount: 2,
+                    itemCount: chartsWidgetList.length,
                     itemBuilder:  (context, index){
                       return chartsWidgetList[index];
                       },

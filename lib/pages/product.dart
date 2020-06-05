@@ -1,9 +1,11 @@
+import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dateAndCalory.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
@@ -45,8 +47,31 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
+  BannerAd createBannerAd() {
+    return BannerAd(
+        adUnitId:  AdMobConfig.AD_UNIT_BANER_ID,
+        size: AdSize.banner,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          print("BannerAd $event");
+        });
+  }
+  
+@override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+}
+
 @override
   void initState() {
+
+    FirebaseAdMob.instance.initialize(appId: BannerAd.testAdUnitId);
+    //Change appId With Admob Id
+    _bannerAd = createBannerAd()
+      ..load()
+      ..show();
+
     super.initState();
     _grammController.text = '100.0';
       DBProductProvider.db.getProductById(int.parse(id)).then((res){
@@ -81,6 +106,7 @@ class _ProductPageState extends State<ProductPage> {
         leading: IconButton(
             onPressed: (){ addClick();
               Navigator.popAndPushNamed(context, "/navigator/2");
+              _bannerAd?.dispose();
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -218,7 +244,10 @@ class _ProductPageState extends State<ProductPage> {
                               );
 
                               addProduct(productSend).then((res){
-                                if (res){ Navigator.pushNamed(context, '/navigator/1'); }
+                                if (res){ 
+                                  Navigator.pushNamed(context, '/navigator/1'); 
+                                _bannerAd?.dispose();
+                                }
                               });
                         },
                         shapeRadius: BorderRadius.circular(50.0),
@@ -241,6 +270,7 @@ class _ProductPageState extends State<ProductPage> {
         var response = await DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
         if(response){
           Navigator.pushNamed(context, '/navigator/1');
+          _bannerAd?.dispose();
         }
       }
 

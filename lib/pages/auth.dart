@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
   },child: new Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: state_bg == 0? AssetImage("assets/bg.png") :AssetImage("assets/bg2.png")
+                image: AssetImage("assets/bg2.png")
                 , fit: BoxFit.cover)),
         child: Scaffold(
           backgroundColor: Colors.transparent,

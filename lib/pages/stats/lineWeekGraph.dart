@@ -36,17 +36,17 @@ getLineGraph(context, chartData){
                               ]),
                             ),
 
-                            // Padding(
-                            //   padding: EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
-                            //   child:
-                            //     Row(
-                            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //       children:<Widget>[
-                            //       Row(children:<Widget>[
-                            //         Icon(Icons.label, color: DesignTheme.secondColor),
-                            //         Text("Сегодня"),]),
-                            //     ]),
-                            //   ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
+                              child:
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children:<Widget>[
+                                  Row(children:<Widget>[
+                                    Icon(Icons.label, color: DesignTheme.secondColor),
+                                    Text("кКалории в день"),]),
+                                ]),
+                              ),
                           ],
                         ),
                       ),

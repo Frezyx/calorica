@@ -1,17 +1,16 @@
-import 'dart:math';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/alerts/badEditionAlert.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:intl/intl.dart';
 
 
 class AddedProductPage extends StatefulWidget{
@@ -27,11 +26,12 @@ class AddedProductPage extends StatefulWidget{
 class _AddedProductPageState extends State<AddedProductPage> {
   String id;
   String from;
+   _AddedProductPageState(this.id, this.from);
+
   String productParamTxt = "";
   bool isEdited = false;
   var productParams = new Product();
   final _formKey = GlobalKey<FormState>();
-  _AddedProductPageState(this.id, this.from);
 
   ScrollController scrollController;
   UserProduct product = UserProduct(id:1,name:'Загрузка...',category:'Говядина и телятина', calory:0.0, squi:0.0, fat:0.0, carboh:0.0, date: DateTime.now());
@@ -71,6 +71,8 @@ class _AddedProductPageState extends State<AddedProductPage> {
            style: TextStyle(fontWeight: FontWeight.w700),),
       ),
       body:
+      SingleChildScrollView(
+        child:
         Padding(
           padding:EdgeInsets.only(top: 0,),
           child: 
@@ -138,11 +140,14 @@ class _AddedProductPageState extends State<AddedProductPage> {
 
                     isEdited ? getSaveButton(_formKey): getDeleteButton(), 
                     isEdited ? getChangeEditButton() : getEditingButton(),
+                    SizedBox(height:20),
+                    AdMobHelper.getAdBigBlock(),
                   ],
                 ) 
               ),
             ),
           ),
+        ),
       );
   }
 

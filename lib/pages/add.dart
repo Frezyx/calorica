@@ -126,7 +126,7 @@ class _AddPageState extends State<AddPage> {
                   } else {
                     var count = snapshot.data.length;
                     if(count > 5){
-                      snapshot.data.insert(5, Product(name:"Реклама"));
+                      snapshot.data.insert(4, Product(name:"Реклама"));
                     }
                     else if(count > 3){
                       snapshot.data.insert(3, Product(name:"Реклама"));

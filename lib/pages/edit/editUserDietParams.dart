@@ -68,7 +68,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                         labelText: 'Лимит калорий',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
-                            FontAwesomeIcons.ruler,
+                            Icons.filter_1,
                           )
                     ),
                     validator: (value){
@@ -89,7 +89,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                         labelText: 'Лимит белков',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
-                            FontAwesomeIcons.ruler,
+                            Icons.filter_2,
                           )
                     ),
                     validator: (value){
@@ -110,7 +110,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                         labelText: 'Лимит жиров',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
-                            Icons.calendar_today,
+                            Icons.filter_3,
                           )
                     ),
                     validator: (value){
@@ -130,7 +130,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                         labelText: 'Лимит углеводов',
                         labelStyle: DesignTheme.selectorLabel,
                         suffixIcon: Icon(
-                            Icons.calendar_today,
+                            Icons.filter_4,
                           )
                     ),
                     validator: (value){

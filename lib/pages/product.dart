@@ -106,7 +106,7 @@ class _ProductPageState extends State<ProductPage> {
         leading: IconButton(
             onPressed: (){ addClick();
               Navigator.popAndPushNamed(context, "/navigator/2");
-              _bannerAd?.dispose();
+              // _bannerAd?.dispose();
             },
             icon:Icon(Icons.arrow_back, size: 24,)
           ),
@@ -243,12 +243,7 @@ class _ProductPageState extends State<ProductPage> {
                                 productId: int.parse(id),
                               );
 
-                              addProduct(productSend).then((res){
-                                if (res){ 
-                                  Navigator.pushNamed(context, '/navigator/1'); 
-                                _bannerAd?.dispose();
-                                }
-                              });
+                              addProduct(productSend);
                         },
                         shapeRadius: BorderRadius.circular(50.0),
                         gradient: DesignTheme.gradient,
@@ -263,18 +258,12 @@ class _ProductPageState extends State<ProductPage> {
       );
   }
 
-  Future<bool> addProduct(UserProduct nowClient) async{
-
+  addProduct(UserProduct nowClient) async{
       DateAndCalory res = await DBUserProductsProvider.db.addProduct(nowClient);
       if(res!=null){
-        var response = await DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
-        if(response){
-          Navigator.pushNamed(context, '/navigator/1');
-          _bannerAd?.dispose();
-        }
+        DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
+        Navigator.popAndPushNamed(context, '/navigator/1');
       }
-
-      return res != null;
   }
 
   getParamText(double value, String name){

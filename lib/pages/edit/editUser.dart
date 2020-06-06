@@ -39,38 +39,19 @@ class _EditUserPageState extends State<EditUserPage> {
   User user = new User();
   String dropdownValue = 'Минимум физической активности';
   int workFutureModel = 1; 
-  List<RadioModel> sampleData = [
-    RadioModel(true, 1, 'Минимум физической активности', "slim", "Похудеть", "Диета для", "быстрого похудения", 20),
-    RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal", "Сохранить вес", "Стандартное, здоровое","питание", 5),
-    RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong", "Набрать вес", "Диета для ","набора массы", 20)
-    ];
 
   final TextEditingController _nameController = new TextEditingController( );
   final TextEditingController _surnameController = new TextEditingController( );
-  final TextEditingController _weightController = new TextEditingController( );
-  final TextEditingController _heightController = new TextEditingController( );
-  final TextEditingController _ageController = new TextEditingController( );
 
   @override
   void initState() {
     super.initState();
-    DBUserProvider.db.getUser().then((userFromBD){
-      user = userFromBD;
+    DBUserProvider.db.getUser().then((_user){
+      user = _user;
       _nameController.text = user.name;
       _surnameController.text = user.surname;
-      _weightController.text = user.weight.toString();
-      _heightController.text = user.height.toString();
-      _ageController.text = user.age.toString();
-      workFutureModel = user.workFutureModel;
-      sampleData[0].isSelected = workFutureModel == 1; 
-      sampleData[1].isSelected = workFutureModel == 2;
-      sampleData[2].isSelected = workFutureModel == 3;
-
-      dropdownValue = user.workModel == 1.2 ?'Минимум физической активности': user.workModel == 1.375 ? 'Занимаюсь спортом 1-3 раза в неделю':
-      user.workModel == 1.55? 'Занимаюсь спортом 3-4 раза в неделю': user.workModel == 1.7? 'Занимаюсь спортом каждый день' : 'Тренируюсь по несколько раз в день';
     });
   }
-
   
     @override
   Widget build(BuildContext context) {
@@ -99,7 +80,7 @@ class _EditUserPageState extends State<EditUserPage> {
                           )
                     ),
                     validator: (value){
-                      if (value.isEmpty) return 'Введите ваш логин';
+                      if (value.isEmpty) return 'Введите ваше имя';
                       else {
                         user.name = value.toString();
                       }
@@ -119,7 +100,7 @@ class _EditUserPageState extends State<EditUserPage> {
                           )
                     ),
                     validator: (value){
-                      if (value.isEmpty) return 'Введите ваш логин';
+                      if (value.isEmpty) return 'Введите вашу фамилию';
                       else {
                         user.surname = value.toString();
                       }
@@ -136,7 +117,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 getFlatNavigationButton("Выбрать диету", "/choiseDiet", context),
 
                 SizedBox(height: MediaQuery.of(context).size.height/3),
-                getEditorSaveButton(_formKey, user, context, false),
+                getEditorSaveButtonOnlyName(_formKey, user, context),
           ]),
         ),
         ]

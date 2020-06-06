@@ -36,7 +36,7 @@ class ErrorScreens {
 
   
   static getNoMealScreen(context){
-    return getErrorScreen("assets/svg/noMeal.svg", "/user/2", "Сегодня вы ничего не ели", "Добавьте прием пищи в меню поиска продукта", "Добавить", true, Icons.add, context);
+    return getErrorScreen("assets/svg/noMeal.svg", "/navigator/2", "Сегодня вы ничего не ели", "Добавьте прием пищи в меню поиска продукта", "Добавить", true, Icons.add, context);
   }
 
   static getOnDevelopmentScreen(context){

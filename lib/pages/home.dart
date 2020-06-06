@@ -196,17 +196,14 @@ class _HomeState extends State<Home> {
                       (BuildContext context, AsyncSnapshot<List<UserProduct>> snapshot) {
                       switch (snapshot.connectionState) {
                                       case ConnectionState.none:
-                                        return new Text('Input a URL to start');
+                                        return ErrorScreens.getNoMealScreen(context);
                                       case ConnectionState.waiting:
                                         return new Center(child: new CircularProgressIndicator());
                                       case ConnectionState.active:
                                         return new Text('');
                                       case ConnectionState.done:
                                         if (snapshot.hasError) {
-                                          return new Text(
-                                            '${snapshot.error}',
-                                            style: TextStyle(color: Colors.red),
-                                          );
+                                          return ErrorScreens.getNoMealScreen(context);
                                         } else{
                                           if(snapshot.data.length > 0){
                                             snapshot.data.add(UserProduct(name: "Кнопка добавления"));
@@ -316,9 +313,9 @@ class _HomeState extends State<Home> {
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        Text( splitBigTxt(name) ,
+                                        Text( splitBigTxt(name)+ " " +splitBigTxt(surname),
                                           style: TextStyle(    fontWeight: FontWeight.w600,
-                                          fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
+                                          fontSize: MediaQuery.of(context).size.width*0.11*(name+" "+surname).length*0.04,
                                           color: Colors.white
                                           ),
                                           overflow: TextOverflow.ellipsis,
@@ -326,17 +323,6 @@ class _HomeState extends State<Home> {
                                         isNameBiggerSurname ? Container() : getIconButton(),
                                       ],
                                     ),
-                                    Row(
-                                      children: <Widget>[
-                                      Text( splitBigTxt(surname) ,
-                                        style: TextStyle(    fontWeight: FontWeight.w600,
-                                        fontSize: MediaQuery.of(context).size.width*0.085*(name+" "+surname).length*0.04,
-                                        color: Colors.white
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      isNameBiggerSurname ? getIconButton() : Container(),
-                                    ])
                                   ]);
     }
   }

@@ -92,6 +92,14 @@ class DBUserProvider {
     return count;
   }
 
+  Future<int>updateUserOnlyNameAndSurname(int id, String name, String surname) async{
+    final db = await database;
+    int count = await db.rawUpdate(
+      'UPDATE Users SET name = ?, surname = ? WHERE id = ?',
+      [name, surname, id]);
+    return count;
+  }
+
   Future<User> getUser() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Users");

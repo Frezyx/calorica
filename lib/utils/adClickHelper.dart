@@ -6,9 +6,8 @@ import 'package:calory_calc/config/adMobConfig.dart';
 const String testDevice = 'MobileId';
 
   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    testDevices: testDevice != null ? <String>[testDevice] : null,
     nonPersonalizedAds: true,
-    keywords: <String>['Game', 'Mario'],
+    keywords: <String>['calorie', 'fitness', 'health', 'sport'],
   );
 
   InterstitialAd createInterstitialAd() {

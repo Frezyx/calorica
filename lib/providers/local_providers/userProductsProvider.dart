@@ -44,6 +44,7 @@ class DBUserProductsProvider {
     });
   }
 
+//TODO: delete
   Future<DateAndCalory>addProduct(UserProduct product) async{
     final db = await database;
 

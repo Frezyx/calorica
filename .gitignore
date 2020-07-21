@@ -84,3 +84,5 @@ android/key.properties
 android/app/calory_calc.jks
 android/app/google-services.json
 .env
+
+windows/

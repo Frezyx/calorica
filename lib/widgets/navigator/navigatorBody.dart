@@ -1,4 +1,4 @@
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:ff_navigation_bar/ff_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 
 getBubbleBarBody(){

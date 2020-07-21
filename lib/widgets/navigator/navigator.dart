@@ -1,13 +1,10 @@
-
-
-
-
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/home.dart';
 import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:ff_navigation_bar/ff_navigation_bar_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'navigatorBody.dart';

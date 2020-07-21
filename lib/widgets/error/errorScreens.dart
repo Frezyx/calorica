@@ -1,6 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/widgets/buttons/buttonWithArrow.dart';
-import 'package:calory_calc/widgets/buttons/gradientButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

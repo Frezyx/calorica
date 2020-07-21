@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  flutter_svg: ^0.17.3+1
+  flutter_svg: ^0.18.0
   sqflite: any
   path_provider: any
   gradient_widgets: ^0.5.2

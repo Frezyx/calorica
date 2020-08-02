@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class DesignTheme {
   DesignTheme._();
 
@@ -11,7 +10,7 @@ class DesignTheme {
 
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
   static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
-  
+
   static const Color mainColorShadow = Color.fromRGBO(68, 211, 177, 0.27);
 
   static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
@@ -32,17 +31,15 @@ class DesignTheme {
 
   static const Color darkBlue = Color.fromRGBO(29, 23, 48, 1);
 
-  static const TextStyle selectorBigText = TextStyle( 
-    fontFamily:
-    'Montserrat',
+  static const TextStyle selectorBigText = TextStyle(
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.w500,
     fontSize: 20,
     color: selectorGray3,
   );
 
   static const TextStyle selectorBigTextAction = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.w600,
     fontSize: 20,
     color: mainColor,
@@ -63,104 +60,91 @@ class DesignTheme {
   );
 
   static const TextStyle bigText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
     color: blackColor,
   );
 
   static const TextStyle bigText1 = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
     color: blackColor,
   );
 
   static const TextStyle bigText2 = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 30,
     color: blackColor,
   );
 
   static const TextStyle bigText3 = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
     color: blackColor,
   );
 
   static const TextStyle bigErrorText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 18,
     color: blackColor,
   );
 
   static const TextStyle lilErrorText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.w400,
     fontSize: 16,
     color: gray50Color,
   );
 
   static const TextStyle blackText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 44,
     color: blackColor,
   );
 
   static const TextStyle bigText24 = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
     color: blackColor,
   );
 
   static const TextStyle bigText20 = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 20,
     color: blackColor,
   );
 
   static const TextStyle bigMainText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
     color: mainColor,
   );
 
   static const TextStyle midleMainText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 20,
     color: mainColor,
   );
 
   static const TextStyle midleMainTextBig = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
     color: mainColor,
   );
 
   static const TextStyle bigWhiteText = TextStyle(
-    fontFamily:
-    'Montserrat',
+    fontFamily: 'Montserrat',
     fontWeight: FontWeight.w600,
     fontSize: 36,
     color: whiteColor,
@@ -181,52 +165,52 @@ class DesignTheme {
   );
 
   static const TextStyle lilWhiteText = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 16,
-      letterSpacing: -0.2,
-      color: DesignTheme.whiteColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+    letterSpacing: -0.2,
+    color: DesignTheme.whiteColor,
   );
 
-  static const TextStyle secondaryText = TextStyle( 
-      fontWeight: FontWeight.w400,
-      fontSize: 12,
-      letterSpacing: -0.2,
-      color: DesignTheme.gray170Color,
+  static const TextStyle secondaryText = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    letterSpacing: -0.2,
+    color: DesignTheme.gray170Color,
   );
 
   static const TextStyle secondaryTextBig = TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 14,
-      letterSpacing: -0.2,
-      color: DesignTheme.gray170Color,
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    letterSpacing: -0.2,
+    color: DesignTheme.gray170Color,
   );
 
   static const TextStyle primeText = TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 18,
-      letterSpacing: -0.2,
-      color: DesignTheme.gray36Color,
+    fontWeight: FontWeight.w400,
+    fontSize: 18,
+    letterSpacing: -0.2,
+    color: DesignTheme.gray36Color,
   );
 
   static const TextStyle primeTextBig = TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 20,
-      letterSpacing: -0.2,
-      color: DesignTheme.gray36Color,
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    letterSpacing: -0.2,
+    color: DesignTheme.gray36Color,
   );
 
   static const TextStyle primeText16 = TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 16,
-      letterSpacing: -0.3,
-      color: DesignTheme.gray36Color,
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: -0.3,
+    color: DesignTheme.gray36Color,
   );
 
   static const TextStyle lilGrayText = TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 14,
-      letterSpacing: 0.2,
-      color: Colors.black54,
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    letterSpacing: 0.2,
+    color: Colors.black54,
   );
 
   static const TextStyle inputText = TextStyle(
@@ -248,7 +232,6 @@ class DesignTheme {
     letterSpacing: 0.2,
     color: Colors.black54,
   );
-  
 
   static const TextStyle labelSearchTextBigger = TextStyle(
     fontWeight: FontWeight.w300,
@@ -264,70 +247,64 @@ class DesignTheme {
     color: blackColor,
   );
 
-  static const LinearGradient 
-    gradient = LinearGradient(
-      colors: [
-        DesignTheme.secondColor,
-        DesignTheme.mainColor
-      ],
+  static const LinearGradient gradient = LinearGradient(
+      colors: [DesignTheme.secondColor, DesignTheme.mainColor],
       begin: Alignment.topRight,
       end: Alignment.bottomLeft,
-      stops: [0.0,1.0],
-      tileMode: TileMode.clamp
-    );
+      stops: [0.0, 1.0],
+      tileMode: TileMode.clamp);
 
   static const BoxShadow selectorShadow = BoxShadow(
-                      color: mainColorShadow,
-                      blurRadius: 8.0, 
-                      spreadRadius: 2.0,
-                      offset: Offset(
-                        0.0,
-                        4.0,
-                      ),
-                    );
-                    
+    color: mainColorShadow,
+    blurRadius: 8.0,
+    spreadRadius: 2.0,
+    offset: Offset(
+      0.0,
+      4.0,
+    ),
+  );
+
   static const BoxShadow transperentShadow = BoxShadow(
-                      color: Colors.transparent,
-                      blurRadius: 15.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(
-                        10.0,
-                        10.0,
-                      ),
-                    );
+    color: Colors.transparent,
+    blurRadius: 15.0,
+    spreadRadius: 2.0,
+    offset: Offset(
+      10.0,
+      10.0,
+    ),
+  );
 
-
-  static shadowByOpacity(double opacity){
-    return  [BoxShadow(
-      color: Colors.black12.withOpacity(opacity),
-      blurRadius: 5.0, 
-      spreadRadius: 2.0, 
-      offset: Offset(
-      0.0, 5.0, 
-      ),
-    )]; 
+  static shadowByOpacity(double opacity) {
+    return [
+      BoxShadow(
+        color: Colors.black12.withOpacity(opacity),
+        blurRadius: 5.0,
+        spreadRadius: 2.0,
+        offset: Offset(
+          0.0,
+          5.0,
+        ),
+      )
+    ];
   }
-                        
 
   static const BoxShadow originalShadow = BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 20.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(
-                              10.0,
-                              10.0,
-                            ),
-                          );
+    color: Colors.black12,
+    blurRadius: 20.0,
+    spreadRadius: 2.0,
+    offset: Offset(
+      10.0,
+      10.0,
+    ),
+  );
 
-    static const BoxShadow originalShadowLil = BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 14.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(
-                              0.0,
-                              4.0,
-                            ),
-                          );
-  }
-
-
+  static const BoxShadow originalShadowLil = BoxShadow(
+    color: Colors.black12,
+    blurRadius: 14.0,
+    spreadRadius: 2.0,
+    offset: Offset(
+      0.0,
+      4.0,
+    ),
+  );
+}

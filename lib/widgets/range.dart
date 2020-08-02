@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calory_calc/design/theme.dart';
 
-class RangeGraphData{
+class RangeGraphData {
   double limit;
   String name;
   double percent;
@@ -15,33 +15,28 @@ class RangeGraphData{
     this.weigth,
     this.limit,
   });
-
 }
 
-getColor(double percent){
-  if (percent <= 30){
+getColor(double percent) {
+  if (percent <= 30) {
     return LinearGradient(colors: [
-            Colors.red[500],
-            Colors.red[800],
-          ]);
-  }
-  else if(percent <= 60){
+      Colors.red[500],
+      Colors.red[800],
+    ]);
+  } else if (percent <= 60) {
     return LinearGradient(colors: [
-            Colors.yellow,
-            Colors.yellow[800],
-          ]);
-  }
-  else if(percent <= 100){
-        return LinearGradient(colors: [
-            Colors.green,
-            Colors.green[800],
-          ]);
-  }
-  else{
+      Colors.yellow,
+      Colors.yellow[800],
+    ]);
+  } else if (percent <= 100) {
     return LinearGradient(colors: [
-            Colors.red[500],
-            Colors.red[800],
-          ]);
+      Colors.green,
+      Colors.green[800],
+    ]);
+  } else {
+    return LinearGradient(colors: [
+      Colors.red[500],
+      Colors.red[800],
+    ]);
   }
 }
-

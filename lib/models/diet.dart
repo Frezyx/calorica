@@ -22,7 +22,6 @@ class Diet {
     this.carboh,
     this.date,
   });
-  
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,7 +38,7 @@ class Diet {
 
   static Diet fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return Diet(
       id: map['id'],
       name: map['name'],

@@ -35,11 +35,12 @@ class DBDateProductsProvider {
     });
   }
 
-  Future<DateProducts>addDateProducts(DateProducts dateProducts) async{
+  Future<DateProducts> addDateProducts(DateProducts dateProducts) async {
     final db = await database;
 
-    dateProducts.date = DateTime(dateProducts.date.year, dateProducts.date.month, dateProducts.date.day);
-    var intDate =epochFromDate(dateProducts.date);
+    dateProducts.date = DateTime(
+        dateProducts.date.year, dateProducts.date.month, dateProducts.date.day);
+    var intDate = epochFromDate(dateProducts.date);
 
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM DateProducts");
     int id = table.first["id"];
@@ -47,10 +48,10 @@ class DBDateProductsProvider {
     var raw = await db.rawInsert(
         "INSERT Into DateProducts (id, date, ids)"
         " VALUES (?,?,?)",
-
-        [id, 
-        intDate,
-        dateProducts.ids,
+        [
+          id,
+          intDate,
+          dateProducts.ids,
         ]);
 
     var respons = DateProducts(
@@ -68,12 +69,13 @@ class DBDateProductsProvider {
     var dateByYMD = DateTime(date.year, date.month, date.day);
     var dateInt = epochFromDate(dateByYMD);
 
-    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
+    var res =
+        await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
 
     var item = res.first;
     var ids = item['ids'];
     var mass = ids.split(";");
-    List<int> result = []; 
+    List<int> result = [];
     for (var i = 0; i < mass.length; i++) {
       result.add(int.parse(mass[i]));
     }
@@ -87,41 +89,43 @@ class DBDateProductsProvider {
     var dateInt = epochFromDate(dateByYMD);
 
     bool resp = false;
-    var res = await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
+    var res =
+        await db.rawQuery("SELECT * FROM DateProducts WHERE date = '$dateInt'");
 
-    if(res.length == 0){
+    if (res.length == 0) {
       var newDP = DateProducts(ids: idToAdd.toString(), date: dateByYMD);
       var response = await addDateProducts(newDP);
       resp = response != null;
-    }
-    else{
+    } else {
       var item = res.first;
-      var products = DateProducts(id:item['id'], ids: item['ids'], date: DateTime.fromMillisecondsSinceEpoch(item['date']));
-        try {
-          products.ids += ";" + res.first['id'].toString();
-        } catch (e) {
-
-        }
-      var response = await DBDateProductsProvider.db.updateDateProducts(products);
+      var products = DateProducts(
+          id: item['id'],
+          ids: item['ids'],
+          date: DateTime.fromMillisecondsSinceEpoch(item['date']));
+      try {
+        products.ids += ";" + res.first['id'].toString();
+      } catch (e) {}
+      var response =
+          await DBDateProductsProvider.db.updateDateProducts(products);
       resp = response == 1;
     }
     return resp;
   }
-  
-  updateDateProducts(DateProducts products) async{
+
+  updateDateProducts(DateProducts products) async {
     final db = await database;
 
     int count = await db.rawUpdate(
-      'UPDATE DateProducts SET ids = ? WHERE id = ?',
-      ['${products.ids}', '${products.id}']);
+        'UPDATE DateProducts SET ids = ? WHERE id = ?',
+        ['${products.ids}', '${products.id}']);
   }
 
-    Future<List<DateProducts>> getDates() async {
+  Future<List<DateProducts>> getDates() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM DateProducts");
 
-      List<DateProducts> list =
-          res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
+    List<DateProducts> list =
+        res.isNotEmpty ? res.map((c) => DateProducts.fromMap(c)).toList() : [];
     return list;
   }
 }

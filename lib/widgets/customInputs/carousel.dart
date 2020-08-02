@@ -7,17 +7,22 @@ class RadioItem extends StatelessWidget {
   RadioItem(this._item);
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        decoration: new BoxDecoration(
-          boxShadow: _item.isSelected? [DesignTheme.selectorShadow] : [DesignTheme.transperentShadow],
-          color: _item.isSelected ? DesignTheme.whiteColor: DesignTheme.selectorGrayBackGround,
-              border: new Border.all(
-                  width: 1.0,
-                  color: _item.isSelected? DesignTheme.mainColor: Colors.transparent),
-              borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
-            ),
-      padding: new EdgeInsets.only(left:20, right:20, top: 7.5,bottom: 7.5),
-      child: new Row(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: _item.isSelected
+            ? [DesignTheme.selectorShadow]
+            : [DesignTheme.transperentShadow],
+        color: _item.isSelected
+            ? DesignTheme.whiteColor
+            : DesignTheme.selectorGrayBackGround,
+        border: Border.all(
+            width: 1.0,
+            color:
+                _item.isSelected ? DesignTheme.mainColor : Colors.transparent),
+        borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
+      ),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 7.5, bottom: 7.5),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -26,19 +31,32 @@ class RadioItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Flexible(
-               child:
-            Text(_item.title, style: _item.isSelected? DesignTheme.selectorBigTextAction : DesignTheme.selectorBigText,)),
-            Flexible(
-               child:
-            Text(_item.subtitle, style: DesignTheme.selectorMiniLabel )),
-            Flexible(
-               child:
-            Text(_item.subSubTitle, style: DesignTheme.selectorMiniLabel ))
-          ],),
+                  child: Text(
+                _item.title,
+                style: _item.isSelected
+                    ? DesignTheme.selectorBigTextAction
+                    : DesignTheme.selectorBigText,
+              )),
+              Flexible(
+                  child: Text(_item.subtitle,
+                      style: DesignTheme.selectorMiniLabel)),
+              Flexible(
+                  child: Text(_item.subSubTitle,
+                      style: DesignTheme.selectorMiniLabel))
+            ],
+          ),
           Padding(
-            padding: new EdgeInsets.only(right:_item.padding),
+            padding: EdgeInsets.only(right: _item.padding),
             child: Container(
-              child: _item.isSelected ? Image.asset("assets/selector/"+_item.icon+"Color.png", height: 80,) : Image.asset("assets/selector/"+_item.icon+".png", height: 80,),
+              child: _item.isSelected
+                  ? Image.asset(
+                      "assets/selector/" + _item.icon + "Color.png",
+                      height: 80,
+                    )
+                  : Image.asset(
+                      "assets/selector/" + _item.icon + ".png",
+                      height: 80,
+                    ),
             ),
           )
         ],

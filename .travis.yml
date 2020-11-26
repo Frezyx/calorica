@@ -1,16 +1,14 @@
-os: osx
-language: generic
-osx_image: xcode8.3
-before_script:
-  - pip install six
-  - brew update
-  - brew install --HEAD libimobiledevice
-  - brew install ideviceinstaller
-  - brew install ios-deploy
-  - git clone https://github.com/flutter/flutter.git -b alpha --depth 1
-script:
-  - ./flutter/bin/flutter -v build ios --no-codesign
+env:
+    - FLUTTER_GITHUB="https://github.com/flutter/flutter.git"
 
-cache:
-  directories:
-    - $HOME/.pub-cache
+language: dart
+dart:
+    - stable
+dart_task:
+    - dartfmt
+install:
+    - git clone $FLUTTER_GITHUB -b stable
+
+script:
+  - ./flutter/bin/flutter doctor
+  - ./flutter/bin/flutter test 

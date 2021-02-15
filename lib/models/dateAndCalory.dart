@@ -8,5 +8,4 @@ class DateAndCalory {
     this.date,
     this.calory,
   });
-  
 }

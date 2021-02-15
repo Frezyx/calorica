@@ -2,25 +2,32 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 
-Future<List<UserProduct>> getProductsCaloryByDateList() async{
-    final now = DateTime.now();
+Future<List<UserProduct>> getProductsCaloryByDateList() async {
+  final now = DateTime.now();
 
-    var productsByDateList = <UserProduct>[];
+  var productsByDateList = <UserProduct>[];
 
-    for(int i = 6; i >= 0; i--){
+  for (int i = 6; i >= 0; i--) {
+    int date = epochFromDate(DateTime(now.year, now.month, now.day - i));
+    var userProduct = UserProduct(
+        id: i,
+        calory: 0.0,
+        squi: 0.0,
+        fat: 0.0,
+        carboh: 0.0,
+        grams: 0.0,
+        date: DateTime.fromMillisecondsSinceEpoch(date));
+    userProduct = getCaloryOfDay(
+        await DBUserProductsProvider.db.getProductsByDate(date), userProduct);
 
-        int date = epochFromDate(DateTime(now.year, now.month, now.day - i));
-        var userProduct = new UserProduct(id:i, calory: 0.0, squi: 0.0, fat: 0.0, carboh: 0.0, grams: 0.0, date: DateTime.fromMillisecondsSinceEpoch(date));
-        userProduct = getCaloryOfDay(await DBUserProductsProvider.db.getProductsByDate(date), userProduct);
-        
-        productsByDateList.add(userProduct);
-    }
-
-    return productsByDateList;
+    productsByDateList.add(userProduct);
   }
 
-UserProduct getCaloryOfDay(List<UserProduct> userProducts, UserProduct dayStats){
+  return productsByDateList;
+}
 
+UserProduct getCaloryOfDay(
+    List<UserProduct> userProducts, UserProduct dayStats) {
   for (UserProduct product in userProducts) {
     dayStats.calory += product.calory;
     dayStats.squi += product.squi;

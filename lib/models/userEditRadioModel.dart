@@ -8,5 +8,14 @@ class RadioModel {
   final double padding;
   final String subSubTitle;
 
-  RadioModel(this.isSelected, this.multiplaier, this.text, this.icon, this.title, this.subtitle,this.subSubTitle , this.padding,);
+  RadioModel(
+    this.isSelected,
+    this.multiplaier,
+    this.text,
+    this.icon,
+    this.title,
+    this.subtitle,
+    this.subSubTitle,
+    this.padding,
+  );
 }

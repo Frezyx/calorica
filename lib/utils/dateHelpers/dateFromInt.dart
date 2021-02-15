@@ -1,3 +1,3 @@
-  int epochFromDate(DateTime dt) {  
-    return dt.millisecondsSinceEpoch;
-  }
+int epochFromDate(DateTime dt) {
+  return dt.millisecondsSinceEpoch;
+}

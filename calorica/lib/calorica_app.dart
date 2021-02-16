@@ -1,6 +1,7 @@
 import 'package:calorica/widgets/launch_navigator/launch_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'blocs/auth_bloc/auth_bloc.dart';
 import 'blocs/auth_bloc/auth_event.dart';
@@ -19,7 +20,11 @@ class CaloricaApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Calorica',
-        theme: lightTheme,
+        theme: lightTheme.copyWith(
+          textTheme: GoogleFonts.rubikTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
         home: LaunchNavigator(),
       ),
     );

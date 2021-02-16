@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class CustomTheme {
   static Color mainColorSimple = Color(0xFF51DF70);
-  static MaterialColor mainColor = MaterialColor(0xFFFB9600, _mainColorCodes);
+  static MaterialColor mainColor = MaterialColor(0xFF51DF70, _mainColorCodes);
 
   static Map<int, Color> _mainColorCodes = {
     50: CustomTheme.mainColorSimple.withOpacity(.1),

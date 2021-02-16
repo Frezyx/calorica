@@ -22,7 +22,7 @@ class BottomBarItem extends StatelessWidget {
         child: Icon(
           iconData,
           size: 28,
-          color: isSelected ? theme.primaryColor : Colors.grey,
+          color: isSelected ? theme.primaryColor : theme.hintColor,
         ),
       ),
     );

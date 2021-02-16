@@ -1,4 +1,8 @@
 import 'package:calorica/blocs/auth_bloc/bloc.dart';
+import 'package:calorica/screens/auth/auth.dart';
+import 'package:calorica/screens/common/loader_screen.dart';
+import 'package:calorica/screens/home/home.dart';
+import 'package:calorica/screens/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,22 +16,14 @@ class LaunchNavigator extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is Authenticated) {
-          return Scaffold(
-            body: Text('Authenticated'),
-          );
+          return Home();
         } else if (state is Unauthenticated) {
           if (state.isFirstLaunch) {
-            return Scaffold(
-              body: Text('First launch'),
-            );
+            return OnboardingScreen();
           }
-          return Scaffold(
-            body: Text('Unauthenticated'),
-          );
+          return AuthScreen();
         }
-        return Scaffold(
-          body: Text('Loading...'),
-        );
+        return LoaderScreen();
       },
     );
   }

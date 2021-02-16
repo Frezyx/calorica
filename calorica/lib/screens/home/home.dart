@@ -1,5 +1,6 @@
 import 'package:calorica/common/constants/assets/assets.dart';
 import 'package:calorica/screens/home/widgets/body.dart';
+import 'package:calorica/widgets/common/bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -22,6 +23,14 @@ class Home extends StatelessWidget {
             child: HomeBody(),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomBar(
+        items: [
+          Icons.pie_chart_outline_rounded,
+          Icons.home_outlined,
+          Icons.add_box_outlined,
+        ],
+        onSelected: (int index) {},
       ),
     );
   }

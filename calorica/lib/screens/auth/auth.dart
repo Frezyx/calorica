@@ -14,7 +14,7 @@ class AuthScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: theme.primaryColor,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Opacity(
@@ -31,7 +31,7 @@ class AuthScreen extends StatelessWidget {
               width: size.width,
               height: size.height * 0.88,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.grey[100],
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -42,8 +42,15 @@ class AuthScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      'Вход в аккаунт',
+                      style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                     AuthButton(
-                      title: 'Вход через Google',
+                      title: 'Вход с Google',
                       titleStyle: TextStyle(
                         color: theme.brightness == Brightness.light
                             ? CustomTheme.darkColor
@@ -53,6 +60,24 @@ class AuthScreen extends StatelessWidget {
                       color: theme.brightness == Brightness.light
                           ? CustomTheme.lightColor
                           : CustomTheme.darkColor,
+                      onTap: () {},
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    AuthButton(
+                      title: 'Вход с Apple',
+                      titleStyle: TextStyle(
+                        color: theme.brightness == Brightness.light
+                            ? CustomTheme.lightColor
+                            : CustomTheme.darkColor,
+                      ),
+                      logoPath: theme.brightness == Brightness.light
+                          ? Assets.appleLightLogo
+                          : Assets.appleDarkLogo,
+                      color: theme.brightness == Brightness.light
+                          ? CustomTheme.darkColor
+                          : CustomTheme.lightColor,
                       onTap: () {},
                     ),
                   ],

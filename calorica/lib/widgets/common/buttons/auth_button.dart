@@ -22,7 +22,6 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return CustomRaisedButton(
         color: color,
         onPressed: onTap,
@@ -34,11 +33,12 @@ class AuthButton extends StatelessWidget {
           width: 30,
           height: 30,
         ),
-        SizedBox(width: 10),
+        SizedBox(width: 15),
         Text(
           title,
           style: titleStyle,
         ),
+        SizedBox(width: 30),
       ],
     ),);
   }

@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
       body: Stack(
         children: [
           Image(
-            image: AssetImage(Assets.homeBackground),
+            image: AssetImage(Assets.background),
           ),
           Align(
             alignment: Alignment.bottomCenter,

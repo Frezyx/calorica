@@ -1,3 +1,3 @@
 abstract class Assets {
-  static const homeBackground = "assets/img/home/bg.png";
+  static const background = "assets/img/home/bg.png";
 }

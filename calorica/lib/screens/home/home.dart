@@ -11,12 +11,15 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: theme.primaryColor,
       body: Stack(
         children: [
           Image(
+            width: size.width,
             image: AssetImage(Assets.background),
+            fit: BoxFit.fitWidth,
           ),
           Align(
             alignment: Alignment.bottomCenter,

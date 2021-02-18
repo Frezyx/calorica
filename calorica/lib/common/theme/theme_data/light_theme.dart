@@ -9,4 +9,7 @@ ThemeData get lightTheme => ThemeData(
         primarySwatch: CustomTheme.mainColor,
         accentColor: CustomTheme.mainColor,
       ),
+      buttonTheme: ButtonThemeData(
+        textTheme: ButtonTextTheme.primary,
+      ),
     );

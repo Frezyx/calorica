@@ -4,6 +4,9 @@ abstract class CustomTheme {
   static Color mainColorSimple = Color(0xFF51DF70);
   static MaterialColor mainColor = MaterialColor(0xFF51DF70, _mainColorCodes);
 
+  static Color lightColor = Colors.white;
+  static Color darkColor = Colors.black;
+
   static Map<int, Color> _mainColorCodes = {
     50: CustomTheme.mainColorSimple.withOpacity(.1),
     100: CustomTheme.mainColorSimple.withOpacity(.2),

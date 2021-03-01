@@ -1,17 +1,14 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/userEditRadioModel.dart';
-import 'package:calory_calc/pages/forms/customFrom.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/convertors/workModelFromTxt.dart';
-import 'package:calory_calc/widgets/alerts/easyGoogAlert.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
 import 'package:calory_calc/widgets/buttons/editorSaveButton.dart';
 import 'package:calory_calc/widgets/customInputs/carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 class EditUserParamsPage extends StatefulWidget {
   @override

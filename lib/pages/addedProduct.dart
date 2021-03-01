@@ -1,11 +1,9 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/alerts/badEditionAlert.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 

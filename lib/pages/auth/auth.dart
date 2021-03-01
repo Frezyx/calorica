@@ -1,4 +1,3 @@
-import 'package:calory_calc/pages/auth/widgets/forms/physical_parameters.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +38,11 @@ class _AuthPageState extends State<AuthPage> {
           allowImplicitScrolling: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
+            WorkModelPickerForm(
+              onComplete: (int workModel) {
+                _openNextPage();
+              },
+            ),
             PhysicalParametersForm(
               ageController: _ageController,
               heightController: _heightController,
@@ -49,11 +53,7 @@ class _AuthPageState extends State<AuthPage> {
                 String age,
                 bool gender,
               ) {
-                _pageController.animateToPage(
-                  _pageController.page.toInt() + 1,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.bounceInOut,
-                );
+                _openNextPage();
               },
             ),
             NameForm(
@@ -70,6 +70,14 @@ class _AuthPageState extends State<AuthPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _openNextPage() {
+    _pageController.animateToPage(
+      _pageController.page.toInt() + 1,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.bounceInOut,
     );
   }
 }

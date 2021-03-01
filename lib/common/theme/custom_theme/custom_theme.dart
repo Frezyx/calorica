@@ -14,7 +14,7 @@ abstract class CustomTheme {
   static Color get hintColor => Colors.grey[500];
 
   static Color get backgroundColor => Color.fromRGBO(244, 244, 244, 1);
-  static Color get lightScaffoldBackgroundColor => Color(0xFFE9E9E9);
+  static Color get lightScaffoldBackgroundColor => Color(0xFFFAFAFA);
 
   static TextStyle get inputLabel => TextStyle(
         fontSize: 16,

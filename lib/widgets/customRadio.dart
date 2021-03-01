@@ -1,8 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 class CustomRadio extends StatefulWidget {
   @override

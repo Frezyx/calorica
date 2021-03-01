@@ -102,43 +102,7 @@ class _PhysicalParametersFormState extends State<PhysicalParametersForm> {
                   },
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: true,
-                          groupValue: _gender,
-                          onChanged: (bool value) {
-                            setState(
-                              () {
-                                _gender = value;
-                              },
-                            );
-                          },
-                        ),
-                        Text("Мужчина"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: false,
-                          groupValue: _gender,
-                          onChanged: (bool value) {
-                            setState(
-                              () {
-                                _gender = value;
-                              },
-                            );
-                          },
-                        ),
-                        Text("Женщина"),
-                      ],
-                    ),
-                  ],
-                ),
+                _buildGenderPicker(),
               ],
             ),
           ),
@@ -153,6 +117,46 @@ class _PhysicalParametersFormState extends State<PhysicalParametersForm> {
           ),
         ],
       ),
+    );
+  }
+
+  Row _buildGenderPicker() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Radio(
+              value: true,
+              groupValue: _gender,
+              onChanged: (bool value) {
+                setState(
+                  () {
+                    _gender = value;
+                  },
+                );
+              },
+            ),
+            Text("Мужчина"),
+          ],
+        ),
+        Row(
+          children: [
+            Radio(
+              value: false,
+              groupValue: _gender,
+              onChanged: (bool value) {
+                setState(
+                  () {
+                    _gender = value;
+                  },
+                );
+              },
+            ),
+            Text("Женщина"),
+          ],
+        ),
+      ],
     );
   }
 

@@ -59,83 +59,83 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
 
   getFP() {
     return Form(
-        key: _formKey,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                cursorColor: DesignTheme.mainColor,
-                decoration: InputDecoration(
-                    labelText: 'Вес',
-                    labelStyle: DesignTheme.label,
-                    suffixIcon: Icon(FontAwesomeIcons.ruler)),
-                validator: (value) {
-                  if (value.isEmpty)
-                    return 'Введите ваш вес';
-                  else if (!(double.parse(value) is double))
-                    return 'Введите число, а не строку';
-                  else {
-                    _weight = double.parse(value);
-                  }
-                },
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TextFormField(
+            cursorColor: DesignTheme.mainColor,
+            decoration: InputDecoration(
+                labelText: 'Вес',
+                labelStyle: DesignTheme.label,
+                suffixIcon: Icon(FontAwesomeIcons.ruler)),
+            validator: (value) {
+              if (value.isEmpty)
+                return 'Введите ваш вес';
+              else if (!(double.parse(value) is double))
+                return 'Введите число, а не строку';
+              else {
+                _weight = double.parse(value);
+              }
+            },
+          ),
+          SizedBox(height: 10),
+          TextFormField(
+            cursorColor: DesignTheme.mainColor,
+            decoration: InputDecoration(
+                labelText: 'Рост',
+                labelStyle: DesignTheme.label,
+                suffixIcon: Icon(FontAwesomeIcons.ruler)),
+            validator: (value) {
+              if (value.isEmpty)
+                return 'Введите ваш рост';
+              else if (!(double.parse(value) is double))
+                return 'Введите число, а не строку';
+              else {
+                _height = double.parse(value);
+              }
+            },
+          ),
+          SizedBox(height: 10),
+          GradientButton(
+            increaseWidthBy: 60,
+            increaseHeightBy: 5,
+            child: Padding(
+              child: Text(
+                'Далее',
+                textAlign: TextAlign.center,
+                style: DesignTheme.buttonText,
               ),
-              SizedBox(height: 10),
-              TextFormField(
-                cursorColor: DesignTheme.mainColor,
-                decoration: InputDecoration(
-                    labelText: 'Рост',
-                    labelStyle: DesignTheme.label,
-                    suffixIcon: Icon(FontAwesomeIcons.ruler)),
-                validator: (value) {
-                  if (value.isEmpty)
-                    return 'Введите ваш рост';
-                  else if (!(double.parse(value) is double))
-                    return 'Введите число, а не строку';
-                  else {
-                    _height = double.parse(value);
-                  }
-                },
-              ),
-              SizedBox(height: 10),
-              GradientButton(
-                increaseWidthBy: 60,
-                increaseHeightBy: 5,
-                child: Padding(
-                  child: Text(
-                    'Далее',
-                    textAlign: TextAlign.center,
-                    style: DesignTheme.buttonText,
-                  ),
-                  padding:
-                      EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
-                ),
-                callback: () {
-                  if (_formKey.currentState.validate()) {
-                    if (_weight != null && _height != null) {
-                      DBUserProvider.db
-                          .updateDateProducts("weight", _weight)
-                          .then((count1) {
-                        DBUserProvider.db
-                            .updateDateProducts("height", _height)
-                            .then((count2) {
-                          if (count1 == 1 && count2 == 1) {
-                            setState(() {
-                              isFP = false;
-                              isSP = true;
-                            });
-                          }
+              padding: EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
+            ),
+            callback: () {
+              if (_formKey.currentState.validate()) {
+                if (_weight != null && _height != null) {
+                  DBUserProvider.db
+                      .updateDateProducts("weight", _weight)
+                      .then((count1) {
+                    DBUserProvider.db
+                        .updateDateProducts("height", _height)
+                        .then((count2) {
+                      if (count1 == 1 && count2 == 1) {
+                        setState(() {
+                          isFP = false;
+                          isSP = true;
                         });
-                      });
-                    }
-                  }
-                },
-                shapeRadius: BorderRadius.circular(50.0),
-                gradient: DesignTheme.gradient,
-                shadowColor:
-                    Gradients.backToFuture.colors.last.withOpacity(0.25),
-              ),
-            ]));
+                      }
+                    });
+                  });
+                }
+              }
+            },
+            shapeRadius: BorderRadius.circular(50.0),
+            gradient: DesignTheme.gradient,
+            shadowColor: Gradients.backToFuture.colors.last.withOpacity(0.25),
+          ),
+        ],
+      ),
+    );
   }
 
   getSP() {

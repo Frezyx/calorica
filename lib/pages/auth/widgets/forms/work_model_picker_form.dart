@@ -10,7 +10,7 @@ class WorkModelPickerForm extends StatefulWidget {
     this.onComplete,
   }) : super(key: key);
 
-  final Function(int workModel) onComplete;
+  final Function(int futureWorkModel) onComplete;
 
   @override
   createState() {

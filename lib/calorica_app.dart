@@ -1,7 +1,5 @@
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/pages/addedProduct.dart';
-import 'package:calory_calc/pages/authLastPage.dart';
-import 'package:calory_calc/pages/authSecondScreen.dart';
 import 'package:calory_calc/pages/edit/choiceDiet.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
 import 'package:calory_calc/pages/edit/editUserDietParams.dart';
@@ -9,7 +7,6 @@ import 'package:calory_calc/pages/edit/editUserParams.dart';
 import 'package:calory_calc/widgets/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/add.dart';
 import 'package:calory_calc/pages/auth/auth.dart';
 import 'package:calory_calc/pages/product.dart';
@@ -36,8 +33,6 @@ class _CaloricaAppState extends State<CaloricaApp> {
         '/add': (BuildContext context) => AddPage(),
         '/stats': (BuildContext context) => MainStats(),
         '/history': (BuildContext context) => HistoryPage(),
-        '/authSecondScreen': (BuildContext context) => SecondAuthPage(),
-        '/selectActiviti': (BuildContext context) => ActivitiSelectPage(),
         '/editUser': (BuildContext context) => EditUserPage(),
         '/editUserParams': (BuildContext context) => EditUserParamsPage(),
         '/editUserDietParams': (BuildContext context) => EditDietParamsPage(),

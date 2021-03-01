@@ -1,8 +1,14 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
 
 class CustomRadio extends StatefulWidget {
+  const CustomRadio({
+    Key key,
+    @required this.onSelect,
+  }) : super(key: key);
+
+  final Function(double workModel) onSelect;
+
   @override
   createState() {
     return CustomRadioState();
@@ -27,54 +33,47 @@ class CustomRadioState extends State<CustomRadio> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(top: 120),
-        child: Text(
-          "Выберите Степень вашей физической активности: ",
+    return Column(
+      children: <Widget>[
+        Text(
+          "Как часто вы занимаетесь спортом ?",
           style: DesignTheme.label,
         ),
-      ),
-      Padding(
-          padding: EdgeInsets.only(top: 170),
-          child: ListView.builder(
-            itemCount: sampleData.length,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                highlightColor: DesignTheme.secondColor,
-                focusColor: DesignTheme.secondColor,
-                splashColor: DesignTheme.secondColor,
-                onTap: () {
-                  setState(() {
-                    sampleData.forEach((element) => element.isSelected = false);
-                    sampleData[index].isSelected = true;
-                  });
-                  DBUserProvider.db
-                      .updateDateProducts(
-                          "workModel", sampleData[index].multiplaier)
-                      .then((count1) {
-                    if (count1 == 1) {
-                      Navigator.pushNamed(context, '/selectActiviti');
-                    } else {
-                      // TODO : Alert
-                    }
-                  });
-                },
-                child: RadioItem(sampleData[index]),
-              );
-            },
-          )),
-    ]);
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            children: sampleData
+                .map(
+                  (e) => InkWell(
+                    highlightColor: DesignTheme.secondColor,
+                    focusColor: DesignTheme.secondColor,
+                    splashColor: DesignTheme.secondColor,
+                    onTap: () {
+                      setState(() {
+                        sampleData
+                            .forEach((element) => element.isSelected = false);
+                        e.isSelected = true;
+                      });
+                      widget.onSelect(e.multiplaier);
+                    },
+                    child: _RadioItem(e),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class RadioItem extends StatelessWidget {
+class _RadioItem extends StatelessWidget {
   final RadioModel _item;
-  RadioItem(this._item);
+  _RadioItem(this._item);
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.only(bottom: 10.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[

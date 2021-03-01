@@ -30,16 +30,18 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
+        FocusScope.of(context).requestFocus(
+          FocusNode(),
+        );
       },
       child: Scaffold(
         body: PageView(
           controller: _pageController,
           allowImplicitScrolling: true,
-          physics: NeverScrollableScrollPhysics(),
+          // physics: NeverScrollableScrollPhysics(),
           children: [
             WorkModelPickerForm(
-              onComplete: (int workModel) {
+              onComplete: (int futureWorkModel) {
                 _openNextPage();
               },
             ),
@@ -53,6 +55,11 @@ class _AuthPageState extends State<AuthPage> {
                 String age,
                 bool gender,
               ) {
+                _openNextPage();
+              },
+            ),
+            ExerciseStressPickerForm(
+              onComplete: (double workModel) {
                 _openNextPage();
               },
             ),

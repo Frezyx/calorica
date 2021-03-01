@@ -40,82 +40,93 @@ class DBUserProvider {
     });
   }
 
-  Future<int>addUser(User user) async{
+  Future<int> addUser(User user) async {
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel, clickCount)"
-        " VALUES (?,?,?,?,?,?,?,?,?,?)",
-        [0, 
+      "INSERT Into Users (id, name, surname, weight, height, age, workModel, gender, workFutureModel, clickCount)"
+      " VALUES (?,?,?,?,?,?,?,?,?,?)",
+      [
+        0,
         user.name,
         user.surname,
-        90.0,
-        180.0,
-        25.0,
-        1.375,
-        true,
-        1,
+        user.weight,
+        user.height,
+        user.age,
+        user.workModel,
+        user.gender,
+        user.workFutureModel,
         0
-        ]);
+      ],
+    );
     return raw;
   }
-  
-  Future<bool>counter() async{
+
+  Future<bool> counter() async {
     final db = await database;
     bool adResponse = false;
     var res = await db.rawQuery("SELECT * FROM Users");
     var item = res.first;
     int count = res.first['clickCount'];
     count++;
-    if(count <= 20){
+    if (count <= 20) {
       updateDateProducts('clickCount', count);
-    }
-    else{
+    } else {
       adResponse = true;
       updateDateProducts('clickCount', 0);
     }
     return adResponse;
   }
 
-  Future<int>updateDateProducts(String paramName, param) async{
+  Future<int> updateDateProducts(String paramName, param) async {
     final db = await database;
     int count = await db.rawUpdate(
-      "UPDATE Users SET $paramName = ? WHERE id = ?",
-      ['$param', 0]);
+        "UPDATE Users SET $paramName = ? WHERE id = ?", ['$param', 0]);
     return count;
   }
 
-  Future<int>updateUser(User user) async{
+  Future<int> updateUser(User user) async {
     final db = await database;
     int count = await db.rawUpdate(
-      'UPDATE Users SET name = ?, surname = ?, weight = ?, height = ?, age = ?, workModel = ?, gender = ?, workFutureModel = ? WHERE id = ?',
-      ['${user.name}' , '${user.surname}', '${user.weight}', '${user.height}', '${user.age}', '${user.workModel}', '${user.gender}', '${user.workFutureModel}', 0]);
+        'UPDATE Users SET name = ?, surname = ?, weight = ?, height = ?, age = ?, workModel = ?, gender = ?, workFutureModel = ? WHERE id = ?',
+        [
+          '${user.name}',
+          '${user.surname}',
+          '${user.weight}',
+          '${user.height}',
+          '${user.age}',
+          '${user.workModel}',
+          '${user.gender}',
+          '${user.workFutureModel}',
+          0
+        ]);
     return count;
   }
 
-  Future<int>updateUserOnlyNameAndSurname(int id, String name, String surname) async{
+  Future<int> updateUserOnlyNameAndSurname(
+      int id, String name, String surname) async {
     final db = await database;
     int count = await db.rawUpdate(
-      'UPDATE Users SET name = ?, surname = ? WHERE id = ?',
-      [name, surname, id]);
+        'UPDATE Users SET name = ?, surname = ? WHERE id = ?',
+        [name, surname, id]);
     return count;
   }
 
   Future<User> getUser() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Users");
-      var item = res.first;
-      User user = User(
-        id: item['id'],
-        name: item['name'],
-        surname: item['surname'],
-        weight: item['weight'],
-        height: item['height'],
-        age: item['age'],
-        workModel: item['workModel'],
-        gender: item['gender'] == 1,
-        workFutureModel: item['workFutureModel'],
-        clickCount: item['clickCount'],
-      );
+    var item = res.first;
+    User user = User(
+      id: item['id'],
+      name: item['name'],
+      surname: item['surname'],
+      weight: item['weight'],
+      height: item['height'],
+      age: item['age'],
+      workModel: item['workModel'],
+      gender: item['gender'] == 1,
+      workFutureModel: item['workFutureModel'],
+      clickCount: item['clickCount'],
+    );
 
     return user;
   }

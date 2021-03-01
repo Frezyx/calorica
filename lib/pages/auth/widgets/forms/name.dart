@@ -19,68 +19,77 @@ class NameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          children: [
-            Text(
-              'Регистрация',
-              style: CustomTheme.title,
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: [
+                Text(
+                  'Регистрация',
+                  style: CustomTheme.title,
+                ),
+                Text(
+                  'Личные данные',
+                  style: CustomTheme.subtitle.copyWith(
+                    color: theme.primaryColor,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Физические параметры',
-              style: CustomTheme.subtitle.copyWith(
-                color: theme.primaryColor,
+            Column(
+              children: [
+                TextFormField(
+                  onTap: () {},
+                  controller: nameController,
+                  cursorColor: theme.primaryColor,
+                  decoration: CustomTheme.authInputDecoration.copyWith(
+                    labelText: 'Имя',
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty)
+                      return 'Введите ваш логин';
+                    else
+                      return null;
+                  },
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  onTap: () {},
+                  controller: surnameController,
+                  cursorColor: theme.primaryColor,
+                  decoration: CustomTheme.authInputDecoration.copyWith(
+                    labelText: 'Фамилия',
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty)
+                      return 'Введите вашу фамилию';
+                    else
+                      return null;
+                  },
+                ),
+              ],
+            ),
+            CommonButton(
+              child: Text(
+                'Далее',
+                style: Theme.of(context).textTheme.button.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
+              onPressed: () => _onButtonPressed(context),
             ),
           ],
         ),
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                onTap: () {},
-                controller: nameController,
-                cursorColor: theme.primaryColor,
-                decoration: CustomTheme.authInputDecoration.copyWith(
-                  labelText: 'Имя',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) return 'Введите ваш логин';
-                },
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                onTap: () {},
-                controller: surnameController,
-                cursorColor: theme.primaryColor,
-                decoration: CustomTheme.authInputDecoration.copyWith(
-                  labelText: 'Фамилия',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) return 'Введите вашу фамилию';
-                },
-              ),
-            ],
-          ),
-        ),
-        CommonButton(
-          child: Text(
-            'Далее',
-            style: Theme.of(context).textTheme.button.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          onPressed: _onButtonPressed,
-        ),
-      ],
+      ),
     );
   }
 
-  void _onButtonPressed() {
+  void _onButtonPressed(BuildContext context) {
     final name = nameController.text;
     final surname = surnameController.text;
     if (_formKey.currentState.validate()) {
@@ -88,13 +97,7 @@ class NameForm extends StatelessWidget {
           name.isNotEmpty &&
           surname != null &&
           surname.isNotEmpty) {
-        onCompleted(nameController.text, surnameController.text);
-        // User user = User(name: _name, surname: _surname);
-        // registrationAtLocalDB(user).then((res) {
-        //   if (res) {
-        //     Navigator.pushNamed(context, '/authSecondScreen');
-        //   }
-        // });
+        onCompleted(name, surname);
       }
     }
   }

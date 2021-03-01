@@ -1,10 +1,11 @@
+import 'package:calory_calc/pages/auth/widgets/forms/physical_parameters.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/utils/dataLoader.dart';
 
-import 'widgets/widgets.dart';
+import 'widgets/forms/forms.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -18,8 +19,13 @@ class _AuthPageState extends State<AuthPage> {
     startLoadData();
   }
 
+  final _pageController = PageController();
+
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +34,40 @@ class _AuthPageState extends State<AuthPage> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(40),
-          child: NameForm(
-            nameController: _nameController,
-            surnameController: _surnameController,
-            onCompleted: (String name, String surname) {},
-          ),
+        body: PageView(
+          controller: _pageController,
+          allowImplicitScrolling: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            PhysicalParametersForm(
+              ageController: _ageController,
+              heightController: _heightController,
+              weightController: _weightController,
+              onCompleted: (
+                String weight,
+                String height,
+                String age,
+                bool gender,
+              ) {
+                _pageController.animateToPage(
+                  _pageController.page.toInt() + 1,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.bounceInOut,
+                );
+              },
+            ),
+            NameForm(
+              nameController: _nameController,
+              surnameController: _surnameController,
+              onCompleted: (String name, String surname) async {
+                User user = User(name: surname, surname: surname);
+                final res = await registrationAtLocalDB(user);
+                if (res) {
+                  Navigator.pushNamed(context, '/authSecondScreen');
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

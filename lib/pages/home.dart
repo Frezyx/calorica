@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DesignTheme.bgColor,
+      backgroundColor: DesignTheme.backgroundColor,
       body: Stack(children: <Widget>[
         Container(
           padding: EdgeInsets.all(0),

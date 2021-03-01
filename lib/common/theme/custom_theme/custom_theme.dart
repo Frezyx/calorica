@@ -2,26 +2,57 @@ import 'package:flutter/material.dart';
 
 // ignore: avoid_classes_with_only_static_members
 abstract class CustomTheme {
-  static const Color mainColorSimple = Color(0xFF51D684);
-  static final MaterialColor mainColor = MaterialColor(
-    mainColorSimple.value,
-    _mainColorCodes,
-  );
+  static Color get mainColorSimple => Color(0xFF51D684);
+  static MaterialColor get mainColor => MaterialColor(
+        mainColorSimple.value,
+        _mainColorCodes,
+      );
 
-  static final Color lightColor = Colors.white;
-  static final Color darkColor = Colors.black;
+  static Color get lightColor => Colors.white;
+  static Color get darkColor => Colors.black;
 
-  static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
+  static Color get hintColor => Colors.grey[500];
 
-  static const Color lightScaffoldBackgroundColor = Color(0xFFE9E9E9);
+  static Color get backgroundColor => Color.fromRGBO(244, 244, 244, 1);
+  static Color get lightScaffoldBackgroundColor => Color(0xFFE9E9E9);
 
-  static final lightFormShadow = [
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.1),
-      blurRadius: 5,
-      offset: const Offset(0, 2),
-    ),
-  ];
+  static TextStyle get inputLabel => TextStyle(
+        fontSize: 16,
+      );
+
+  static get lightFormShadow => [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.1),
+          blurRadius: 5,
+          offset: const Offset(0, 2),
+        ),
+      ];
+
+  static get authInputDecoration => InputDecoration(
+        labelStyle: CustomTheme.inputLabel,
+        hintStyle: CustomTheme.inputLabel.copyWith(
+          color: CustomTheme.hintColor,
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: hintColor,
+            style: BorderStyle.solid,
+          ),
+        ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: hintColor,
+            style: BorderStyle.solid,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderSide: BorderSide(
+            color: CustomTheme.mainColor,
+          ),
+        ),
+        contentPadding: EdgeInsets.only(bottom: 0.0, left: 5.0, right: 5.0),
+      );
 
   static final Map<int, Color> _mainColorCodes = {
     50: CustomTheme.mainColorSimple.withOpacity(.1),
@@ -36,5 +67,5 @@ abstract class CustomTheme {
     900: CustomTheme.mainColorSimple,
   };
 
-  static const EdgeInsets pagePadding = EdgeInsets.only(top: 40.0);
+  static EdgeInsets get pagePadding => EdgeInsets.only(top: 40.0);
 }

@@ -5,7 +5,7 @@ ThemeData get lightTheme => ThemeData(
       fontFamily: 'Montserrat',
       cardColor: Colors.white,
       hintColor: Colors.grey[400],
-      backgroundColor: CustomTheme.bgColor,
+      backgroundColor: CustomTheme.backgroundColor,
       scaffoldBackgroundColor: CustomTheme.lightScaffoldBackgroundColor,
       primaryColor: CustomTheme.mainColor,
       accentColor: CustomTheme.mainColor,

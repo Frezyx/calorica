@@ -114,6 +114,9 @@ class DBUserProvider {
   Future<User> getUser() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Users");
+    if (res == null || res.isEmpty) {
+      return null;
+    }
     var item = res.first;
     User user = User(
       id: item['id'],

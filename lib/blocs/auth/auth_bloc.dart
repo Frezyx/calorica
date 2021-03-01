@@ -10,6 +10,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     if (event is LoadAuthorization) {
       yield* _mapLoadAuthorizationToState(event);
+    } else if (event is Authorize) {
+      yield* _mapAuthorizeToState(event);
+    }
+  }
+
+  Stream<AuthState> _mapAuthorizeToState(Authorize event) async* {
+    try {
+      await DBUserProvider.db.addUser(event.user);
+      yield Authorized(event.user);
+    } on Exception catch (e) {
+      yield Unauthorized();
     }
   }
 
@@ -22,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         yield Unauthorized();
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       yield Unauthorized();
     }
   }

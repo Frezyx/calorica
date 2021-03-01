@@ -27,6 +27,11 @@ dependencies:
   flutter_config: ^1.0.7
   ff_navigation_bar: ^0.1.4
 
+  # after 1.0.1
+
+  equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
+
 
 dev_dependencies:
   flutter_test:

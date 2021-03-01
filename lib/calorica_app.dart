@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/add.dart';
-import 'package:calory_calc/pages/auth.dart';
+import 'package:calory_calc/pages/auth/auth.dart';
 import 'package:calory_calc/pages/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';
 import 'package:calory_calc/pages/stats/history.dart';

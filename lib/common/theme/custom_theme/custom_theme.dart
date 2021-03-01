@@ -18,6 +18,17 @@ abstract class CustomTheme {
 
   static TextStyle get inputLabel => TextStyle(
         fontSize: 16,
+        color: CustomTheme.darkColor,
+      );
+
+  static TextStyle get title => TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w700,
+      );
+
+  static TextStyle get subtitle => TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       );
 
   static get lightFormShadow => [
@@ -30,24 +41,21 @@ abstract class CustomTheme {
 
   static get authInputDecoration => InputDecoration(
         labelStyle: CustomTheme.inputLabel,
-        hintStyle: CustomTheme.inputLabel.copyWith(
-          color: CustomTheme.hintColor,
-        ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: hintColor,
+            color: CustomTheme.mainColor,
             style: BorderStyle.solid,
           ),
         ),
         border: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: hintColor,
+            color: CustomTheme.mainColor,
             style: BorderStyle.solid,
           ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
+            width: 2.0,
             color: CustomTheme.mainColor,
           ),
         ),

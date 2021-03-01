@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/authLastPage.dart';
 import 'package:calory_calc/pages/authSecondScreen.dart';
@@ -26,14 +27,7 @@ class _CaloricaAppState extends State<CaloricaApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Calori Calc',
-      theme: ThemeData(
-        backgroundColor: DesignTheme.bgColor,
-        fontFamily: 'Montserrat',
-        accentColor: DesignTheme.mainColor,
-        primaryColorDark: DesignTheme.secondColor,
-        primaryColorLight: DesignTheme.mainColor,
-        primaryColor: DesignTheme.mainColor,
-      ),
+      theme: lightTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: '/auth',
       routes: {
@@ -53,28 +47,27 @@ class _CaloricaAppState extends State<CaloricaApp> {
         var path = RouteSettings.name.split('/');
 
         if (path[1] == 'product') {
-          return new MaterialPageRoute(
-              builder: (context) => new ProductPage(id: path[2]),
+          return MaterialPageRoute(
+              builder: (context) => ProductPage(id: path[2]),
               settings: RouteSettings);
         }
 
         if (path[1] == 'navigator') {
-          return new MaterialPageRoute(
-              builder: (context) =>
-                  new NavigatorPage(index: int.parse(path[2])),
+          return MaterialPageRoute(
+              builder: (context) => NavigatorPage(index: int.parse(path[2])),
               settings: RouteSettings);
         }
 
         if (path[1] == 'daydata') {
-          return new MaterialPageRoute(
-              builder: (context) => new DayDatePage(date: path[2]),
+          return MaterialPageRoute(
+              builder: (context) => DayDatePage(date: path[2]),
               settings: RouteSettings);
         }
 
         if (path[1] == 'addedProduct') {
-          return new MaterialPageRoute(
+          return MaterialPageRoute(
               builder: (context) =>
-                  new AddedProductPage(id: path[2], from: path[3]),
+                  AddedProductPage(id: path[2], from: path[3]),
               settings: RouteSettings);
         }
       },

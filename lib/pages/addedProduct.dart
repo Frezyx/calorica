@@ -30,7 +30,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
 
   String productParamTxt = "";
   bool isEdited = false;
-  var productParams = new Product();
+  var productParams = Product();
   final _formKey = GlobalKey<FormState>();
 
   ScrollController scrollController;
@@ -171,7 +171,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
   }
 
   getTextForm() {
-    final TextEditingController _ageController = new TextEditingController();
+    final TextEditingController _ageController = TextEditingController();
     _ageController.text = productParamTxt;
 
     return Padding(
@@ -244,9 +244,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
             highlightedBorderColor: Colors.red,
-            borderSide: new BorderSide(color: Colors.red),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0))));
+            borderSide: BorderSide(color: Colors.red),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))));
   }
 
   getEditingButton() {
@@ -284,9 +284,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
             highlightedBorderColor: DesignTheme.darkBlue,
-            borderSide: new BorderSide(color: DesignTheme.darkBlue),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0))));
+            borderSide: BorderSide(color: DesignTheme.darkBlue),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))));
   }
 
   getSaveButton(_formKey) {
@@ -332,9 +332,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
             highlightedBorderColor: DesignTheme.mainColor,
-            borderSide: new BorderSide(color: DesignTheme.mainColor),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0))));
+            borderSide: BorderSide(color: DesignTheme.mainColor),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))));
   }
 
   getDeleteButton() {
@@ -370,9 +370,9 @@ class _AddedProductPageState extends State<AddedProductPage> {
               ),
             ),
             highlightedBorderColor: Colors.red,
-            borderSide: new BorderSide(color: Colors.red),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0))));
+            borderSide: BorderSide(color: Colors.red),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))));
   }
 
   Future<void> _badAllert(context, id) async {

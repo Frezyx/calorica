@@ -9,35 +9,23 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 class CustomRadioSelector extends StatefulWidget {
   @override
   createState() {
-    return new CustomRadioSelectorState();
+    return CustomRadioSelectorState();
   }
 }
 
 class CustomRadioSelectorState extends State<CustomRadioSelector> {
-  List<RadioModel> sampleData = new List<RadioModel>();
+  List<RadioModel> sampleData = List<RadioModel>();
   int workModel = 1;
 
   @override
   void initState() {
     super.initState();
-    sampleData.add(new RadioModel(true, 1, 'Минимум физической активности',
-        "slim", "Похудеть", "Диета для быстрого похудения", 20));
-    sampleData.add(new RadioModel(
-        false,
-        2,
-        'Занимаюсь спортом 1-3 раза в неделю',
-        "normal",
-        "Сохранить вес",
-        "Стандартное, здоровое питание",
-        5));
-    sampleData.add(new RadioModel(
-        false,
-        3,
-        'Занимаюсь спортом 3-4 раза в неделю',
-        "strong",
-        "Набрать вес",
-        "Диета для набора массы",
-        20));
+    sampleData.add(RadioModel(true, 1, 'Минимум физической активности', "slim",
+        "Похудеть", "Диета для быстрого похудения", 20));
+    sampleData.add(RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю',
+        "normal", "Сохранить вес", "Стандартное, здоровое питание", 5));
+    sampleData.add(RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю',
+        "strong", "Набрать вес", "Диета для набора массы", 20));
   }
 
   @override
@@ -59,7 +47,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                   child: ListView.builder(
                     itemCount: sampleData.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return new InkWell(
+                      return InkWell(
                         highlightColor: Colors.transparent,
                         focusColor: Colors.transparent,
                         splashColor: Colors.transparent,
@@ -71,7 +59,7 @@ class CustomRadioSelectorState extends State<CustomRadioSelector> {
                             workModel = sampleData[index].multiplaier;
                           });
                         },
-                        child: new RadioItem(sampleData[index]),
+                        child: RadioItem(sampleData[index]),
                       );
                     },
                   )),
@@ -162,27 +150,27 @@ class RadioItem extends StatelessWidget {
   RadioItem(this._item);
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
+    return Container(
+      decoration: BoxDecoration(
         boxShadow: _item.isSelected
             ? [DesignTheme.selectorShadow]
             : [DesignTheme.transperentShadow],
         color: _item.isSelected
             ? DesignTheme.whiteColor
             : DesignTheme.selectorGrayBackGround,
-        border: new Border.all(
+        border: Border.all(
             width: 1.0,
             color:
                 _item.isSelected ? DesignTheme.mainColor : Colors.transparent),
         borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
       ),
-      margin: new EdgeInsets.only(
+      margin: EdgeInsets.only(
         bottom: 15,
         left: 30.0,
         right: 30.0,
       ),
-      padding: new EdgeInsets.only(left: 20, right: 20, top: 7.5, bottom: 7.5),
-      child: new Row(
+      padding: EdgeInsets.only(left: 20, right: 20, top: 7.5, bottom: 7.5),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -200,7 +188,7 @@ class RadioItem extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: new EdgeInsets.only(right: _item.padding),
+            padding: EdgeInsets.only(right: _item.padding),
             child: Container(
               child: _item.isSelected
                   ? Image.asset(

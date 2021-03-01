@@ -26,7 +26,7 @@ class User {
     this.workFutureModel,
     this.clickCount,
   });
-      
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -38,13 +38,13 @@ class User {
       'workModel': workModel,
       'gender': gender == 1,
       'workFutureModel': workFutureModel,
-      'clickCount' : clickCount,
+      'clickCount': clickCount,
     };
   }
 
   static User fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return User(
       id: map['id'],
       name: map['name'],
@@ -74,7 +74,7 @@ class Product {
   double carboh;
 
   Product({
-		this.id,
+    this.id,
     this.name,
     this.category,
     this.calory,
@@ -83,7 +83,7 @@ class Product {
     this.carboh,
   });
 
-  factory Product.fromMap(Map<String, dynamic> json) => new Product(
+  factory Product.fromMap(Map<String, dynamic> json) => Product(
         id: json["id"],
         name: json["name"],
         category: json["category"],
@@ -92,7 +92,7 @@ class Product {
         fat: json["fat"],
         carboh: json["carboh"],
       );
-      
+
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
@@ -103,7 +103,6 @@ class Product {
         "carboh": carboh,
       };
 }
-
 
 class UserProduct {
   int id;
@@ -130,7 +129,7 @@ class UserProduct {
     this.productId,
   });
 
-  factory UserProduct.fromMap(Map<String, dynamic> json) => new UserProduct(
+  factory UserProduct.fromMap(Map<String, dynamic> json) => UserProduct(
         id: json["id"],
         name: json["name"],
         category: json["category"],
@@ -142,7 +141,7 @@ class UserProduct {
         grams: json['grams'],
         productId: json["productId"],
       );
-      
+
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
@@ -151,9 +150,9 @@ class UserProduct {
         "squi": squi,
         "fat": fat,
         "carboh": carboh,
-        "date": epochFromDate(date) ,
+        "date": epochFromDate(date),
         "grams": grams,
-        "productId" : productId,
+        "productId": productId,
       };
 }
 
@@ -172,13 +171,13 @@ class DateProducts {
     return {
       'date': epochFromDate(date),
       'id': id,
-      'ids' : ids,
+      'ids': ids,
     };
   }
 
   static DateProducts fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return DateProducts(
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       id: map['id'],

@@ -26,7 +26,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   String id;
   _ProductPageState(this.id);
-  final _grammController = new TextEditingController();
+  final _grammController = TextEditingController();
   Product product = Product();
   String name = "";
   double calory = 0.0;

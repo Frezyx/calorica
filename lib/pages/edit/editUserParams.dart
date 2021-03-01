@@ -13,42 +13,52 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
-class EditUserParamsPage extends StatefulWidget{
+class EditUserParamsPage extends StatefulWidget {
   @override
   _EditUserParamsPageState createState() => _EditUserParamsPageState();
 }
 
 class _EditUserParamsPageState extends State<EditUserParamsPage> {
-  User user = new User();
+  User user = User();
 
   List<RadioModel> sampleData = [
-    RadioModel(true, 1, 'Минимум физической активности', "slim", "Похудеть", "Диета для", "быстрого похудения", 20),
-    RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal", "Сохранить вес", "Стандартное, здоровое","питание", 5),
-    RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong", "Набрать вес", "Диета для ","набора массы", 20)
+    RadioModel(true, 1, 'Минимум физической активности', "slim", "Похудеть",
+        "Диета для", "быстрого похудения", 20),
+    RadioModel(false, 2, 'Занимаюсь спортом 1-3 раза в неделю', "normal",
+        "Сохранить вес", "Стандартное, здоровое", "питание", 5),
+    RadioModel(false, 3, 'Занимаюсь спортом 3-4 раза в неделю', "strong",
+        "Набрать вес", "Диета для ", "набора массы", 20)
   ];
 
   String dropdownValue = 'Минимум физической активности';
-  
+
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _weightController = new TextEditingController( );
-  final TextEditingController _heightController = new TextEditingController( );
-  final TextEditingController _ageController = new TextEditingController( );
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
 
   @override
   void initState() {
-    DBUserProvider.db.getUser().then((_user){
-      setState((){
+    DBUserProvider.db.getUser().then((_user) {
+      setState(() {
         user = _user;
-        
+
         _weightController.text = user.weight.toString();
         _heightController.text = user.height.toString();
         _ageController.text = user.age.toString();
 
-        sampleData[0].isSelected = user.workFutureModel == 1; 
+        sampleData[0].isSelected = user.workFutureModel == 1;
         sampleData[1].isSelected = user.workFutureModel == 2;
         sampleData[2].isSelected = user.workFutureModel == 3;
-        dropdownValue = user.workModel == 1.2 ?'Минимум физической активности': user.workModel == 1.375 ? 'Занимаюсь спортом 1-3 раза в неделю':
-        user.workModel == 1.55? 'Занимаюсь спортом 3-4 раза в неделю': user.workModel == 1.7? 'Занимаюсь спортом каждый день' : 'Тренируюсь по несколько раз в день';
+        dropdownValue = user.workModel == 1.2
+            ? 'Минимум физической активности'
+            : user.workModel == 1.375
+                ? 'Занимаюсь спортом 1-3 раза в неделю'
+                : user.workModel == 1.55
+                    ? 'Занимаюсь спортом 3-4 раза в неделю'
+                    : user.workModel == 1.7
+                        ? 'Занимаюсь спортом каждый день'
+                        : 'Тренируюсь по несколько раз в день';
       });
     });
     super.initState();
@@ -59,149 +69,150 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
     return Scaffold(
       appBar: getArrowBackAppBar("Параметры тела", "/editUser", context),
       body: SingleChildScrollView(
-        child:
-        Stack(
-        children: <Widget>[
-          Form(key: _formKey, child: 
-      Column(
-        children:<Widget>[
-            Stack(
-              children:<Widget>[ 
-        Container(
-          padding: EdgeInsets.only(left:30, top:30, right:30),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                      controller: _weightController,
-                      cursorColor: DesignTheme.mainColor,
-                      decoration: InputDecoration(
-                        labelText: 'Вес',
-                        labelStyle: DesignTheme.selectorLabel,
-                        suffixIcon: Icon(
-                            FontAwesomeIcons.ruler,
-                          )
+        child: Stack(
+          children: <Widget>[
+            Form(
+                key: _formKey,
+                child: Column(children: <Widget>[
+                  Stack(children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            TextFormField(
+                              controller: _weightController,
+                              cursorColor: DesignTheme.mainColor,
+                              decoration: InputDecoration(
+                                  labelText: 'Вес',
+                                  labelStyle: DesignTheme.selectorLabel,
+                                  suffixIcon: Icon(
+                                    FontAwesomeIcons.ruler,
+                                  )),
+                              validator: (value) {
+                                if (value.isEmpty) return 'Введите ваш вес';
+                                if (!(double.parse(value) is double))
+                                  return 'Введите число';
+                                else {
+                                  user.weight = double.parse(value);
+                                }
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            TextFormField(
+                              controller: _heightController,
+                              cursorColor: DesignTheme.mainColor,
+                              decoration: InputDecoration(
+                                  labelText: 'Рост',
+                                  labelStyle: DesignTheme.selectorLabel,
+                                  suffixIcon: Icon(
+                                    FontAwesomeIcons.ruler,
+                                  )),
+                              validator: (value) {
+                                if (value.isEmpty) return 'Введите ваш рост';
+                                if (!(double.parse(value) is double))
+                                  return 'Введите число';
+                                else {
+                                  user.height = double.parse(value);
+                                }
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            TextFormField(
+                              controller: _ageController,
+                              cursorColor: DesignTheme.mainColor,
+                              decoration: InputDecoration(
+                                  labelText: 'Возраст',
+                                  labelStyle: DesignTheme.selectorLabel,
+                                  suffixIcon: Icon(
+                                    Icons.calendar_today,
+                                  )),
+                              validator: (value) {
+                                if (value.isEmpty) return 'Введите ваш возраст';
+                                if (!(double.parse(value) is double))
+                                  return 'Введите число';
+                                else {
+                                  user.age = double.parse(value);
+                                }
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: Icon(
+                                Icons.arrow_downward,
+                                color: DesignTheme.mainColor,
+                              ),
+                              iconSize: 24,
+                              elevation: 2,
+                              style: TextStyle(color: DesignTheme.gray50Color),
+                              underline: Container(
+                                height: 2,
+                                color: DesignTheme.mainColor,
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                  user.workModel =
+                                      getWorkModelFromText(newValue);
+                                });
+                              },
+                              items: <String>[
+                                'Минимум физической активности',
+                                'Занимаюсь спортом 1-3 раза в неделю',
+                                'Занимаюсь спортом 3-4 раза в неделю',
+                                'Занимаюсь спортом каждый день',
+                                'Тренируюсь по несколько раз в день'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ]),
                     ),
-                    validator: (value){
-                      if (value.isEmpty) return 'Введите ваш вес';
-                      if (!(double.parse(value) is double)) return 'Введите число';
-                      else {
-                        user.weight = double.parse(value);
-                      }
-                  },
-                ),
-
-                new SizedBox(height: 10),
-
-                new TextFormField(
-                      controller: _heightController,
-                      cursorColor: DesignTheme.mainColor,
-                      decoration: InputDecoration(
-                        labelText: 'Рост',
-                        labelStyle: DesignTheme.selectorLabel,
-                        suffixIcon: Icon(
-                            FontAwesomeIcons.ruler,
-                          )
-                    ),
-                    validator: (value){
-                      if (value.isEmpty) return 'Введите ваш рост';
-                      if (!(double.parse(value) is double)) return 'Введите число';
-                      else {
-                        user.height = double.parse(value);
-                      }
-                  },
-                ),
-
-                new SizedBox(height: 10),
-
-                new TextFormField(
-                      controller: _ageController,
-                      cursorColor: DesignTheme.mainColor,
-                      decoration: InputDecoration(
-                        labelText: 'Возраст',
-                        labelStyle: DesignTheme.selectorLabel,
-                        suffixIcon: Icon(
-                            Icons.calendar_today,
-                          )
-                    ),
-                    validator: (value){
-                      if (value.isEmpty) return 'Введите ваш возраст';
-                      if (!(double.parse(value) is double)) return 'Введите число';
-                      else {
-                        user.age = double.parse(value);
-                      }
-                  },
-                ),
-
-                new SizedBox(height: 10),
-
-                DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: Icon(Icons.arrow_downward, color: DesignTheme.mainColor,),
-                    iconSize: 24,
-                    elevation: 2,
-                    style: TextStyle( color: DesignTheme.gray50Color ),
-                    underline: Container(
-                      height: 2,
-                      color: DesignTheme.mainColor,
-                    ),
-                    onChanged: (String newValue) {
-
-                      setState(() {
-                        dropdownValue = newValue;
-                        user.workModel = getWorkModelFromText(newValue);
-                      });
-
-                    },
-                    items: <String>[ 'Минимум физической активности','Занимаюсь спортом 1-3 раза в неделю','Занимаюсь спортом 3-4 раза в неделю', 'Занимаюсь спортом каждый день', 'Тренируюсь по несколько раз в день']
-                      .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+                  ]),
+                  Container(
+                    height: 150,
+                    child: CarouselSlider.builder(
+                      itemCount: sampleData.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          highlightColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          child: RadioItem(sampleData[index]),
                         );
-                      })
-                      .toList(),
-                  ),
-                SizedBox(height: 10,),
-                ]
-              ),
-            ),
-          ]),
-        Container(
-                height: 150,
-                child:
-                CarouselSlider.builder(
-                  itemCount: sampleData.length,
-                  itemBuilder:  (context, index){
-                    return new InkWell(
-                      highlightColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      child: new RadioItem(sampleData[index]),
-                    );},
-                    options: CarouselOptions(
-                          initialPage: sampleData[0].isSelected? 0: sampleData[1].isSelected? 1 : 2,
+                      },
+                      options: CarouselOptions(
+                          initialPage: sampleData[0].isSelected
+                              ? 0
+                              : sampleData[1].isSelected
+                                  ? 1
+                                  : 2,
                           height: 150.0,
                           viewportFraction: 0.7,
                           autoPlay: false,
                           autoPlayCurve: Curves.elasticIn,
                           onPageChanged: (index, reason) {
                             setState(() {
-                              sampleData.forEach((element) => element.isSelected = false);
+                              sampleData.forEach(
+                                  (element) => element.isSelected = false);
                               sampleData[index].isSelected = true;
-                              user.workFutureModel = sampleData[index].multiplaier;
+                              user.workFutureModel =
+                                  sampleData[index].multiplaier;
                             });
-                          }
+                          }),
                     ),
                   ),
-              ),
-
-              SizedBox(height: MediaQuery.of(context).size.height/6.5),
-
-              getEditorSaveButton(_formKey, user, context, true),
-        ])
-      ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 6.5),
+                  getEditorSaveButton(_formKey, user, context, true),
+                ])),
           ],
         ),
       ),

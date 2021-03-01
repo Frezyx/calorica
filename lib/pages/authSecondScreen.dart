@@ -30,9 +30,9 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
+        FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: new Container(
+      child: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/bg2.png"), fit: BoxFit.cover)),
@@ -64,7 +64,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new TextFormField(
+              TextFormField(
                 cursorColor: DesignTheme.mainColor,
                 decoration: InputDecoration(
                     labelText: 'Вес',
@@ -80,8 +80,8 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                   }
                 },
               ),
-              new SizedBox(height: 10),
-              new TextFormField(
+              SizedBox(height: 10),
+              TextFormField(
                 cursorColor: DesignTheme.mainColor,
                 decoration: InputDecoration(
                     labelText: 'Рост',
@@ -97,7 +97,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                   }
                 },
               ),
-              new SizedBox(height: 10),
+              SizedBox(height: 10),
               GradientButton(
                 increaseWidthBy: 60,
                 increaseHeightBy: 5,
@@ -145,7 +145,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new TextFormField(
+              TextFormField(
                 cursorColor: DesignTheme.mainColor,
                 decoration: InputDecoration(
                     labelText: 'Сколько вам лет ?',
@@ -161,7 +161,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                   }
                 },
               ),
-              new SizedBox(height: 10),
+              SizedBox(height: 10),
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -202,7 +202,7 @@ class _SecondAuthPageState extends State<SecondAuthPage> {
                       ]),
                     ),
                   ]),
-              new SizedBox(height: 10),
+              SizedBox(height: 10),
               GradientButton(
                 increaseWidthBy: 60,
                 increaseHeightBy: 5,

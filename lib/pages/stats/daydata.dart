@@ -112,15 +112,15 @@ class _DayDatePageState extends State<DayDatePage> {
                                 AsyncSnapshot<List<UserProduct>> snapshot) {
                               switch (snapshot.connectionState) {
                                 case ConnectionState.none:
-                                  return new Text('Input a URL to start');
+                                  return Text('Input a URL to start');
                                 case ConnectionState.waiting:
-                                  return new Center(
-                                      child: new CircularProgressIndicator());
+                                  return Center(
+                                      child: CircularProgressIndicator());
                                 case ConnectionState.active:
-                                  return new Text('');
+                                  return Text('');
                                 case ConnectionState.done:
                                   if (snapshot.hasError) {
-                                    return new Text(
+                                    return Text(
                                       '${snapshot.error}',
                                       style: TextStyle(color: Colors.red),
                                     );

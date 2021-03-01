@@ -36,7 +36,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
+        FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
         appBar: AppBar(
@@ -87,7 +87,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             color: DesignTheme.mainColor,
                           ),
                         ),
-                        contentPadding: new EdgeInsets.symmetric(
+                        contentPadding: EdgeInsets.symmetric(
                             vertical: 5.0, horizontal: 15.0),
                         labelText: 'Поиск по дате...',
                         border: InputBorder.none,
@@ -117,15 +117,15 @@ class _HistoryPageState extends State<HistoryPage> {
                               AsyncSnapshot<List<DateProducts>> snapshot) {
                             switch (snapshot.connectionState) {
                               case ConnectionState.none:
-                                return new Text('Input a URL to start');
+                                return Text('Input a URL to start');
                               case ConnectionState.waiting:
-                                return new Center(
-                                    child: new CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               case ConnectionState.active:
-                                return new Text('');
+                                return Text('');
                               case ConnectionState.done:
                                 if (snapshot.hasError) {
-                                  return new Text(
+                                  return Text(
                                     '${snapshot.error}',
                                     style: TextStyle(color: Colors.red),
                                   );

@@ -200,9 +200,9 @@ class _HomeState extends State<Home> {
                   case ConnectionState.none:
                     return ErrorScreens.getNoMealScreen(context);
                   case ConnectionState.waiting:
-                    return new Center(child: new CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   case ConnectionState.active:
-                    return new Text('');
+                    return Text('');
                   case ConnectionState.done:
                     if (snapshot.hasError) {
                       return ErrorScreens.getNoMealScreen(context);

@@ -125,23 +125,6 @@ class _DayDatePageState extends State<DayDatePage> {
                                       style: TextStyle(color: Colors.red),
                                     );
                                   } else {
-                                    var count = snapshot.data.length;
-                                    var now = DateTime.now();
-                                    final yearsAgo30 = DateTime(
-                                        now.year - 30, now.month, now.day);
-                                    if (count > 5) {
-                                      snapshot.data.insert(
-                                          5, UserProduct(date: yearsAgo30));
-                                    } else if (count > 3) {
-                                      snapshot.data.insert(
-                                          3, UserProduct(date: yearsAgo30));
-                                    } else if (count > 1) {
-                                      snapshot.data.insert(
-                                          1, UserProduct(date: yearsAgo30));
-                                    } else {
-                                      snapshot.data.insert(
-                                          0, UserProduct(date: yearsAgo30));
-                                    }
                                     return StaggeredGridView.countBuilder(
                                         controller: scrollController,
                                         padding: const EdgeInsets.all(7.0),
@@ -150,29 +133,14 @@ class _DayDatePageState extends State<DayDatePage> {
                                         crossAxisCount: 4,
                                         itemCount: snapshot.data.length,
                                         itemBuilder: (context, i) {
-                                          return snapshot.data[i].date ==
-                                                  yearsAgo30
-                                              ? Card(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0)),
-                                                  elevation: 1.0,
-                                                  child: Container(
-                                                      height: 330,
-                                                      child: NativeAdmob(
-                                                        adUnitID: AdMobConfig
-                                                            .NATIVE_ADMOB_UNIT_ID,
-                                                        controller: _controller,
-                                                      )))
-                                              : InkWell(
-                                                  child: getProductCard(
-                                                      snapshot.data[i]),
-                                                  onTap: () {
-                                                    Navigator.pushNamed(context,
-                                                        '/addedProduct/${snapshot.data[i].id}/$intDate');
-                                                  },
-                                                );
+                                          return InkWell(
+                                            child: getProductCard(
+                                                snapshot.data[i]),
+                                            onTap: () {
+                                              Navigator.pushNamed(context,
+                                                  '/addedProduct/${snapshot.data[i].id}/$intDate');
+                                            },
+                                          );
                                         },
                                         staggeredTileBuilder: (int i) =>
                                             StaggeredTile.count(4, 1));

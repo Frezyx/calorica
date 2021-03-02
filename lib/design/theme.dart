@@ -5,7 +5,7 @@ class DesignTheme {
 
   static const String fontMain = 'Montserrat';
 
-  static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
+  static const Color backgroundColor = Color.fromRGBO(244, 244, 244, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);

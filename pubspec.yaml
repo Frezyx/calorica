@@ -1,7 +1,7 @@
 name: calory_calc
 description: Calorie calculator.
 
-version: 1.0.1+1
+version: 1.1.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -26,6 +26,11 @@ dependencies:
   carousel_slider: ^2.1.0
   flutter_config: ^1.0.7
   ff_navigation_bar: ^0.1.4
+
+  # after 1.0.1
+
+  equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
 
 
 dev_dependencies:

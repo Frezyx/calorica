@@ -61,7 +61,7 @@ void runTests() {
 void dietTest(_testName, _weight, _height, _age, _gender, _workModel,
     _workFutureModel, _calory, _squi, _fat, _carboh) {
   test(_testName, () {
-    var userTest = new User(
+    var userTest = User(
         id: 1,
         name: "Тест",
         surname: "Тест",

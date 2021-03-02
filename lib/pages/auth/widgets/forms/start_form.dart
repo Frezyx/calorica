@@ -1,16 +1,22 @@
-import 'package:calory_calc/common/theme/constants/constants.dart';
-import 'package:calory_calc/common/theme/theme.dart';
+import 'package:calory_calc/common/constants/constants.dart';
 import 'package:calory_calc/widgets/animated/animated_items_zone/animated_items_zone.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class StartForm extends StatelessWidget {
+class StartForm extends StatefulWidget {
   StartForm({
     Key key,
     @required this.onCompleted,
   }) : super(key: key);
 
   final Function() onCompleted;
+
+  @override
+  _StartFormState createState() => _StartFormState();
+}
+
+class _StartFormState extends State<StartForm> {
+  bool animated = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +27,13 @@ class StartForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          AnimatedZone(),
+          AnimatedZone(
+            animated: animated,
+          ),
           Column(
             children: [
               Text(
-                Conatntas.appName.toUpperCase(),
+                Constants.appName.toUpperCase(),
                 style: TextStyle(
                   fontSize: 50,
                   color: theme.primaryColor,
@@ -58,6 +66,9 @@ class StartForm extends StatelessWidget {
   }
 
   void _onButtonPressed(BuildContext context) {
-    onCompleted();
+    setState(() {
+      animated = false;
+    });
+    widget.onCompleted();
   }
 }

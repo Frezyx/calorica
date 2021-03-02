@@ -16,6 +16,7 @@ import 'package:calory_calc/pages/stats/history.dart';
 import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'common/constants/constants.dart';
 import 'pages/launch_navigator.dart';
 
 class CaloricaApp extends StatefulWidget {
@@ -35,7 +36,7 @@ class _CaloricaAppState extends State<CaloricaApp> {
         ),
       ],
       child: MaterialApp(
-        title: 'Calori Calc',
+        title: Constants.appName,
         theme: lightTheme,
         debugShowCheckedModeBanner: false,
         initialRoute: '/launch',

@@ -2,8 +2,20 @@ import 'package:calory_calc/widgets/animated/animated_items_zone/src/src.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedZone extends StatelessWidget {
+  AnimatedZone({
+    Key key,
+    this.animated = true,
+  }) : super(key: key);
+
+  final bool animated;
+
+  var controllers = <AnimationController>[];
+
   @override
   Widget build(BuildContext context) {
+    if (!animated) {
+      controllers.forEach((e) => e.dispose());
+    }
     final theme = Theme.of(context);
     return Stack(
       children: [
@@ -68,6 +80,7 @@ class AnimatedZone extends StatelessWidget {
   }
 
   void _onControllerCreate(AnimationController controller, Duration duration) {
+    controllers.add(controller);
     Future.delayed(duration).then((value) => controller.repeat(
           reverse: true,
         ));

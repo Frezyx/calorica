@@ -1,3 +1,3 @@
-abstract class Conatntas {
+abstract class Constants {
   static String get appName => 'Calorica';
 }

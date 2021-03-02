@@ -65,7 +65,7 @@ class WorkModelPickerFormState extends State<WorkModelPickerForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(40.0).copyWith(left: 25.0, right: 25.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -86,7 +86,7 @@ class WorkModelPickerFormState extends State<WorkModelPickerForm> {
           Column(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height / 2.3,
+                height: MediaQuery.of(context).size.height / 2,
                 child: ListView.builder(
                   itemCount: sampleData.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -109,12 +109,15 @@ class WorkModelPickerFormState extends State<WorkModelPickerForm> {
               ),
             ],
           ),
-          CommonButton(
-            child: Text(
-              'Далее',
-              style: theme.textTheme.button,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: CommonButton(
+              child: Text(
+                'Далее',
+                style: theme.textTheme.button,
+              ),
+              onPressed: () => widget.onComplete(workModel),
             ),
-            onPressed: () => widget.onComplete(workModel),
           )
         ],
       ),
@@ -141,7 +144,7 @@ class RadioItem extends StatelessWidget {
                 _item.isSelected ? DesignTheme.mainColor : Colors.transparent),
         borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
       ),
-      margin: EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.all(15).copyWith(top: 0.0),
       padding: EdgeInsets.only(left: 20, right: 20, top: 7.5, bottom: 7.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

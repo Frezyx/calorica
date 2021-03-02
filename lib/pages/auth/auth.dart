@@ -46,6 +46,9 @@ class _AuthPageState extends State<AuthPage> {
           allowImplicitScrolling: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
+            StartForm(
+              onCompleted: () => _openNextPage(),
+            ),
             WorkModelPickerForm(
               onComplete: (int futureWorkModel) {
                 setState(() => _futureWorkModel = futureWorkModel);
@@ -77,7 +80,7 @@ class _AuthPageState extends State<AuthPage> {
               surnameController: _surnameController,
               onCompleted: (String name, String surname) async {
                 User user = User(
-                  name: surname,
+                  name: name,
                   surname: surname,
                   weight: double.tryParse(_weightController.text),
                   height: double.tryParse(_heightController.text),

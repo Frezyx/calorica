@@ -102,51 +102,51 @@ class _DayDatePageState extends State<DayDatePage> {
                   ),
                   Flexible(
                     child: Container(
-                        padding: const EdgeInsets.all(0.0),
-                        constraints: BoxConstraints.expand(
-                            height: MediaQuery.of(context).size.height),
-                        child: FutureBuilder(
-                            future: DBUserProductsProvider.db
-                                .getProductsByDate(intDate),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<UserProduct>> snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return Text('Input a URL to start');
-                                case ConnectionState.waiting:
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                case ConnectionState.active:
-                                  return Text('');
-                                case ConnectionState.done:
-                                  if (snapshot.hasError) {
-                                    return Text(
-                                      '${snapshot.error}',
-                                      style: TextStyle(color: Colors.red),
-                                    );
-                                  } else {
-                                    return StaggeredGridView.countBuilder(
-                                        controller: scrollController,
-                                        padding: const EdgeInsets.all(7.0),
-                                        mainAxisSpacing: 3,
-                                        crossAxisSpacing: 0,
-                                        crossAxisCount: 4,
-                                        itemCount: snapshot.data.length,
-                                        itemBuilder: (context, i) {
-                                          return InkWell(
-                                            child: getProductCard(
-                                                snapshot.data[i]),
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  '/addedProduct/${snapshot.data[i].id}/$intDate');
-                                            },
-                                          );
+                      padding: const EdgeInsets.all(0.0),
+                      constraints: BoxConstraints.expand(
+                          height: MediaQuery.of(context).size.height),
+                      child: FutureBuilder(
+                        future: DBUserProductsProvider.db
+                            .getProductsByDate(intDate),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<UserProduct>> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return Text('Input a URL to start');
+                            case ConnectionState.waiting:
+                              return Center(child: CircularProgressIndicator());
+                            case ConnectionState.active:
+                              return Text('');
+                            case ConnectionState.done:
+                              if (snapshot.hasError) {
+                                return Text(
+                                  '${snapshot.error}',
+                                  style: TextStyle(color: Colors.red),
+                                );
+                              } else {
+                                return StaggeredGridView.countBuilder(
+                                    controller: scrollController,
+                                    padding: const EdgeInsets.all(7.0),
+                                    mainAxisSpacing: 3,
+                                    crossAxisSpacing: 0,
+                                    crossAxisCount: 4,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (context, i) {
+                                      return InkWell(
+                                        child: getProductCard(snapshot.data[i]),
+                                        onTap: () {
+                                          Navigator.pushNamed(context,
+                                              '/addedProduct/${snapshot.data[i].id}/$intDate');
                                         },
-                                        staggeredTileBuilder: (int i) =>
-                                            StaggeredTile.count(4, 1));
-                                  }
+                                      );
+                                    },
+                                    staggeredTileBuilder: (int i) =>
+                                        StaggeredTile.count(4, 1));
                               }
-                            })),
+                          }
+                        },
+                      ),
+                    ),
                   ),
                 ],
               )),

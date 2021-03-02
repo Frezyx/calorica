@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:calory_calc/blocs/auth/bloc.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
+import 'package:calory_calc/utils/userDietSelector.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthLoading());
@@ -19,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await DBUserProvider.db.addUser(event.user);
       yield Authorized(event.user);
+      await DietSelector.slectUserDiet();
     } on Exception catch (e) {
       yield Unauthorized();
     }

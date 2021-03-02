@@ -18,12 +18,6 @@ class _HistoryPageState extends State<HistoryPage> {
   bool isSaerching = false;
   ScrollController scrollController;
   String searchText;
-  List<UserProduct> prod = [
-    UserProduct(name: "asas"),
-    UserProduct(name: "asas"),
-    UserProduct(name: "asas"),
-    UserProduct(name: "asas"),
-  ];
 
   void startSearch(String text) {
     setState(() {

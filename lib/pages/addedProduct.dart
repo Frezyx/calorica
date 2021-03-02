@@ -103,57 +103,52 @@ class _AddedProductPageState extends State<AddedProductPage> {
                         padding: EdgeInsets.only(
                             left: 15, right: 15, bottom: 20, top: 20),
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                product == null ? 'Загрузка...' : product.name,
-                                style: isStringOverSize(product.name)
-                                    ? DesignTheme.bigText20
-                                    : DesignTheme.bigText24,
-                                textAlign: TextAlign.start,
-                              ),
-                              SizedBox(height: 5),
-
-                              isEdited
-                                  ? getTextForm()
-                                  : getBigParamText(product.grams, " грамм"),
-
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          getParamText(
-                                              roundDouble(product.calory, 2),
-                                              " кКал"),
-                                          getParamText(
-                                              roundDouble(product.squi, 2),
-                                              " Белки г."),
-                                        ]),
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          getParamText(
-                                              roundDouble(product.fat, 2),
-                                              " Жир г."),
-                                          getParamText(
-                                              roundDouble(product.carboh, 2),
-                                              " Углеводы г."),
-                                        ])
-                                  ]),
-
-                              // SizedBox(height:5),
-
-                              // Text("Добавлено:   " + DateFormat('yyyy-MM-dd').format(product.date), style: DesignTheme.labelSearchText),
-                            ]),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              product == null ? 'Загрузка...' : product.name,
+                              style: isStringOverSize(product.name)
+                                  ? DesignTheme.bigText20
+                                  : DesignTheme.bigText24,
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(height: 5),
+                            isEdited
+                                ? getTextForm()
+                                : getBigParamText(product.grams, " грамм"),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        getParamText(
+                                            roundDouble(product.calory, 2),
+                                            " кКал"),
+                                        getParamText(
+                                            roundDouble(product.squi, 2),
+                                            " Белки г."),
+                                      ]),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        getParamText(
+                                            roundDouble(product.fat, 2),
+                                            " Жир г."),
+                                        getParamText(
+                                            roundDouble(product.carboh, 2),
+                                            " Углеводы г."),
+                                      ])
+                                ]),
+                          ],
+                        ),
                       ),
                     ),
                     isEdited ? getSaveButton(_formKey) : getDeleteButton(),

@@ -5,7 +5,6 @@ import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
@@ -38,7 +37,7 @@ class _ProductPageState extends State<ProductPage> {
   double carboh = 0.0;
   double carbohConst = 0.0;
   double gramsEditing = 100;
-  BannerAd _bannerAd;
+  // BannerAd _bannerAd;
 
   bool canWriteInDB = true;
 
@@ -62,7 +61,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    // _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -70,9 +69,9 @@ class _ProductPageState extends State<ProductPage> {
   void initState() {
     FirebaseAdMob.instance.initialize(appId: BannerAd.testAdUnitId);
     //Change appId With Admob Id
-    _bannerAd = createBannerAd()
-      ..load()
-      ..show();
+    // _bannerAd = createBannerAd()
+    //   ..load()
+    //   ..show();
 
     super.initState();
     _grammController.text = '100.0';

@@ -1,6 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -111,84 +110,84 @@ class _AddPageState extends State<AddPage> {
                 style: DesignTheme.lilGrayText,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
+              child: Divider(height: 1),
+            ),
             Flexible(
               child: Container(
-                  padding: const EdgeInsets.all(0.0),
-                  constraints: BoxConstraints.expand(
-                      height: MediaQuery.of(context).size.height),
-                  child: FutureBuilder(
-                      future: isSaerching
-                          ? DBProductProvider.db
-                              .getAllProductsSearch(searchText)
-                          : DBProductProvider.db.getAllProducts(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Product>> snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return Text('Input a URL to start');
-                          case ConnectionState.waiting:
-                            return Center(child: CircularProgressIndicator());
-                          case ConnectionState.active:
-                            return Text('');
-                          case ConnectionState.done:
-                            if (snapshot.hasError) {
-                              return Text(
-                                '${snapshot.error}',
-                                style: TextStyle(color: Colors.red),
-                              );
-                            } else {
-                              var count = snapshot.data.length;
-                              if (count > 5) {
-                                snapshot.data
-                                    .insert(4, Product(name: "Реклама"));
-                              } else if (count > 3) {
-                                snapshot.data
-                                    .insert(3, Product(name: "Реклама"));
-                              } else if (count > 1) {
-                                snapshot.data
-                                    .insert(1, Product(name: "Реклама"));
-                              } else {
-                                snapshot.data
-                                    .insert(0, Product(name: "Реклама"));
-                              }
-                              return StaggeredGridView.countBuilder(
-                                  controller: scrollController,
-                                  padding: const EdgeInsets.all(7.0),
-                                  mainAxisSpacing: 3,
-                                  crossAxisSpacing: 0,
-                                  crossAxisCount: 4,
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder: (context, i) {
-                                    return snapshot.data[i].name == "Реклама"
-                                        ? Card(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                            elevation: 1.0,
-                                            child: Container(
-                                                height: 330,
-                                                child: NativeAdmob(
-                                                  adUnitID: AdMobConfig
-                                                      .NATIVE_ADMOB_UNIT_ID,
-                                                  controller: _controller,
-                                                )))
-                                        : InkWell(
-                                            child: getCard(snapshot.data[i]),
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  '/product/' +
-                                                      snapshot.data[i].id
-                                                          .toString());
-                                            },
-                                          );
-                                  },
-                                  staggeredTileBuilder: (int i) =>
-                                      StaggeredTile.count(4, 1));
-                            }
+                constraints: BoxConstraints.expand(
+                    height: MediaQuery.of(context).size.height),
+                child: FutureBuilder(
+                  future: isSaerching
+                      ? DBProductProvider.db.getAllProductsSearch(searchText)
+                      : DBProductProvider.db.getAllProducts(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Product>> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        return Text('Input a URL to start');
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      case ConnectionState.active:
+                        return Text('');
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          return Text(
+                            '${snapshot.error}',
+                            style: TextStyle(color: Colors.red),
+                          );
+                        } else {
+                          var count = snapshot.data.length;
+                          if (count > 5) {
+                            snapshot.data.insert(4, Product(name: "Реклама"));
+                          } else if (count > 3) {
+                            snapshot.data.insert(3, Product(name: "Реклама"));
+                          } else if (count > 1) {
+                            snapshot.data.insert(1, Product(name: "Реклама"));
+                          } else {
+                            snapshot.data.insert(0, Product(name: "Реклама"));
+                          }
+                          return ListView.builder(
+                            controller: scrollController,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, i) {
+                              return snapshot.data[i].name == "Реклама"
+                                  ? Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      elevation: 1.0,
+                                      child: Container(
+                                        height: 250,
+                                        child: NativeAdmob(
+                                          adUnitID: AdMobConfig
+                                              .NATIVE_ADMOB_BIG_BLOCK_ID,
+                                          controller: _controller,
+                                        ),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      child: getCard(snapshot.data[i]),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context,
+                                            '/product/' +
+                                                snapshot.data[i].id.toString());
+                                      },
+                                    );
+                            },
+                          );
                         }
-                      })),
+                    }
+                  },
+                ),
+              ),
             ),
           ]),
         ),

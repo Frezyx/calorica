@@ -13,7 +13,7 @@ class DesignTheme {
 
   static const Color mainColorShadow = Color.fromRGBO(68, 211, 177, 0.27);
 
-  static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
+  static const Color blackTextColor = Color(0xFF17262A);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
   static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
   static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
@@ -63,35 +63,35 @@ class DesignTheme {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText1 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText2 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 30,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText3 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigErrorText = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 18,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle lilErrorText = TextStyle(
@@ -105,21 +105,21 @@ class DesignTheme {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 44,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText24 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText20 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 20,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigMainText = TextStyle(
@@ -161,7 +161,7 @@ class DesignTheme {
     fontFamily: fontMain,
     fontWeight: FontWeight.w400,
     fontSize: 20,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle lilWhiteText = TextStyle(
@@ -244,7 +244,7 @@ class DesignTheme {
     fontWeight: FontWeight.w300,
     fontSize: 20,
     letterSpacing: 0.2,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const gradient = LinearGradient(

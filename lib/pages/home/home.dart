@@ -6,7 +6,7 @@ import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/error/errorScreens.dart';
-import 'package:calory_calc/widgets/range.dart';
+import 'package:calory_calc/models/range.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -131,11 +131,79 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DesignTheme.backgroundColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+      body: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // HomeAppBar(
+              //     name: name,
+              //     surname: surname,
+              //     calory: calory,
+              //     squi: squi,
+              //     fat: fat,
+              //     carboh: carboh,
+              //   ),
+              // TODO: enable in new UI version
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+              //   child: Text(
+              //     "Сегодня вы ели".toUpperCase(),
+              //     textAlign: TextAlign.start,
+              //     style: TextStyle(
+              //       fontSize: 10,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 5.0, left: 25, right: 25),
+              //   child: Divider(height: 1),
+              // ),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: 240, left: 15, right: 15),
+                  child: FutureBuilder<List<UserProduct>>(
+                      initialData: emptyProduct,
+                      future: DBUserProductsProvider.db.getAllProducts(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<UserProduct>> snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return ErrorScreens.getNoMealScreen(context);
+                          case ConnectionState.waiting:
+                            return Center(child: CircularProgressIndicator());
+                          case ConnectionState.active:
+                            return Text('');
+                          case ConnectionState.done:
+                            if (snapshot.hasError) {
+                              return ErrorScreens.getNoMealScreen(context);
+                            } else {
+                              if (snapshot.data.length > 0) {
+                                return ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  controller: scrollController,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, i) {
+                                    return AddedProductCard(
+                                      product: snapshot.data[i],
+                                    );
+                                  },
+                                );
+                              } else {
+                                return ErrorScreens.getNoMealScreen(context);
+                              }
+                            }
+                        }
+                      }),
+                ),
+              ),
+            ],
+          ),
           Container(
-            constraints: BoxConstraints.expand(height: 230),
+            constraints: BoxConstraints.expand(height: 190),
             decoration: BoxDecoration(
               gradient: DesignTheme.gradient,
               borderRadius: BorderRadius.only(
@@ -143,69 +211,21 @@ class _HomeState extends State<Home> {
                 bottomRight: Radius.circular(40),
               ),
             ),
-            child: HomeAppBar(
-              name: name,
-              surname: surname,
-              calory: calory,
-              squi: squi,
-              fat: fat,
-              carboh: carboh,
-            ),
           ),
-          // TODO: enable in new UI version
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 30.0, top: 10.0),
-          //   child: Text(
-          //     "Сегодня вы ели".toUpperCase(),
-          //     textAlign: TextAlign.start,
-          //     style: TextStyle(
-          //       fontSize: 10,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 5.0, left: 25, right: 25),
-          //   child: Divider(height: 1),
-          // ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: FutureBuilder<List<UserProduct>>(
-                  initialData: emptyProduct,
-                  future: DBUserProductsProvider.db.getAllProducts(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<UserProduct>> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return ErrorScreens.getNoMealScreen(context);
-                      case ConnectionState.waiting:
-                        return Center(child: CircularProgressIndicator());
-                      case ConnectionState.active:
-                        return Text('');
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return ErrorScreens.getNoMealScreen(context);
-                        } else {
-                          if (snapshot.data.length > 0) {
-                            return ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              controller: scrollController,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, i) {
-                                return AddedProductCard(
-                                  product: snapshot.data[i],
-                                );
-                              },
-                            );
-                          } else {
-                            return ErrorScreens.getNoMealScreen(context);
-                          }
-                        }
-                    }
-                  }),
-            ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: HomeAppBar(
+                  name: name,
+                  surname: surname,
+                  calory: calory,
+                  squi: squi,
+                  fat: fat,
+                  carboh: carboh,
+                ),
+              ),
+            ],
           ),
         ],
       ),

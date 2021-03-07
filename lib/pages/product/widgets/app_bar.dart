@@ -18,7 +18,7 @@ class ProductsListAppBar extends StatelessWidget {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 28,
-          color: DesignTheme.blackColor,
+          color: DesignTheme.blackTextColor,
         ),
       ),
     );

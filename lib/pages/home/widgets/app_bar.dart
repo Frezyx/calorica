@@ -1,6 +1,7 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/widgets/range.dart';
+import 'package:calory_calc/models/range.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -22,9 +23,18 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.only(
-        top: 50,
+      margin: EdgeInsets.only(
+        top: 25,
+        left: 25,
+        right: 25,
+      ),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: DesignTheme.shadowByOpacity(0.04),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,8 +49,7 @@ class HomeAppBar extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getSubText(name, surname, context),
-                    getIconButton(context),
+                    buildUserName(name, surname, context),
                   ],
                 ),
                 getBigRangeWidget(calory, context),
@@ -67,63 +76,49 @@ class HomeAppBar extends StatelessWidget {
       return text.substring(0, 13);
   }
 
-  getIconButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: MediaQuery.of(context).size.width * 0.08,
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/editUser');
-      },
-    );
-  }
+  // getIconButton(BuildContext context) {
+  //   return IconButton(
+  //     icon: Icon(
+  //       Icons.edit,
+  //       color: Theme.of(context).primaryColor,
+  //       size: MediaQuery.of(context).size.width * 0.08,
+  //     ),
+  //     onPressed: () {
+  //       Navigator.pushNamed(context, '/editUser');
+  //     },
+  //   );
+  // }
 
-  getSubText(String name, String surname, BuildContext context) {
-    if ((name + " " + surname).length <= 11) {
-      return Text(
-        name + " " + surname,
+  buildUserName(String name, String surname, BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width * 0.7,
+      child: AutoSizeText(
+        '$name $surname',
+        maxLines: 2,
+        minFontSize: 20,
         style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: MediaQuery.of(context).size.width * 0.085,
-            color: Colors.white),
+          fontWeight: FontWeight.w600,
+          fontSize: 26,
+          color: DesignTheme.blackTextColor,
+        ),
         overflow: TextOverflow.ellipsis,
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(
-                splitBigTxt(name) + " " + splitBigTxt(surname),
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: MediaQuery.of(context).size.width *
-                        0.11 *
-                        (name + " " + surname).length *
-                        0.04,
-                    color: Colors.white),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ],
-      );
-    }
+      ),
+    );
   }
 
   getRangeWidget(RangeGraphData range, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10, right: 10, left: 0),
+      padding: EdgeInsets.only(top: 10, right: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             range.name,
-            style: DesignTheme.lilWhiteText,
+            style: DesignTheme.lilWhiteText.copyWith(
+              color: DesignTheme.blackTextColor,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 0, top: 4),
@@ -131,7 +126,7 @@ class HomeAppBar extends StatelessWidget {
               height: 6,
               width: 80,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.grey[200],
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
               child: Row(
@@ -140,7 +135,7 @@ class HomeAppBar extends StatelessWidget {
                     width: (range.percent * 0.01) * 80,
                     height: 6,
                     decoration: BoxDecoration(
-                      gradient: getColor(range.percent),
+                      gradient: range.gradient,
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),
                     ),
                   ),
@@ -150,13 +145,26 @@ class HomeAppBar extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              range.weigth.toString() + " / " + range.limit.toString() + ' г',
+            child: RichText(
               textAlign: TextAlign.center,
-              style: TextStyle(
+              text: TextSpan(
+                text: range.weigth.toString(),
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
-                  color: DesignTheme.whiteColor),
+                  color: range.color,
+                ),
+                children: [
+                  TextSpan(
+                    text: ' / ${range.limit} г',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 9,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -184,7 +192,7 @@ class HomeAppBar extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       fontSize: MediaQuery.of(context).size.width * 0.051,
                       letterSpacing: -0.2,
-                      color: DesignTheme.whiteColor,
+                      color: DesignTheme.blackTextColor,
                     ),
                   ),
                 ),
@@ -195,7 +203,7 @@ class HomeAppBar extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: MediaQuery.of(context).size.width * 0.051,
                     letterSpacing: -0.2,
-                    color: DesignTheme.whiteColor,
+                    color: DesignTheme.blackTextColor,
                   ),
                 ),
               ]),
@@ -205,7 +213,7 @@ class HomeAppBar extends StatelessWidget {
               height: 10,
               width: MediaQuery.of(context).size.width - 122,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.grey[200],
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: Row(
@@ -216,7 +224,7 @@ class HomeAppBar extends StatelessWidget {
                         0.01,
                     height: 10,
                     decoration: BoxDecoration(
-                      gradient: getColor(range.percent),
+                      gradient: range.gradient,
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 
 class WorkModelPickerForm extends StatefulWidget {
@@ -141,7 +142,7 @@ class RadioItem extends StatelessWidget {
         border: Border.all(
             width: 1.0,
             color:
-                _item.isSelected ? DesignTheme.mainColor : Colors.transparent),
+                _item.isSelected ? CustomTheme.mainColor : Colors.transparent),
         borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
       ),
       margin: EdgeInsets.all(15).copyWith(top: 0.0),

@@ -5,15 +5,14 @@ import 'package:calory_calc/pages/edit/choiceDiet.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
 import 'package:calory_calc/pages/edit/editUserDietParams.dart';
 import 'package:calory_calc/pages/edit/editUserParams.dart';
-import 'package:calory_calc/widgets/navigator/navigator.dart';
+import 'package:calory_calc/widgets/navigation/navigator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/pages/add.dart';
-import 'package:calory_calc/pages/auth/auth.dart';
-import 'package:calory_calc/pages/product.dart';
+import 'package:calory_calc/pages/product/products_list.dart';
+import 'package:calory_calc/pages/product/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';
 import 'package:calory_calc/pages/stats/history.dart';
-import 'package:calory_calc/pages/stats/mainStats.dart';
+import 'package:calory_calc/pages/stats/main_stats.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';

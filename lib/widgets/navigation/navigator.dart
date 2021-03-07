@@ -1,12 +1,10 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/pages/add.dart';
-import 'package:calory_calc/pages/home.dart';
-import 'package:calory_calc/pages/stats/mainStats.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:calory_calc/pages/product/products_list.dart';
+import 'package:calory_calc/pages/home/home.dart';
+import 'package:calory_calc/pages/stats/main_stats.dart';
 import 'package:flutter/material.dart';
 
-import 'navigatorBody.dart';
+import 'bottom_bar/bottom_bar.dart';
 
 class NavigatorPage extends StatefulWidget {
   NavigatorPage({int index}) : _index = index;
@@ -43,15 +41,11 @@ class _NavigatorPageState extends State<NavigatorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView.builder(
-          itemBuilder: (ctx, i) => pages[index],
-          itemCount: pages.length,
-          controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
-          onPageChanged: (i) {
-            setState(() {
-              index = i;
-            });
-          }),
+        itemBuilder: (ctx, i) => pages[index],
+        itemCount: pages.length,
+        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
+      ),
       bottomNavigationBar: Container(
         height: 80,
         decoration: BoxDecoration(
@@ -62,21 +56,17 @@ class _NavigatorPageState extends State<NavigatorPage> {
             topRight: Radius.circular(30.0),
           ),
         ),
-        child: FFNavigationBar(
-          theme: FFNavigationBarTheme(
-            barBackgroundColor: Colors.white,
-            selectedItemBorderColor: DesignTheme.mainColor,
-            selectedItemBackgroundColor: DesignTheme.mainColor,
-            selectedItemIconColor: Colors.white,
-            selectedItemLabelColor: Colors.black,
-          ),
-          selectedIndex: index,
-          onSelectTab: (i) {
+        child: BottomBar(
+          items: [
+            Icons.bar_chart_rounded,
+            Icons.home_rounded,
+            Icons.add,
+          ],
+          onSelected: (int i) {
             setState(() {
               index = i;
             });
           },
-          items: getBubbleBarBody(),
         ),
       ),
     );

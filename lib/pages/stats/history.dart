@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
@@ -78,7 +79,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           ),
                           child: Icon(
                             Icons.search,
-                            color: DesignTheme.mainColor,
+                            color: CustomTheme.mainColor,
                           ),
                         ),
                         contentPadding: EdgeInsets.symmetric(
@@ -175,15 +176,15 @@ class _HistoryPageState extends State<HistoryPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  splashColor: DesignTheme.mainColor,
-                  hoverColor: DesignTheme.secondColor,
+                  splashColor: CustomTheme.mainColor,
+                  hoverColor: CustomTheme.mainColor,
                   onPressed: () {
                     Navigator.pushNamed(context,
                         '/daydata/${epochFromDate(data.date).toString()}');
                   },
                   icon: Icon(
                     Icons.arrow_forward,
-                    color: DesignTheme.mainColor,
+                    color: CustomTheme.mainColor,
                     size: 28,
                   ),
                 ),

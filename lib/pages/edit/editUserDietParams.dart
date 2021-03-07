@@ -3,7 +3,7 @@ import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
-import 'package:calory_calc/widgets/buttons/editorSaveButton.dart';
+import 'package:calory_calc/widgets/buttons/editorSaveButtons.dart';
 import 'package:flutter/material.dart';
 
 class EditDietParamsPage extends StatefulWidget {

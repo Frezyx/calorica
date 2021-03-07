@@ -6,12 +6,13 @@ import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/widgets/widgets.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductPage extends StatefulWidget {
   String _id;
@@ -128,103 +129,91 @@ class _ProductPageState extends State<ProductPage> {
               BoxConstraints.expand(height: MediaQuery.of(context).size.height),
           child: Padding(
               padding:
-                  EdgeInsets.only(left: 15, right: 15, bottom: 20, top: 20),
+                  EdgeInsets.only(left: 15, right: 15, bottom: 40, top: 20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: DesignTheme.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12.withOpacity(0.1),
-                          blurRadius: 20.0,
-                          spreadRadius: 2.0,
-                          offset: Offset(
-                            10.0,
-                            10.0,
-                          ),
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 15, right: 15, bottom: 20, top: 20),
-                      child: Column(children: <Widget>[
-                        Text(
-                          product == null ? 'Загрузка...' : name,
-                          style: isStringOverSize(name)
-                              ? DesignTheme.bigText20
-                              : DesignTheme.bigText24,
-                          textAlign: TextAlign.start,
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: DesignTheme.whiteColor,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          boxShadow: DesignTheme.shadowByOpacity(0.05),
                         ),
-                        SizedBox(height: 10),
-                        Form(
-                          key: _formKey,
-                          child: TextFormField(
-                            onChanged: (text) {
-                              if (_formKey.currentState.validate()) {}
-                              multiData(double.parse(text));
-                            },
-                            controller: _grammController,
-                            style: DesignTheme.inputText,
-                            cursorColor: DesignTheme.mainColor,
-                            decoration: InputDecoration(
-                                labelText: 'Введите вес...',
-                                labelStyle: DesignTheme.labelSearchTextBigger,
-                                suffixIcon: Icon(
-                                  Icons.people,
-                                )),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                setWriteStatus(false);
-                                return 'Введите вес продукта';
-                              } else if (!(double.parse(value) is double)) {
-                                setWriteStatus(false);
-                                return 'Введите число';
-                              } else {
-                                setWriteStatus(true);
-                              }
-                            },
-                          ),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 15, right: 15, bottom: 20, top: 20),
+                          child: Column(children: <Widget>[
+                            Text(
+                              product == null ? 'Загрузка...' : name,
+                              style: isStringOverSize(name)
+                                  ? DesignTheme.bigText20
+                                  : DesignTheme.bigText24,
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(height: 10),
+                            Form(
+                              key: _formKey,
+                              child: TextFormField(
+                                onChanged: (text) {
+                                  if (_formKey.currentState.validate()) {}
+                                  multiData(double.parse(text));
+                                },
+                                controller: _grammController,
+                                style: DesignTheme.inputText,
+                                cursorColor: DesignTheme.mainColor,
+                                decoration: InputDecoration(
+                                  labelText: 'Введите вес в граммах',
+                                  labelStyle: DesignTheme.labelSearchTextBigger,
+                                  suffixIcon:
+                                      Icon(FontAwesomeIcons.weightHanging),
+                                ),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    setWriteStatus(false);
+                                    return 'Введите вес продукта';
+                                  } else if (!(double.parse(value) is double)) {
+                                    setWriteStatus(false);
+                                    return 'Введите число';
+                                  } else {
+                                    setWriteStatus(true);
+                                  }
+                                },
+                              ),
+                            ),
+                          ]),
                         ),
-                      ]),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               getParamText(calory, "кКал"),
                               getParamText(squi, "Белки г."),
-                            ]),
-                        Column(
+                            ],
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               getParamText(fat, "Жир г."),
                               getParamText(carboh, "Углеводы г."),
-                            ])
-                      ]),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                   Padding(
-                      child: GradientButton(
-                        increaseWidthBy: 60,
-                        increaseHeightBy: 5,
-                        child: Padding(
-                          child: Text(
-                            'Добавить',
-                            textAlign: TextAlign.center,
-                            style: DesignTheme.buttonText,
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 5, right: 5, bottom: 5, top: 5),
-                        ),
-                        callback: () {
+                      child: CommonButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
                           UserProduct productSend = UserProduct(
                             name: name,
                             category: product.category,
@@ -238,13 +227,14 @@ class _ProductPageState extends State<ProductPage> {
 
                           addProduct(productSend);
                         },
-                        shapeRadius: BorderRadius.circular(50.0),
-                        gradient: DesignTheme.gradient,
-                        shadowColor: Gradients.backToFuture.colors.last
-                            .withOpacity(0.25),
+                        child: Text(
+                          'Добавить',
+                          style: Theme.of(context).textTheme.button.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
                       ),
-                      padding: EdgeInsets.only(
-                          left: 15, right: 15, bottom: 10, top: 10)),
+                      padding: EdgeInsets.symmetric(horizontal: 15)),
                 ],
               )),
         ),
@@ -261,20 +251,32 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   getParamText(double value, String name) {
-    return Padding(
-        padding: EdgeInsets.only(left: 30, right: 30, bottom: 3, top: 3),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                value.toString(),
-                style: DesignTheme.bigMainText,
-              ),
-              Text(
-                name,
-                style: DesignTheme.labelSearchText,
-              ),
-            ]));
+    final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width * 0.44,
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        boxShadow: DesignTheme.shadowByOpacity(0.03),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            value.toString(),
+            style: DesignTheme.bigMainText,
+          ),
+          Text(
+            name,
+            style: DesignTheme.labelSearchText,
+          ),
+        ],
+      ),
+    );
   }
 
   String splitText(String text) {

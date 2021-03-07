@@ -40,8 +40,8 @@ class _MainStatsState extends State<MainStats> {
   var caloryLimit = 0.0;
   var caloryLimitDeltaL = 0.0;
   var caloryLimitDeltaR = 0.0;
-  List<Widget> chartsWidgetList = [CircularProgressIndicator()];
-  List<Widget> lineTextList = [CircularProgressIndicator()];
+  List<Widget> chartsWidgetList = [Center(child: CircularProgressIndicator())];
+  List<Widget> lineTextList = [Center(child: CircularProgressIndicator())];
 
   bool isAutoPlay = true;
 
@@ -103,95 +103,108 @@ class _MainStatsState extends State<MainStats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-          Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 10, top: 50, left: 30, right: 20),
-          child: getStartText(todayParams, yesterdayParams, caloryLimitDeltaR,
-              caloryLimitDeltaL),
-        ),
-        Padding(
-            padding: EdgeInsets.only(bottom: 20, top: 20, left: 20, right: 20),
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding:
+                  EdgeInsets.only(bottom: 10, top: 50, left: 30, right: 20),
+              child: getStartText(
+                todayParams,
+                yesterdayParams,
+                caloryLimitDeltaR,
+                caloryLimitDeltaL,
+              ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(bottom: 20, top: 20, left: 20, right: 20),
+              child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     boxShadow: [DesignTheme.originalShadow]),
                 constraints: BoxConstraints.expand(
                     height: MediaQuery.of(context).size.height / 8),
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    elevation: 0.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "История питания",
-                                    style: DesignTheme.primeTextBig,
-                                  ),
-                                  Text(
-                                    "Узнай как ты питаешься",
-                                    style: DesignTheme.secondaryTextBig,
-                                  ),
-                                ]),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: IconButton(
-                                splashColor: CustomTheme.mainColor,
-                                hoverColor: CustomTheme.mainColor,
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/history');
-                                },
-                                icon: Icon(
-                                  Icons.arrow_forward,
-                                  color: CustomTheme.mainColor,
-                                  size: 32,
-                                ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  elevation: 0.0,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "История питания",
+                                style: DesignTheme.primeTextBig,
                               ),
-                            )
-                          ]),
-                    )))),
-        Container(
-          height: 93.0,
-          child: CarouselSlider.builder(
-            itemCount: lineTextList.length,
-            itemBuilder: (context, index) {
-              return lineTextList[index];
-            },
-            options: CarouselOptions(
-                height: 93.0,
-                viewportFraction: 1,
-                autoPlay: isAutoPlay,
-                autoPlayCurve: Curves.easeInExpo,
-                autoPlayInterval: const Duration(seconds: 6),
-                onPageChanged: (index, reason) {}),
-          ),
+                              Text(
+                                "Узнай как ты питаешься",
+                                style: DesignTheme.secondaryTextBig,
+                              ),
+                            ]),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            splashColor: CustomTheme.mainColor,
+                            hoverColor: CustomTheme.mainColor,
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/history');
+                            },
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: CustomTheme.mainColor,
+                              size: 32,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 93.0,
+              child: CarouselSlider.builder(
+                itemCount: lineTextList.length,
+                itemBuilder: (context, index) {
+                  return lineTextList[index];
+                },
+                options: CarouselOptions(
+                    height: 93.0,
+                    viewportFraction: 1,
+                    autoPlay: isAutoPlay,
+                    autoPlayCurve: Curves.easeInExpo,
+                    autoPlayInterval: const Duration(seconds: 6),
+                    onPageChanged: (index, reason) {}),
+              ),
+            ),
+            Container(
+              height: 300.0,
+              child: CarouselSlider.builder(
+                itemCount: chartsWidgetList.length,
+                itemBuilder: (context, index) {
+                  return chartsWidgetList[index];
+                },
+                options: CarouselOptions(
+                    height: 300.0,
+                    viewportFraction: 1,
+                    autoPlay: isAutoPlay,
+                    autoPlayCurve: Curves.easeInExpo,
+                    autoPlayInterval: const Duration(seconds: 8),
+                    onPageChanged: (index, reason) {}),
+              ),
+            ),
+          ],
         ),
-        Container(
-          height: 300.0,
-          child: CarouselSlider.builder(
-            itemCount: chartsWidgetList.length,
-            itemBuilder: (context, index) {
-              return chartsWidgetList[index];
-            },
-            options: CarouselOptions(
-                height: 300.0,
-                viewportFraction: 1,
-                autoPlay: isAutoPlay,
-                autoPlayCurve: Curves.easeInExpo,
-                autoPlayInterval: const Duration(seconds: 8),
-                onPageChanged: (index, reason) {}),
-          ),
-        ),
-      ]),
-    ));
+      ),
+    );
   }
 }

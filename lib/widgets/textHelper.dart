@@ -11,7 +11,11 @@ getStartText(
   String text = "";
   bool bigCondition =
       todayCalory <= caloryLimitDeltaR && todayCalory >= caloryLimitDeltaL;
-  TextStyle _style = DesignTheme.bigText1;
+  TextStyle _style = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 28,
+    color: DesignTheme.blackTextColor,
+  );
 
   if (todayCalory == 0.0) {
     text = "Вы ничего не ели сегодня";

@@ -1,6 +1,7 @@
 import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dateAndCalory.dart';
+import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
@@ -194,16 +195,28 @@ class _ProductPageState extends State<ProductPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              getParamText(calory, "кКал"),
-                              getParamText(squi, "Белки г."),
+                              ProductParamPanel(
+                                value: calory,
+                                title: "кКал",
+                              ),
+                              ProductParamPanel(
+                                value: squi,
+                                title: "Белки г.",
+                              ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              getParamText(fat, "Жир г."),
-                              getParamText(carboh, "Углеводы г."),
+                              ProductParamPanel(
+                                value: fat,
+                                title: "Жир г.",
+                              ),
+                              ProductParamPanel(
+                                value: carboh,
+                                title: "Углеводы г.",
+                              ),
                             ],
                           )
                         ],
@@ -248,35 +261,6 @@ class _ProductPageState extends State<ProductPage> {
       DBDateProductsProvider.db.getPoductsByDate(res.date, res.id);
       Navigator.popAndPushNamed(context, '/navigator/1');
     }
-  }
-
-  getParamText(double value, String name) {
-    final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.44,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        boxShadow: DesignTheme.shadowByOpacity(0.03),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            value.toString(),
-            style: DesignTheme.bigMainText,
-          ),
-          Text(
-            name,
-            style: DesignTheme.labelSearchText,
-          ),
-        ],
-      ),
-    );
   }
 
   String splitText(String text) {

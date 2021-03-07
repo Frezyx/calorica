@@ -1,5 +1,4 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/pages/product/widgets/search_bar.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 

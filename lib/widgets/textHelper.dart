@@ -69,7 +69,7 @@ getParamText(
             checkThousands((todayCalory - yesterdayCalory).abs()).toString(),
     textAlign: TextAlign.start,
     style: TextStyle(
-      fontSize: 38.0,
+      fontSize: 18.0,
       fontWeight: FontWeight.w900,
       color: _color,
     ),
@@ -83,7 +83,7 @@ checkThousands(double value) {
   return value;
 }
 
-getOtherParamText(todayParam, yesterdayParam) {
+getOtherParamText(double todayParam, double yesterdayParam) {
   Color _color = DesignTheme.redColor;
 
   if (todayParam == 0.0 || todayParam > yesterdayParam) {
@@ -99,7 +99,7 @@ getOtherParamText(todayParam, yesterdayParam) {
             (roundDouble((todayParam - yesterdayParam), 1).abs()).toString(),
     textAlign: TextAlign.start,
     style: TextStyle(
-      fontSize: 38.0,
+      fontSize: 18.0,
       fontWeight: FontWeight.w900,
       color: _color,
     ),

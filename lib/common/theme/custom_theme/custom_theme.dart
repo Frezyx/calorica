@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Black colors candidates :
-// 1) 1C2E33
-// 2) 17262A
-
 // ignore: avoid_classes_with_only_static_members
 abstract class CustomTheme {
   static Color get mainColorSimple => Color(0xFF51D684);

@@ -6,6 +6,7 @@ import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_bar/bottom_bar.dart';
 import 'navigatorBody.dart';
 
 class NavigatorPage extends StatefulWidget {
@@ -53,32 +54,44 @@ class _NavigatorPageState extends State<NavigatorPage> {
             });
           }),
       bottomNavigationBar: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          boxShadow: [DesignTheme.originalShadow],
-          color: DesignTheme.whiteColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+          height: 80,
+          decoration: BoxDecoration(
+            boxShadow: [DesignTheme.originalShadow],
+            color: DesignTheme.whiteColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
           ),
-        ),
-        child: FFNavigationBar(
-          theme: FFNavigationBarTheme(
-            barBackgroundColor: Colors.white,
-            selectedItemBorderColor: DesignTheme.mainColor,
-            selectedItemBackgroundColor: DesignTheme.mainColor,
-            selectedItemIconColor: Colors.white,
-            selectedItemLabelColor: Colors.black,
+          child: BottomBar(
+            items: [
+              Icons.bar_chart_rounded,
+              Icons.home_rounded,
+              Icons.add,
+            ],
+            onSelected: (int i) {
+              setState(() {
+                index = i;
+              });
+            },
+          )
+          // FFNavigationBar(
+          //   theme: FFNavigationBarTheme(
+          //     barBackgroundColor: Colors.white,
+          //     selectedItemBorderColor: DesignTheme.mainColor,
+          //     selectedItemBackgroundColor: DesignTheme.mainColor,
+          //     selectedItemIconColor: Colors.white,
+          //     selectedItemLabelColor: Colors.black,
+          //   ),
+          //   selectedIndex: index,
+          //   onSelectTab: (i) {
+          //     setState(() {
+          //       index = i;
+          //     });
+          //   },
+          //   items: getBubbleBarBody(),
+          // ),
           ),
-          selectedIndex: index,
-          onSelectTab: (i) {
-            setState(() {
-              index = i;
-            });
-          },
-          items: getBubbleBarBody(),
-        ),
-      ),
     );
   }
 }

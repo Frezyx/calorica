@@ -58,7 +58,7 @@ class _EditUserPageState extends State<EditUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getArrowBackAppBar("Настройки", "/navigator/1", context),
+      appBar: getArrowBackAppBar("Профиль", "/navigator/1", context),
       body: Form(
           key: _formKey,
           child: Column(children: <Widget>[

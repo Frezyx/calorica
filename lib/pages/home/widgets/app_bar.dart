@@ -1,5 +1,4 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/range.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -31,7 +30,7 @@ class HomeAppBar extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(
-          top: 25,
+          top: 5,
           left: 25,
           right: 25,
         ),

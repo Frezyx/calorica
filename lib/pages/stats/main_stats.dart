@@ -71,21 +71,32 @@ class _MainStatsState extends State<MainStats> {
 
           setState(() {
             _chartData = createSampleData(weekStats);
-            _seriesData = generateData(yesterdayParams, todayParams,
-                caloryLimitDeltaR, caloryLimitDeltaL);
+            _seriesData = generateData(
+              yesterdayParams,
+              todayParams,
+              caloryLimitDeltaR,
+              caloryLimitDeltaL,
+            );
 
             chartsWidgetList.removeLast();
 
-            chartsWidgetList.add(getBarGraph(
+            chartsWidgetList.add(
+              getBarGraph(
                 context,
                 _seriesData,
                 caloryLimitDeltaL,
                 caloryLimitDeltaR,
                 todayParams,
-                yesterdayParams));
+                yesterdayParams,
+              ),
+            );
 
-            chartsWidgetList.add(getLineGraph(context, _chartData));
-            chartsWidgetList.add(AdMobHelper.getAdMobGraphBaner(context));
+            chartsWidgetList.add(
+              getLineGraph(
+                context,
+                _chartData,
+              ),
+            );
 
             lineTextList.add(getOtherParamTextColumn(
               todayParams,
@@ -204,14 +215,14 @@ class _MainStatsState extends State<MainStats> {
               items: lineTextList,
             ),
             Container(
-              height: 300.0,
+              height: 290.0,
               child: CarouselSlider.builder(
                 itemCount: chartsWidgetList.length,
                 itemBuilder: (context, index) {
                   return chartsWidgetList[index];
                 },
                 options: CarouselOptions(
-                    height: 300.0,
+                    height: 290.0,
                     viewportFraction: 1,
                     autoPlay: isAutoPlay,
                     autoPlayCurve: Curves.easeInExpo,
@@ -219,6 +230,7 @@ class _MainStatsState extends State<MainStats> {
                     onPageChanged: (index, reason) {}),
               ),
             ),
+            AdMobHelper.getAdMobGraphBaner(context),
           ],
         ),
       ),

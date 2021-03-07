@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 getLineGraph(context, chartData) {
   return Padding(
-    padding: EdgeInsets.only(bottom: 20, top: 10, left: 20, right: 20),
+    padding: EdgeInsets.only(bottom: 20, top: 10, left: 10, right: 10),
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [DesignTheme.originalShadowLil],
+        boxShadow: DesignTheme.shadowByOpacity(0.03),
       ),
       constraints:
           BoxConstraints.expand(height: MediaQuery.of(context).size.height / 3),

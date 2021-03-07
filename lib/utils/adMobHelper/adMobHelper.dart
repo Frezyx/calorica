@@ -26,38 +26,31 @@ class AdMobHelper {
   static getAdMidleBlock() {
     final _controller = NativeAdmobController();
     return Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        elevation: 1.0,
-        child: Container(
-            height: 150,
-            child: NativeAdmob(
-              adUnitID: AdMobConfig.NATIVE_ADMOB_BIG_BLOCK_ID,
-              controller: _controller,
-            )));
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      elevation: 1.0,
+      child: Container(
+        height: 150,
+        child: NativeAdmob(
+          adUnitID: AdMobConfig.NATIVE_ADMOB_BIG_BLOCK_ID,
+          controller: _controller,
+        ),
+      ),
+    );
   }
 
   static getAdMobGraphBaner(context) {
     final _controller = NativeAdmobController();
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20, top: 10, left: 20, right: 20),
-      child: Container(
-        constraints: BoxConstraints.expand(
-            height: MediaQuery.of(context).size.height / 3),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: NativeAdmob(
-                options: NativeAdmobOptions(
-                  ratingColor: CustomTheme.mainColor,
-                ),
-                adUnitID: AdMobConfig.NATIVE_ADMOB_GRAPH_BLOCK_ID,
-                controller: _controller,
-              ),
-            )
-          ],
+    return Container(
+      height: 170,
+      color: Colors.white,
+      child: NativeAdmob(
+        options: NativeAdmobOptions(
+          showMediaContent: true,
         ),
+        type: NativeAdmobType.banner,
+        adUnitID: AdMobConfig.NATIVE_ADMOB_GRAPH_BLOCK_ID,
+        controller: _controller,
       ),
     );
   }

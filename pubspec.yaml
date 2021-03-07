@@ -27,8 +27,6 @@ dependencies:
   flutter_config: ^1.0.7
   ff_navigation_bar: ^0.1.4
 
-  auto_size_text: ^2.1.0
-
   # after 1.0.1
 
   equatable: ^1.2.5

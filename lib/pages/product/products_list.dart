@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/pages/product/widgets/search_bar.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 
@@ -45,64 +46,11 @@ class _AddPageState extends State<AddPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 15,
-                  right: 15,
-                ),
-                child: Text(
-                  "Добавление \nприема пищи",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    color: DesignTheme.blackColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding:
-                    EdgeInsets.only(top: 15, bottom: 20, left: 10, right: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: DesignTheme.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 15.0,
-                        spreadRadius: 4.0,
-                        offset: Offset(
-                          0.0,
-                          5.0,
-                        ),
-                      )
-                    ],
-                  ),
-                  child: TextFormField(
-                    onChanged: (text) {
-                      startSearch(text);
-                    },
-                    style: DesignTheme.inputText,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      icon: Padding(
-                        padding: EdgeInsets.only(
-                          left: 15,
-                        ),
-                        child: Icon(
-                          Icons.search,
-                          color: DesignTheme.mainColor,
-                        ),
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                      labelText: 'Поиск по продуктам...',
-                      border: InputBorder.none,
-                      labelStyle: DesignTheme.labelSearchText,
-                    ),
-                    onEditingComplete: () {},
-                  ),
-                ),
+              ProductsListAppBar(),
+              ProductSearchBar(
+                onChanged: (String text) {
+                  startSearch(text);
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 15, left: 15),

@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
           Container(
             constraints: BoxConstraints.expand(height: 190),
             decoration: BoxDecoration(
-              gradient: DesignTheme.gradient,
+              gradient: calory.gradient,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(40),
                 bottomRight: Radius.circular(40),

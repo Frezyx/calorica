@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/utils/calculator_parts/percent_checker.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +38,8 @@ class RangeGraphData {
       },
       onFinalPart: () {
         _gradient = LinearGradient(colors: [
-          Colors.green,
-          Colors.green[800],
+          CustomTheme.mainColor[600],
+          CustomTheme.mainColor[900],
         ]);
       },
     );
@@ -54,7 +55,7 @@ class RangeGraphData {
         color = Colors.yellow[800];
       },
       onFinalPart: () {
-        color = Colors.green[800];
+        color = CustomTheme.mainColor[800];
       },
     );
     return color;

@@ -9,9 +9,6 @@ class DesignTheme {
   static const Color backgroundColor = Color.fromRGBO(244, 244, 244, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
-  static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
-  static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
-
   static const Color blackTextColor = Color(0xFF17262A);
   static const Color blackLightTextColor = Color(0xFF092043);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
@@ -38,12 +35,12 @@ class DesignTheme {
     color: selectorGray3,
   );
 
-  static const TextStyle selectorBigTextAction = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
-    color: mainColor,
-  );
+  static TextStyle get selectorBigTextAction => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle selectorLabel = TextStyle(
     fontFamily: fontMain,
@@ -122,26 +119,26 @@ class DesignTheme {
     color: blackTextColor,
   );
 
-  static const TextStyle bigMainText = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 36,
-    color: mainColor,
-  );
+  static TextStyle get bigMainText => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 36,
+        color: CustomTheme.mainColor,
+      );
 
-  static const TextStyle midleMainText = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 20,
-    color: mainColor,
-  );
+  static TextStyle get midleMainText => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+        color: CustomTheme.mainColor,
+      );
 
-  static const TextStyle midleMainTextBig = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 24,
-    color: mainColor,
-  );
+  static TextStyle get midleMainTextBig => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle bigWhiteText = TextStyle(
     fontFamily: 'Montserrat',

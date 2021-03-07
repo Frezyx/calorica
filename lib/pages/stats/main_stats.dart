@@ -4,8 +4,7 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/pages/stats/barGraph.dart';
 import 'package:calory_calc/pages/stats/lineWeekGraph.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
+
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/utils/stats/prepareDataByDay.dart';

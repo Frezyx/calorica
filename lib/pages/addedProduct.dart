@@ -1,9 +1,9 @@
+import 'package:calory_calc/common/services/admob_service.dart';
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
+
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/alerts/badEditionAlert.dart';
 
@@ -156,7 +156,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                     isEdited ? getSaveButton(_formKey) : getDeleteButton(),
                     isEdited ? getChangeEditButton() : getEditingButton(),
                     SizedBox(height: 20),
-                    AdMobHelper.getAdBigBlock(),
+                    AdmobService.instance.getAdBigBlock(),
                   ],
                 )),
           ),

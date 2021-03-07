@@ -1,15 +1,10 @@
-import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/widgets/crads/info_card.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:flutter_native_admob/flutter_native_admob.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -20,8 +15,6 @@ class _AddPageState extends State<AddPage> {
   bool isSaerching = false;
   ScrollController scrollController;
   String searchText;
-
-  final _controller = NativeAdmobController();
 
   void startSearch(String text) {
     setState(() {
@@ -79,16 +72,6 @@ class _AddPageState extends State<AddPage> {
                               style: TextStyle(color: Colors.red),
                             );
                           } else {
-                            // var count = snapshot.data.length;
-                            // if (count > 5) {
-                            //   snapshot.data.insert(4, Product(name: "Реклама"));
-                            // } else if (count > 3) {
-                            //   snapshot.data.insert(3, Product(name: "Реклама"));
-                            // } else if (count > 1) {
-                            //   snapshot.data.insert(1, Product(name: "Реклама"));
-                            // } else {
-                            //   snapshot.data.insert(0, Product(name: "Реклама"));
-                            // }
                             return ListView.builder(
                               controller: scrollController,
                               padding: const EdgeInsets.symmetric(
@@ -97,29 +80,13 @@ class _AddPageState extends State<AddPage> {
                               physics: const BouncingScrollPhysics(),
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, i) {
-                                return snapshot.data[i].name == "Реклама"
-                                    ? Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        elevation: 1.0,
-                                        child: Container(
-                                          height: 250,
-                                          child: NativeAdmob(
-                                            adUnitID: AdMobConfig
-                                                .NATIVE_ADMOB_BIG_BLOCK_ID,
-                                            controller: _controller,
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        child: ProductCard(
-                                          product: snapshot.data[i],
-                                        ),
-                                        onTap: () =>
-                                            _openProductPage(snapshot.data[i]),
-                                      );
+                                return GestureDetector(
+                                  child: ProductCard(
+                                    product: snapshot.data[i],
+                                  ),
+                                  onTap: () =>
+                                      _openProductPage(snapshot.data[i]),
+                                );
                               },
                             );
                           }

@@ -1,16 +1,13 @@
 import 'package:calory_calc/common/theme/theme.dart';
-import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dateAndCalory.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
+
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/widgets.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:flutter/material.dart';
 
@@ -53,16 +50,6 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
-  BannerAd createBannerAd() {
-    return BannerAd(
-        adUnitId: AdMobConfig.AD_UNIT_BANER_ID,
-        size: AdSize.banner,
-        targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
-          print("BannerAd $event");
-        });
-  }
-
   @override
   void dispose() {
     // _bannerAd?.dispose();
@@ -71,12 +58,6 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    FirebaseAdMob.instance.initialize(appId: BannerAd.testAdUnitId);
-    //Change appId With Admob Id
-    // _bannerAd = createBannerAd()
-    //   ..load()
-    //   ..show();
-
     super.initState();
     _grammController.text = '100.0';
     DBProductProvider.db.getProductById(int.parse(id)).then((res) {

@@ -1,7 +1,7 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
+
 import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
 
 import 'package:flutter/material.dart';

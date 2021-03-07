@@ -1,6 +1,4 @@
-import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/common/theme/theme.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:flutter/material.dart';
 
 Future<void> goodAlert(context) async {

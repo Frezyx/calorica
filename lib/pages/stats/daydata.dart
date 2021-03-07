@@ -1,7 +1,6 @@
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:calory_calc/design/theme.dart';
@@ -21,8 +20,6 @@ class _DayDatePageState extends State<DayDatePage> {
   String date;
   _DayDatePageState(this.date);
   var intDate;
-
-  final _controller = NativeAdmobController();
 
   ScrollController scrollController;
   double calory = 0.0;

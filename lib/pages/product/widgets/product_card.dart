@@ -37,10 +37,10 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   product.name,
                   style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    letterSpacing: -0.3,
-                    color: DesignTheme.gray36Color,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    letterSpacing: -0.2,
+                    color: DesignTheme.blackLightTextColor,
                   ),
                 ),
               ),
@@ -54,7 +54,9 @@ class ProductCard extends StatelessWidget {
                     " Ж     " +
                     product.carboh.toString() +
                     " У",
-                style: DesignTheme.secondaryText,
+                style: DesignTheme.secondaryText.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),

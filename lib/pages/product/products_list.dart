@@ -36,6 +36,7 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -62,8 +63,12 @@ class _AddPageState extends State<AddPage> {
                         left: 5,
                       ),
                       child: Text(
-                        "Результаты поиска:",
-                        style: DesignTheme.lilGrayText,
+                        "Результаты поиска".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: theme.primaryColor,
+                        ),
                       ),
                     ),
                     Padding(

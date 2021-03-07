@@ -25,7 +25,6 @@ getEditorDietSaveButton(_formKey, Diet diet, context) {
           }
         });
       }
-      ;
     },
     shapeRadius: BorderRadius.circular(50.0),
     gradient: DesignTheme.gradient,

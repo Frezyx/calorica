@@ -4,6 +4,7 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/pages/stats/barGraph.dart';
 import 'package:calory_calc/pages/stats/lineWeekGraph.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
+import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
 import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
@@ -16,7 +17,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
-
 import 'widgets/widgets.dart';
 
 class MainStats extends StatefulWidget {
@@ -230,7 +230,6 @@ class _MainStatsState extends State<MainStats> {
                     onPageChanged: (index, reason) {}),
               ),
             ),
-            AdMobHelper.getAdMobGraphBaner(context),
           ],
         ),
       ),

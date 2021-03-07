@@ -1,13 +1,10 @@
-import 'package:calory_calc/common/theme/custom_theme/custom_theme.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
-import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_native_admob/native_admob_options.dart';
 
-class AdMobHelper {
+abstract class AdMobHelper {
   static getAdBigBlock() {
     final _controller = NativeAdmobController();
     return Card(
@@ -42,7 +39,7 @@ class AdMobHelper {
     final _controller = NativeAdmobController();
 
     return Container(
-      height: 170,
+      height: 120,
       color: Colors.white,
       child: NativeAdmob(
         options: NativeAdmobOptions(

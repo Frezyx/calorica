@@ -253,7 +253,7 @@ class DesignTheme {
       );
 
   static BoxShadow get selectorShadow => BoxShadow(
-        color: CustomTheme.mainColor,
+        color: CustomTheme.mainColor.withOpacity(0.25),
         blurRadius: 8.0,
         spreadRadius: 2.0,
         offset: Offset(

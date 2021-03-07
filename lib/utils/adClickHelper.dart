@@ -11,9 +11,12 @@ MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
 
 InterstitialAd createInterstitialAd() {
   return InterstitialAd(
-      adUnitId: AdMobConfig.AD_UNIT_ID_ONE,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {});
+    adUnitId: AdMobConfig.AD_UNIT_ID_ONE,
+    targetingInfo: targetingInfo,
+    listener: (MobileAdEvent event) {
+      print(event);
+    },
+  );
 }
 
 BannerAd createBannerAd() {

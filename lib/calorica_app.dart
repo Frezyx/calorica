@@ -8,7 +8,7 @@ import 'package:calory_calc/pages/edit/editUserParams.dart';
 import 'package:calory_calc/widgets/navigator/navigator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/pages/add.dart';
+import 'package:calory_calc/pages/product/products_list.dart';
 import 'package:calory_calc/pages/auth/auth.dart';
 import 'package:calory_calc/pages/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';

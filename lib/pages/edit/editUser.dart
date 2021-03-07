@@ -2,7 +2,6 @@ import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/widgets/alerts/easyGoogAlert.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
-import 'package:calory_calc/widgets/buttons/editorSaveButtons.dart';
 import 'package:calory_calc/widgets/buttons/flatNavigationButton.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 

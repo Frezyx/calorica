@@ -7,7 +7,6 @@ import 'package:calory_calc/utils/convertors/workModelFromTxt.dart';
 import 'package:calory_calc/utils/userDietUpdate.dart';
 import 'package:calory_calc/widgets/alerts/easyGoogAlert.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
-import 'package:calory_calc/widgets/buttons/editorSaveButtons.dart';
 import 'package:calory_calc/widgets/customInputs/carousel.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';

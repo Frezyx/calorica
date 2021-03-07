@@ -4,7 +4,6 @@ import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/widgets/alerts/easyGoogAlert.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
-import 'package:calory_calc/widgets/buttons/editorSaveButtons.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 

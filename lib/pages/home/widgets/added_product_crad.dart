@@ -16,27 +16,29 @@ class AddedProductCard extends StatelessWidget {
     return GestureDetector(
       child: Container(
         padding: EdgeInsets.all(8.0),
+        margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: BorderRadius.circular(8.0),
-          boxShadow: DesignTheme.shadowByOpacity(0.02),
+          boxShadow: DesignTheme.shadowByOpacity(0.03),
         ),
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                product.name,
-                style: DesignTheme.primeText,
-              ),
-              Text(
-                product.calory.toString() + " кКал  ",
-                style: DesignTheme.secondaryText,
-              )
-            ]),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              product.name,
+              style: DesignTheme.primeText,
+            ),
+            Text(
+              product.calory.toString() + " кКал  ",
+              style: DesignTheme.secondaryText,
+            )
+          ],
+        ),
       ),
       onTap: () {
-        Navigator.popAndPushNamed(context, '/navigator/2');
+        Navigator.pushNamed(context, '/addedProduct/${product.id}/home');
       },
     );
   }

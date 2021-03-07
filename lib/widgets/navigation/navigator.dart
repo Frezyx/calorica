@@ -1,6 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/product/products_list.dart';
-import 'package:calory_calc/pages/home.dart';
+import 'package:calory_calc/pages/home/home.dart';
 import 'package:calory_calc/pages/stats/mainStats.dart';
 import 'package:flutter/material.dart';
 

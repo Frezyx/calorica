@@ -1,18 +1,11 @@
-import 'dart:math';
-
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
-import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
-import 'package:calory_calc/utils/dietSelector.dart';
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/error/errorScreens.dart';
 import 'package:calory_calc/widgets/range.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -137,166 +130,98 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DesignTheme.backgroundColor,
-      body: Stack(children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(0),
-          constraints: BoxConstraints.expand(height: 340),
-          decoration: BoxDecoration(
-              gradient: DesignTheme.gradient,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(140),
-                  bottomRight: Radius.circular(140))),
-          child: Container(
-            padding: EdgeInsets.only(top: 50, left: 30, right: 30),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(children: <Widget>[
-                        getSubText(name, surname),
-                        isNameSurnameBig ? Container() : getIconButton(),
-                      ]),
-                      getBigRangeWidget(calory),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          getRangeWidget(squi),
-                          getRangeWidget(fat),
-                          getRangeWidget(carboh),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Text(
-                          "Сегодня " +
-                              DateFormat('dd.MM.yyyy').format(DateTime.now()),
-                          textAlign: TextAlign.start,
-                          style: DesignTheme.lilWhiteText,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(0),
+            constraints: BoxConstraints.expand(height: 340),
+            decoration: BoxDecoration(
+                gradient: DesignTheme.gradient,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(140),
+                    bottomRight: Radius.circular(140))),
+            child: Container(
+              padding: EdgeInsets.only(top: 50, left: 30, right: 30),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(children: <Widget>[
+                          getSubText(name, surname),
+                          isNameSurnameBig ? Container() : getIconButton(),
+                        ]),
+                        getBigRangeWidget(calory),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            getRangeWidget(squi),
+                            getRangeWidget(fat),
+                            getRangeWidget(carboh),
+                          ],
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: EdgeInsets.only(top: 30),
+                          child: Text(
+                            "Сегодня " +
+                                DateFormat('dd.MM.yyyy').format(DateTime.now()),
+                            textAlign: TextAlign.start,
+                            style: DesignTheme.lilWhiteText,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: paddingTop, left: 30, right: 30),
-          constraints: BoxConstraints.expand(
-              height: MediaQuery.of(context).size.height - 280),
-          child: FutureBuilder<List<UserProduct>>(
-              initialData: emptyProduct,
-              future: DBUserProductsProvider.db.getAllProducts(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<UserProduct>> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return ErrorScreens.getNoMealScreen(context);
-                  case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
-                  case ConnectionState.active:
-                    return Text('');
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
+          Container(
+            margin: EdgeInsets.only(top: paddingTop, left: 30, right: 30),
+            constraints: BoxConstraints.expand(
+                height: MediaQuery.of(context).size.height - 280),
+            child: FutureBuilder<List<UserProduct>>(
+                initialData: emptyProduct,
+                future: DBUserProductsProvider.db.getAllProducts(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<UserProduct>> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
                       return ErrorScreens.getNoMealScreen(context);
-                    } else {
-                      if (snapshot.data.length > 0) {
-                        snapshot.data
-                            .add(UserProduct(name: "Кнопка добавления"));
-                        return StaggeredGridView.countBuilder(
+                    case ConnectionState.waiting:
+                      return Center(child: CircularProgressIndicator());
+                    case ConnectionState.active:
+                      return Text('');
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return ErrorScreens.getNoMealScreen(context);
+                      } else {
+                        if (snapshot.data.length > 0) {
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
                             controller: scrollController,
                             padding: const EdgeInsets.all(7.0),
-                            mainAxisSpacing: 3.0,
-                            crossAxisSpacing: 3.0,
-                            crossAxisCount: 6,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, i) {
-                              return InkWell(
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    elevation: 1.0,
-                                    child: snapshot.data[i].name ==
-                                            "Кнопка добавления"
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                                Icon(
-                                                  Icons.add,
-                                                  size: 36,
-                                                  color: DesignTheme.mainColor,
-                                                )
-                                              ])
-                                        : Padding(
-                                            padding: EdgeInsets.only(left: 10),
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text(
-                                                    splitText(
-                                                        snapshot.data[i].name),
-                                                    style:
-                                                        DesignTheme.primeText,
-                                                  ),
-                                                  Text(
-                                                    snapshot.data[i].calory
-                                                            .toString() +
-                                                        " кКал  ",
-                                                    style: DesignTheme
-                                                        .secondaryText,
-                                                  )
-                                                ]),
-                                          ),
-                                  ),
-                                  onTap: snapshot.data[i].name !=
-                                          "Кнопка добавления"
-                                      ? () {
-                                          Navigator.pushNamed(context,
-                                              '/addedProduct/${snapshot.data[i].id}/home');
-                                        }
-                                      : () {
-                                          Navigator.popAndPushNamed(
-                                              context, '/navigator/2');
-                                        });
+                              return AddedProductCard(
+                                product: snapshot.data[i],
+                              );
                             },
-                            staggeredTileBuilder: (int i) =>
-                                StaggeredTile.count(3, 2));
-                      } else {
-                        return ErrorScreens.getNoMealScreen(context);
+                          );
+                        } else {
+                          return ErrorScreens.getNoMealScreen(context);
+                        }
                       }
-                    }
-                }
-              }),
-        ),
-      ]),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-
-      //     UserProduct up = UserProduct(name:"s", category: "d", grams: 120, calory: -430, fat: 120, squi: 120, carboh: 120, productId: 1200);
-      //     var nowDate = DateTime.now();
-      //     var _date = DateTime(nowDate.year, nowDate.month, nowDate.day - 5);
-      //     up.date = _date;
-
-      //     DBUserProductsProvider.db.addProductWithDate(up);
-      //   },
-      //   label: Text('Approve'),
-      //   icon: Icon(Icons.thumb_up),
-      //   backgroundColor: Colors.pink,
-      // ),
+                  }
+                }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -344,13 +269,6 @@ class _HomeState extends State<Home> {
             ),
           ]);
     }
-  }
-
-  splitText(String text) {
-    if (text.length <= 20)
-      return text;
-    else
-      return text.substring(0, 20);
   }
 
   splitBigTxt(String text) {
@@ -472,6 +390,46 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AddedProductCard extends StatelessWidget {
+  const AddedProductCard({
+    Key key,
+    this.product,
+  }) : super(key: key);
+
+  final UserProduct product;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: DesignTheme.shadowByOpacity(0.02),
+        ),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                product.name,
+                style: DesignTheme.primeText,
+              ),
+              Text(
+                product.calory.toString() + " кКал  ",
+                style: DesignTheme.secondaryText,
+              )
+            ]),
+      ),
+      onTap: () {
+        Navigator.popAndPushNamed(context, '/navigator/2');
+      },
     );
   }
 }

@@ -25,47 +25,52 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      margin: EdgeInsets.only(
-        top: 25,
-        left: 25,
-        right: 25,
-      ),
-      padding: EdgeInsets.symmetric(vertical: 15),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: DesignTheme.shadowByOpacity(0.04),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    buildUserName(name, surname, context),
-                  ],
-                ),
-                getBigRangeWidget(calory, context),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getRangeWidget(squi, context),
-                    getRangeWidget(fat, context),
-                    getRangeWidget(carboh, context),
-                  ],
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/editUser');
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          top: 25,
+          left: 25,
+          right: 25,
+        ),
+        padding: EdgeInsets.symmetric(vertical: 15),
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: DesignTheme.shadowByOpacity(0.04),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      buildUserName(name, surname, context),
+                    ],
+                  ),
+                  getBigRangeWidget(calory, context),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      getRangeWidget(squi, context),
+                      getRangeWidget(fat, context),
+                      getRangeWidget(carboh, context),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

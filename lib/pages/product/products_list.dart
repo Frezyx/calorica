@@ -1,6 +1,8 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
+import 'package:calory_calc/widgets/crads/info_card.dart';
 
 import 'package:flutter/material.dart';
 
@@ -35,6 +37,7 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -51,27 +54,7 @@ class _AddPageState extends State<AddPage> {
                   startSearch(text);
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 15, left: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 5,
-                      ),
-                      child: Text(
-                        "Результаты поиска:",
-                        style: DesignTheme.lilGrayText,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Divider(height: 1),
-                    ),
-                  ],
-                ),
-              ),
+              InfoCard(title: "Результаты поиска"),
               Flexible(
                 child: Container(
                   constraints: BoxConstraints.expand(

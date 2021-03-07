@@ -1,4 +1,6 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class ProductSearchBar extends StatelessWidget {
@@ -40,7 +42,7 @@ class ProductSearchBar extends StatelessWidget {
               ),
               child: Icon(
                 Icons.search,
-                color: DesignTheme.mainColor,
+                color: CustomTheme.mainColor,
               ),
             ),
             contentPadding:

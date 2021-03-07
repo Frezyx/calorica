@@ -1,5 +1,7 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dateAndCalory.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
@@ -129,127 +131,128 @@ class _ProductPageState extends State<ProductPage> {
           constraints:
               BoxConstraints.expand(height: MediaQuery.of(context).size.height),
           child: Padding(
-              padding:
-                  EdgeInsets.only(left: 15, right: 15, bottom: 40, top: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: DesignTheme.whiteColor,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          boxShadow: DesignTheme.shadowByOpacity(0.05),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 15, right: 15, bottom: 20, top: 20),
-                          child: Column(children: <Widget>[
-                            Text(
-                              product == null ? 'Загрузка...' : name,
-                              style: isStringOverSize(name)
-                                  ? DesignTheme.bigText20
-                                  : DesignTheme.bigText24,
-                              textAlign: TextAlign.start,
-                            ),
-                            SizedBox(height: 10),
-                            Form(
-                              key: _formKey,
-                              child: TextFormField(
-                                onChanged: (text) {
-                                  if (_formKey.currentState.validate()) {}
-                                  multiData(double.parse(text));
-                                },
-                                controller: _grammController,
-                                style: DesignTheme.inputText,
-                                cursorColor: DesignTheme.mainColor,
-                                decoration: InputDecoration(
-                                  labelText: 'Введите вес в граммах',
-                                  labelStyle: DesignTheme.labelSearchTextBigger,
-                                  suffixIcon:
-                                      Icon(FontAwesomeIcons.weightHanging),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    setWriteStatus(false);
-                                    return 'Введите вес продукта';
-                                  } else if (!(double.parse(value) is double)) {
-                                    setWriteStatus(false);
-                                    return 'Введите число';
-                                  } else {
-                                    setWriteStatus(true);
-                                  }
-                                },
-                              ),
-                            ),
-                          ]),
-                        ),
+            padding: EdgeInsets.only(left: 15, right: 15, bottom: 40, top: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: DesignTheme.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        boxShadow: DesignTheme.shadowByOpacity(0.05),
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              ProductParamPanel(
-                                value: calory,
-                                title: "кКал",
-                              ),
-                              ProductParamPanel(
-                                value: squi,
-                                title: "Белки г.",
-                              ),
-                            ],
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 15, right: 15, bottom: 20, top: 20),
+                        child: Column(children: <Widget>[
+                          Text(
+                            product == null ? 'Загрузка...' : name,
+                            style: isStringOverSize(name)
+                                ? DesignTheme.bigText20
+                                : DesignTheme.bigText24,
+                            textAlign: TextAlign.start,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              ProductParamPanel(
-                                value: fat,
-                                title: "Жир г.",
+                          SizedBox(height: 10),
+                          Form(
+                            key: _formKey,
+                            child: TextFormField(
+                              onChanged: (text) {
+                                if (_formKey.currentState.validate()) {}
+                                multiData(double.parse(text));
+                              },
+                              controller: _grammController,
+                              style: DesignTheme.inputText,
+                              cursorColor: CustomTheme.mainColor,
+                              decoration: InputDecoration(
+                                labelText: 'Введите вес в граммах',
+                                labelStyle: DesignTheme.labelSearchTextBigger,
+                                suffixIcon:
+                                    Icon(FontAwesomeIcons.weightHanging),
                               ),
-                              ProductParamPanel(
-                                value: carboh,
-                                title: "Углеводы г.",
-                              ),
-                            ],
-                          )
-                        ],
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  setWriteStatus(false);
+                                  return 'Введите вес продукта';
+                                } else if (!(double.parse(value) is double)) {
+                                  setWriteStatus(false);
+                                  return 'Введите число';
+                                } else {
+                                  setWriteStatus(true);
+                                }
+                              },
+                            ),
+                          ),
+                        ]),
                       ),
-                    ],
-                  ),
-                  Padding(
-                      child: CommonButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          UserProduct productSend = UserProduct(
-                            name: name,
-                            category: product.category,
-                            calory: calory,
-                            carboh: carboh,
-                            squi: squi,
-                            fat: fat,
-                            grams: gramsEditing,
-                            productId: int.parse(id),
-                          );
-
-                          addProduct(productSend);
-                        },
-                        child: Text(
-                          'Добавить',
-                          style: Theme.of(context).textTheme.button.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ProductParamPanel(
+                              value: calory,
+                              title: "кКал",
+                            ),
+                            ProductParamPanel(
+                              value: squi,
+                              title: "Белки г.",
+                            ),
+                          ],
                         ),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 15)),
-                ],
-              )),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            ProductParamPanel(
+                              value: fat,
+                              title: "Жир г.",
+                            ),
+                            ProductParamPanel(
+                              value: carboh,
+                              title: "Углеводы г.",
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  child: CommonButton(
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      UserProduct productSend = UserProduct(
+                        name: name,
+                        category: product.category,
+                        calory: calory,
+                        carboh: carboh,
+                        squi: squi,
+                        fat: fat,
+                        grams: gramsEditing,
+                        productId: int.parse(id),
+                      );
+
+                      addProduct(productSend);
+                    },
+                    child: Text(
+                      'Добавить',
+                      style: Theme.of(context).textTheme.button.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

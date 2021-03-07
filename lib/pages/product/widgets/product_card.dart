@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 
 import 'package:flutter/material.dart';
 
@@ -36,10 +37,10 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   product.name,
                   style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    letterSpacing: -0.3,
-                    color: DesignTheme.gray36Color,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    letterSpacing: -0.2,
+                    color: DesignTheme.blackLightTextColor,
                   ),
                 ),
               ),
@@ -53,19 +54,21 @@ class ProductCard extends StatelessWidget {
                     " Ж     " +
                     product.carboh.toString() +
                     " У",
-                style: DesignTheme.secondaryText,
+                style: DesignTheme.secondaryText.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              splashColor: DesignTheme.mainColor,
-              hoverColor: DesignTheme.secondColor,
+              splashColor: CustomTheme.mainColor,
+              hoverColor: CustomTheme.mainColor,
               onPressed: () => _openProductPage(product, context),
               icon: Icon(
                 Icons.add,
-                color: DesignTheme.mainColor,
+                color: CustomTheme.mainColor,
                 size: 28,
               ),
             ),

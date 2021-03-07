@@ -12,7 +12,7 @@ import 'package:calory_calc/pages/product/products_list.dart';
 import 'package:calory_calc/pages/product/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';
 import 'package:calory_calc/pages/stats/history.dart';
-import 'package:calory_calc/pages/stats/mainStats.dart';
+import 'package:calory_calc/pages/stats/main_stats.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:calory_calc/config/adMobConfig.dart';
@@ -9,6 +12,13 @@ import 'package:flutter_native_admob/native_admob_options.dart';
 class AdmobService {
   AdmobService._();
 
+  final Random _rnd = Random();
+
+  int _interstitialAdViewCount = 0;
+
+  Duration _time;
+  Timer _timer;
+
   static AdmobService _service;
   static AdmobService get instance {
     if (_service == null) {
@@ -19,15 +29,51 @@ class AdmobService {
 
   static const String TEST_DEVICE_ID = 'MobileId';
 
-  MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    nonPersonalizedAds: true,
-    keywords: <String>['calorie', 'fitness', 'health', 'sport'],
+  MobileAdTargetingInfo _targetingInfo = MobileAdTargetingInfo(
+    nonPersonalizedAds: false,
+    keywords: <String>[
+      'calorie',
+      'fitness',
+      'health',
+      'sport',
+      'фитнес',
+      'калории',
+      'калькулятор калорий',
+      'sports',
+      'eat',
+      'health'
+    ],
   );
+
+  void initializePeriodically() {
+    if (_interstitialAdViewCount >= 2) {
+      return;
+    }
+    if (_interstitialAdViewCount == 0) {
+      _time = Duration(seconds: 40 + _rnd.nextInt(80 - 40));
+    } else {
+      _time = Duration(seconds: 60 + _rnd.nextInt(140 - 60));
+    }
+    _timer = Timer.periodic(
+      _time,
+      (Timer timer) {
+        _interstitialAdViewCount += 1;
+        createInterstitialAd()
+          ..load()
+          ..show();
+
+        timer?.cancel();
+        _timer?.cancel();
+        _timer = null;
+        initializePeriodically();
+      },
+    );
+  }
 
   InterstitialAd createInterstitialAd() {
     return InterstitialAd(
       adUnitId: AdMobConfig.AD_UNIT_ID_ONE,
-      targetingInfo: targetingInfo,
+      targetingInfo: _targetingInfo,
       listener: (MobileAdEvent event) {
         print(event);
       },
@@ -38,7 +84,7 @@ class AdmobService {
     return BannerAd(
         adUnitId: AdMobConfig.AD_UNIT_ID_SECOND,
         size: AdSize.banner,
-        targetingInfo: targetingInfo,
+        targetingInfo: _targetingInfo,
         listener: (MobileAdEvent event) {});
   }
 

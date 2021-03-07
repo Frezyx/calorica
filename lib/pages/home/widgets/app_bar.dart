@@ -30,7 +30,7 @@ class HomeAppBar extends StatelessWidget {
         left: 25,
         right: 25,
       ),
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(8.0),
@@ -95,7 +95,7 @@ class HomeAppBar extends StatelessWidget {
       width: size.width * 0.7,
       child: AutoSizeText(
         '$name $surname',
-        maxLines: 2,
+        maxLines: 1,
         minFontSize: 20,
         style: TextStyle(
           fontWeight: FontWeight.w600,

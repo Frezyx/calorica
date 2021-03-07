@@ -133,9 +133,34 @@ class _HomeState extends State<Home> {
       backgroundColor: DesignTheme.backgroundColor,
       body: Stack(
         children: [
+          Container(
+            constraints: BoxConstraints.expand(height: 190),
+            decoration: BoxDecoration(
+              gradient: DesignTheme.gradient,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ),
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: HomeAppBar(
+                      name: name,
+                      surname: surname,
+                      calory: calory,
+                      squi: squi,
+                      fat: fat,
+                      carboh: carboh,
+                    ),
+                  ),
+                ],
+              ),
               // HomeAppBar(
               //     name: name,
               //     surname: surname,
@@ -160,9 +185,10 @@ class _HomeState extends State<Home> {
               //   padding: const EdgeInsets.only(top: 5.0, left: 25, right: 25),
               //   child: Divider(height: 1),
               // ),
+
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 240, left: 15, right: 15),
+                  margin: EdgeInsets.only(top: 5, left: 15, right: 15),
                   child: FutureBuilder<List<UserProduct>>(
                       initialData: emptyProduct,
                       future: DBUserProductsProvider.db.getAllProducts(),
@@ -198,31 +224,6 @@ class _HomeState extends State<Home> {
                             }
                         }
                       }),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            constraints: BoxConstraints.expand(height: 190),
-            decoration: BoxDecoration(
-              gradient: DesignTheme.gradient,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40),
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: HomeAppBar(
-                  name: name,
-                  surname: surname,
-                  calory: calory,
-                  squi: squi,
-                  fat: fat,
-                  carboh: carboh,
                 ),
               ),
             ],

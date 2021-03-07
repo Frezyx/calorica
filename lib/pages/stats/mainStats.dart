@@ -102,14 +102,14 @@ class _MainStatsState extends State<MainStats> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding:
-                  EdgeInsets.only(bottom: 10, top: 50, left: 30, right: 20),
+              padding: EdgeInsets.only(top: 50, left: 20, right: 20),
               child: getStartText(
                 todayParams,
                 yesterdayParams,
@@ -117,57 +117,47 @@ class _MainStatsState extends State<MainStats> {
                 caloryLimitDeltaL,
               ),
             ),
-            Padding(
-              padding:
-                  EdgeInsets.only(bottom: 20, top: 20, left: 20, right: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [DesignTheme.originalShadow]),
-                constraints: BoxConstraints.expand(
-                    height: MediaQuery.of(context).size.height / 8),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  elevation: 0.0,
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            Container(
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: BorderRadius.circular(15.0),
+                boxShadow: DesignTheme.shadowByOpacity(0.05),
+              ),
+              margin: EdgeInsets.all(15),
+              padding: EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "История питания",
-                                style: DesignTheme.primeTextBig,
-                              ),
-                              Text(
-                                "Узнай как ты питаешься",
-                                style: DesignTheme.secondaryTextBig,
-                              ),
-                            ]),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            splashColor: CustomTheme.mainColor,
-                            hoverColor: CustomTheme.mainColor,
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/history');
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward,
-                              color: CustomTheme.mainColor,
-                              size: 32,
-                            ),
-                          ),
-                        )
-                      ],
+                        Text(
+                          "История питания",
+                          style: DesignTheme.primeTextBig,
+                        ),
+                        Text(
+                          "Узнай как ты питаешься",
+                          style: DesignTheme.secondaryTextBig,
+                        ),
+                      ]),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      splashColor: CustomTheme.mainColor,
+                      hoverColor: CustomTheme.mainColor,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/history');
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: CustomTheme.mainColor,
+                        size: 26,
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
             ),
             Container(

@@ -23,7 +23,7 @@ getStartText(
   } else if (todayCalory < yesterdayCalory && bigCondition) {
     text = "Лучше, чем вчера!";
   } else if (bigCondition) {
-    text = "Сегодня вы - молодец!";
+    text = "Сегодня \nвы - молодец!";
   } else if (todayCalory <= caloryLimitDeltaR && todayCalory > 1000) {
     text = "Сегодня можно ещё!";
   } else if (todayCalory <= caloryLimitDeltaR) {

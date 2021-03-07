@@ -16,7 +16,6 @@ import 'package:calory_calc/pages/stats/main_stats.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';
-import 'common/services/admob_service.dart';
 import 'pages/launch_navigator.dart';
 
 class CaloricaApp extends StatefulWidget {
@@ -25,12 +24,6 @@ class CaloricaApp extends StatefulWidget {
 }
 
 class _CaloricaAppState extends State<CaloricaApp> {
-  @override
-  void initState() {
-    AdmobService.instance.initializePeriodically();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -62,27 +55,31 @@ class _CaloricaAppState extends State<CaloricaApp> {
 
           if (path[1] == 'product') {
             return MaterialPageRoute(
-                builder: (context) => ProductPage(id: path[2]),
-                settings: RouteSettings);
+              builder: (context) => ProductPage(id: path[2]),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'navigator') {
             return MaterialPageRoute(
-                builder: (context) => NavigatorPage(index: int.parse(path[2])),
-                settings: RouteSettings);
+              builder: (context) => NavigatorPage(index: int.parse(path[2])),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'daydata') {
             return MaterialPageRoute(
-                builder: (context) => DayDatePage(date: path[2]),
-                settings: RouteSettings);
+              builder: (context) => DayDatePage(date: path[2]),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'addedProduct') {
             return MaterialPageRoute(
-                builder: (context) =>
-                    AddedProductPage(id: path[2], from: path[3]),
-                settings: RouteSettings);
+              builder: (context) =>
+                  AddedProductPage(id: path[2], from: path[3]),
+              settings: RouteSettings,
+            );
           }
         },
       ),

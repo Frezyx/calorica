@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/services/admob_service.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/pages/product/products_list.dart';
 import 'package:calory_calc/pages/home/home.dart';
@@ -29,6 +30,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
   @override
   void initState() {
     if (this.mounted) {
+      AdmobService.instance.initializePeriodically();
       setState(() {
         isFromAnotherContext = index != null;
         index = index ?? 0;

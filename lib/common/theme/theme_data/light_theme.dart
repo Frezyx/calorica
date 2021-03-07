@@ -8,7 +8,7 @@ ThemeData get lightTheme => ThemeData(
       backgroundColor: CustomTheme.backgroundColor,
       scaffoldBackgroundColor: CustomTheme.lightScaffoldBackgroundColor,
       primaryColor: CustomTheme.mainColor,
-      accentColor: CustomTheme.mainColor,
+      accentColor: CustomTheme.secondColor,
       dividerColor: Colors.grey.withOpacity(0.5),
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: CustomTheme.mainColor,

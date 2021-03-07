@@ -8,6 +8,8 @@ abstract class CustomTheme {
         _mainColorCodes,
       );
 
+  static Color get secondColor => Color.fromRGBO(68, 211, 177, 1);
+
   static Color get lightColor => Colors.white;
   static Color get darkColor => Colors.black;
 

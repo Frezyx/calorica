@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/pages/home/widgets/widgets.dart';
@@ -129,6 +130,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: DesignTheme.backgroundColor,
       body: Stack(
@@ -161,30 +163,24 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              // HomeAppBar(
-              //     name: name,
-              //     surname: surname,
-              //     calory: calory,
-              //     squi: squi,
-              //     fat: fat,
-              //     carboh: carboh,
-              //   ),
+
               // TODO: enable in new UI version
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 30.0, top: 10.0),
-              //   child: Text(
-              //     "Сегодня вы ели".toUpperCase(),
-              //     textAlign: TextAlign.start,
-              //     style: TextStyle(
-              //       fontSize: 10,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 5.0, left: 25, right: 25),
-              //   child: Divider(height: 1),
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+                child: Text(
+                  "Сегодня вы ели".toUpperCase(),
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: theme.primaryColor,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0, left: 25, right: 25),
+                child: Divider(height: 1),
+              ),
 
               Expanded(
                 child: Container(

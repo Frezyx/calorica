@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/pages/stats/barGraph.dart';
 import 'package:calory_calc/pages/stats/lineWeekGraph.dart';
@@ -144,14 +145,14 @@ class _MainStatsState extends State<MainStats> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: IconButton(
-                                splashColor: DesignTheme.mainColor,
-                                hoverColor: DesignTheme.secondColor,
+                                splashColor: CustomTheme.mainColor,
+                                hoverColor: CustomTheme.mainColor,
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/history');
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward,
-                                  color: DesignTheme.mainColor,
+                                  color: CustomTheme.mainColor,
                                   size: 32,
                                 ),
                               ),

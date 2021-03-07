@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:flutter/material.dart';
 
@@ -26,14 +27,34 @@ class AddedProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              product.name,
-              style: DesignTheme.primeText,
+            Padding(
+              padding: const EdgeInsets.all(4.0).copyWith(bottom: 0),
+              child: Text(
+                product.name,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                  letterSpacing: -0.2,
+                  color: DesignTheme.blackLightTextColor,
+                ),
+              ),
             ),
-            Text(
-              product.calory.toString() + " кКал  ",
-              style: DesignTheme.secondaryText,
-            )
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                product.calory.toString() +
+                    " кКал     " +
+                    product.squi.toString() +
+                    " Б     " +
+                    product.fat.toString() +
+                    " Ж     " +
+                    product.carboh.toString() +
+                    " У",
+                style: DesignTheme.secondaryText.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ],
         ),
       ),

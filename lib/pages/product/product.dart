@@ -1,5 +1,7 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/config/adMobConfig.dart';
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dateAndCalory.dart';
 import 'package:calory_calc/pages/product/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/dateProvider.dart';
@@ -163,7 +165,7 @@ class _ProductPageState extends State<ProductPage> {
                                 },
                                 controller: _grammController,
                                 style: DesignTheme.inputText,
-                                cursorColor: DesignTheme.mainColor,
+                                cursorColor: CustomTheme.mainColor,
                                 decoration: InputDecoration(
                                   labelText: 'Введите вес в граммах',
                                   labelStyle: DesignTheme.labelSearchTextBigger,

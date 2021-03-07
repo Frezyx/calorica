@@ -1,18 +1,13 @@
-import 'dart:math';
-
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
 import 'package:calory_calc/widgets/buttons/editorSaveButton.dart';
 import 'package:calory_calc/widgets/buttons/flatNavigationButton.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 class RadioModel {
   bool isSelected;
@@ -76,7 +71,7 @@ class _EditUserPageState extends State<EditUserPage> {
                     children: <Widget>[
                       TextFormField(
                         controller: _nameController,
-                        cursorColor: DesignTheme.mainColor,
+                        cursorColor: CustomTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Имя',
                             labelStyle: DesignTheme.selectorLabel,
@@ -94,7 +89,7 @@ class _EditUserPageState extends State<EditUserPage> {
                       SizedBox(height: 10),
                       TextFormField(
                         controller: _surnameController,
-                        cursorColor: DesignTheme.mainColor,
+                        cursorColor: CustomTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Фамилия',
                             labelStyle: DesignTheme.selectorLabel,

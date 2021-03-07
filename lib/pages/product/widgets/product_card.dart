@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 
 import 'package:flutter/material.dart';
 
@@ -60,12 +61,12 @@ class ProductCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              splashColor: DesignTheme.mainColor,
-              hoverColor: DesignTheme.secondColor,
+              splashColor: CustomTheme.mainColor,
+              hoverColor: CustomTheme.mainColor,
               onPressed: () => _openProductPage(product, context),
               icon: Icon(
                 Icons.add,
-                color: DesignTheme.mainColor,
+                color: CustomTheme.mainColor,
                 size: 28,
               ),
             ),

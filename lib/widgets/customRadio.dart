@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomRadio extends StatefulWidget {
@@ -45,9 +46,9 @@ class CustomRadioState extends State<CustomRadio> {
             children: sampleData
                 .map(
                   (e) => InkWell(
-                    highlightColor: DesignTheme.secondColor,
-                    focusColor: DesignTheme.secondColor,
-                    splashColor: DesignTheme.secondColor,
+                    highlightColor: CustomTheme.mainColor,
+                    focusColor: CustomTheme.mainColor,
+                    splashColor: CustomTheme.mainColor,
                     onTap: () {
                       setState(() {
                         sampleData
@@ -89,13 +90,12 @@ class _RadioItem extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: _item.isSelected
-                    ? DesignTheme.secondColor
+                    ? CustomTheme.mainColor
                     : Colors.transparent,
                 border: Border.all(
                     width: 1.0,
-                    color: _item.isSelected
-                        ? DesignTheme.secondColor
-                        : Colors.grey),
+                    color:
+                        _item.isSelected ? CustomTheme.mainColor : Colors.grey),
                 borderRadius:
                     const BorderRadius.all(const Radius.circular(2.0)),
               ),

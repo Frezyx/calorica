@@ -1,16 +1,10 @@
 import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/models/dbModels.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/diet.dart';
-import 'package:calory_calc/models/userEditRadioModel.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
-import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:calory_calc/utils/convertors/workModelFromTxt.dart';
 import 'package:calory_calc/widgets/appBars/arrowBackAppBar.dart';
 import 'package:calory_calc/widgets/buttons/editorSaveButton.dart';
-import 'package:calory_calc/widgets/customInputs/carousel.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EditDietParamsPage extends StatefulWidget {
   @override
@@ -60,7 +54,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                           children: <Widget>[
                             TextFormField(
                               controller: _caloryLimitController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Лимит калорий',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -80,7 +74,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                             SizedBox(height: 10),
                             TextFormField(
                               controller: _squiLimitController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Лимит белков',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -100,7 +94,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                             SizedBox(height: 10),
                             TextFormField(
                               controller: _fatLimitController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Лимит жиров',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -122,7 +116,7 @@ class _EditDietParamsPageState extends State<EditDietParamsPage> {
                             ),
                             TextFormField(
                               controller: _carbohLimitController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Лимит углеводов',
                                   labelStyle: DesignTheme.selectorLabel,

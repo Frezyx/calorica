@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/userEditRadioModel.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
@@ -80,7 +81,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                           children: <Widget>[
                             TextFormField(
                               controller: _weightController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Вес',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -99,7 +100,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                             SizedBox(height: 10),
                             TextFormField(
                               controller: _heightController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Рост',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -118,7 +119,7 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                             SizedBox(height: 10),
                             TextFormField(
                               controller: _ageController,
-                              cursorColor: DesignTheme.mainColor,
+                              cursorColor: CustomTheme.mainColor,
                               decoration: InputDecoration(
                                   labelText: 'Возраст',
                                   labelStyle: DesignTheme.selectorLabel,
@@ -139,14 +140,14 @@ class _EditUserParamsPageState extends State<EditUserParamsPage> {
                               value: dropdownValue,
                               icon: Icon(
                                 Icons.arrow_downward,
-                                color: DesignTheme.mainColor,
+                                color: CustomTheme.mainColor,
                               ),
                               iconSize: 24,
                               elevation: 2,
                               style: TextStyle(color: DesignTheme.gray50Color),
                               underline: Container(
                                 height: 2,
-                                color: DesignTheme.mainColor,
+                                color: CustomTheme.mainColor,
                               ),
                               onChanged: (String newValue) {
                                 setState(() {

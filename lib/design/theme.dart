@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class DesignTheme {
@@ -11,9 +12,8 @@ class DesignTheme {
   static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
   static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
 
-  static const Color mainColorShadow = Color.fromRGBO(68, 211, 177, 0.27);
-
   static const Color blackTextColor = Color(0xFF17262A);
+  static const Color blackLightTextColor = Color(0xFF092043);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
   static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
   static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
@@ -213,11 +213,11 @@ class DesignTheme {
     color: Colors.black54,
   );
 
-  static const TextStyle inputText = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 16,
-    color: DesignTheme.mainColor,
-  );
+  static TextStyle get inputText => TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle labelSearchText = TextStyle(
     fontWeight: FontWeight.w300,
@@ -247,23 +247,23 @@ class DesignTheme {
     color: blackTextColor,
   );
 
-  static const gradient = LinearGradient(
-    colors: [DesignTheme.secondColor, DesignTheme.mainColor],
-    begin: Alignment.topRight,
-    end: Alignment.bottomLeft,
-    stops: [0.0, 1.0],
-    tileMode: TileMode.clamp,
-  );
+  static get gradient => LinearGradient(
+        colors: [CustomTheme.mainColor, CustomTheme.mainColor],
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        stops: [0.0, 1.0],
+        tileMode: TileMode.clamp,
+      );
 
-  static const BoxShadow selectorShadow = BoxShadow(
-    color: mainColorShadow,
-    blurRadius: 8.0,
-    spreadRadius: 2.0,
-    offset: Offset(
-      0.0,
-      4.0,
-    ),
-  );
+  static BoxShadow get selectorShadow => BoxShadow(
+        color: CustomTheme.mainColor,
+        blurRadius: 8.0,
+        spreadRadius: 2.0,
+        offset: Offset(
+          0.0,
+          4.0,
+        ),
+      );
 
   static const BoxShadow transperentShadow = BoxShadow(
     color: Colors.transparent,

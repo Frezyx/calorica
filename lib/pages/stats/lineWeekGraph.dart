@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ getLineGraph(context, chartData) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(children: <Widget>[
-                        Icon(Icons.label, color: DesignTheme.secondColor),
+                        Icon(Icons.label, color: CustomTheme.mainColor),
                         Text("кКалории в день"),
                       ]),
                     ]),
@@ -74,7 +75,7 @@ List<charts.Series<GraphLinarData, String>> createSampleData(
     charts.Series<GraphLinarData, String>(
         id: 'Mobile',
         colorFn: (_, __) =>
-            charts.ColorUtil.fromDartColor(DesignTheme.secondColor),
+            charts.ColorUtil.fromDartColor(CustomTheme.mainColor),
         domainFn: (GraphLinarData data, _) => data.date,
         measureFn: (GraphLinarData data, _) => data.param,
         data: mobileSalesData)

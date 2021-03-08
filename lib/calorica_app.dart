@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';
 import 'pages/launch_navigator.dart';
+import 'widgets/lifie_cycle/life_cycle_watcher.dart';
 
 class CaloricaApp extends StatefulWidget {
   @override
@@ -24,6 +25,17 @@ class CaloricaApp extends StatefulWidget {
 }
 
 class _CaloricaAppState extends State<CaloricaApp> {
+  @override
+  Widget build(BuildContext context) {
+    return LifecycleWatcher(child: _App());
+  }
+}
+
+class _App extends StatelessWidget {
+  const _App({
+    Key key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

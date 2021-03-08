@@ -152,4 +152,10 @@ class AdmobService {
       ),
     );
   }
+
+  void clearAll() {
+    _timer?.cancel();
+    _timer = null;
+    _service = null;
+  }
 }

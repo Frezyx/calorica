@@ -30,7 +30,6 @@ class _NavigatorPageState extends State<NavigatorPage> {
   @override
   void initState() {
     if (this.mounted) {
-      AdmobService.instance.initializePeriodically();
       setState(() {
         isFromAnotherContext = index != null;
         index = index ?? 0;

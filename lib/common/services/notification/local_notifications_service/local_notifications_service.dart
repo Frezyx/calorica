@@ -1,5 +1,6 @@
 import 'package:calory_calc/common/services/notification/service.dart';
 import 'package:calory_calc/common/theme/custom_theme/custom_theme.dart';
+import 'package:calory_calc/repositories/notifications/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';

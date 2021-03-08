@@ -1,13 +1,15 @@
 import 'package:calory_calc/common/services/notification/service.dart';
-import 'package:calory_calc/common/services/time_zone/service.dart';
 import 'package:calory_calc/common/theme/custom_theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 class LocalNotificationsService implements AbstractLocalNotificationsServie {
   LocalNotificationsService._();
+
   static LocalNotificationsService _service;
 
   FlutterLocalNotificationsPlugin notifyPlugin =
@@ -37,7 +39,8 @@ class LocalNotificationsService implements AbstractLocalNotificationsServie {
         await FlutterNativeTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
-    final android = AndroidInitializationSettings('ic_notification');
+
+    final android = AndroidInitializationSettings('notify_icon');
     final iOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -62,7 +65,7 @@ class LocalNotificationsService implements AbstractLocalNotificationsServie {
   Future<void> show({
     @required String title,
     @required String body,
-    String payload,
+    String payload = '',
   }) async {
     final generalNotificationDetails = NotificationDetails(
       android: androidDefaultDetails,
@@ -78,15 +81,30 @@ class LocalNotificationsService implements AbstractLocalNotificationsServie {
   }
 
   @override
-  Future<void> showPeriodically(
-      {String title, String body, RepeatInterval repeat, String payload}) {
-    // TODO: implement showPeriodically
-    throw UnimplementedError();
+  Future<void> showPeriodically({
+    @required String title,
+    @required String body,
+    @required RepeatInterval repeat,
+    String payload = '',
+  }) async {
+    final generalNotificationDetails = NotificationDetails(
+      android: androidDefaultDetails,
+      iOS: iOSDefaultSettings,
+    );
+
+    await notifyPlugin.periodicallyShow(
+      2,
+      title,
+      body,
+      repeat,
+      generalNotificationDetails,
+      androidAllowWhileIdle: true,
+      payload: payload,
+    );
   }
 
   @override
-  Future<void> cancelAll() {
-    // TODO: implement cancelAll
-    throw UnimplementedError();
+  Future<void> cancelAll() async {
+    await notifyPlugin.cancelAll();
   }
 }

@@ -12,6 +12,7 @@ import 'package:calory_calc/models/range.dart';
 
 import 'package:flutter/material.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Data {
@@ -133,14 +134,6 @@ class _HomeState extends State<Home> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: DesignTheme.backgroundColor,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          LocalNotificationsService.instance.show(
-            title: 'Test',
-            body: 'notify',
-          );
-        },
-      ),
       body: Stack(
         children: [
           Container(

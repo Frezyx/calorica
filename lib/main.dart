@@ -3,9 +3,11 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 
 import 'calorica_app.dart';
+import 'common/services/notification/service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseAdMob.instance.initialize(appId: AdMobConfig.APP_ID);
+  await LocalNotificationsService.instance.initialize();
   runApp(CaloricaApp());
 }

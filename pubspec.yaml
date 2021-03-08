@@ -38,6 +38,7 @@ dependencies:
   auto_size_text: ^2.1.0
 
   flutter_local_notifications: ^4.0.1
+  flutter_native_timezone: ^1.0.4
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
 

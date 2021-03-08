@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/services/notification/service.dart';
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
@@ -132,6 +133,14 @@ class _HomeState extends State<Home> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: DesignTheme.backgroundColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          LocalNotificationsService.instance.show(
+            title: 'Test',
+            body: 'notify',
+          );
+        },
+      ),
       body: Stack(
         children: [
           Container(

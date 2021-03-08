@@ -6,12 +6,12 @@ class NotificationsConfig {
     @required this.enabled,
   });
 
-  final int id;
+  final String id;
   final bool enabled;
 
   NotificationsConfig.initial()
       : this(
-          id: 1,
+          id: 'main_configuration',
           enabled: true,
         );
 

@@ -1,7 +1,7 @@
 name: calory_calc
 description: Calorie calculator.
 
-version: 1.2.0+4
+version: 1.2.1+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

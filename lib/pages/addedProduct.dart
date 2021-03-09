@@ -1,7 +1,9 @@
+import 'package:calory_calc/common/services/admob_service.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/adMobHelper/adMobHelper.dart';
+
 import 'package:calory_calc/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/alerts/badEditionAlert.dart';
 
@@ -154,7 +156,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
                     isEdited ? getSaveButton(_formKey) : getDeleteButton(),
                     isEdited ? getChangeEditButton() : getEditingButton(),
                     SizedBox(height: 20),
-                    AdMobHelper.getAdBigBlock(),
+                    AdmobService.instance.getAdBigBlock(),
                   ],
                 )),
           ),
@@ -172,7 +174,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
         child: Form(
             key: _formKey,
             child: TextFormField(
-              cursorColor: DesignTheme.mainColor,
+              cursorColor: CustomTheme.mainColor,
               decoration: InputDecoration(
                 labelText: 'Кол-во грамм',
                 labelStyle: DesignTheme.selectorLabel,
@@ -289,7 +291,7 @@ class _AddedProductPageState extends State<AddedProductPage> {
             hoverColor: Colors.white,
             focusColor: Colors.white,
             highlightColor: Colors.white,
-            splashColor: DesignTheme.mainColor,
+            splashColor: CustomTheme.mainColor,
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 DBUserProductsProvider.db.updateProduct(product).then((res) {
@@ -310,13 +312,13 @@ class _AddedProductPageState extends State<AddedProductPage> {
                 children: <Widget>[
                   Align(
                       alignment: Alignment.centerLeft,
-                      child: Icon(Icons.check, color: DesignTheme.mainColor)),
+                      child: Icon(Icons.check, color: CustomTheme.mainColor)),
                   Align(
                       alignment: Alignment.center,
                       child: Text(
                         "Сохранить",
                         style: TextStyle(
-                            color: DesignTheme.mainColor,
+                            color: CustomTheme.mainColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                         textAlign: TextAlign.center,
@@ -324,8 +326,8 @@ class _AddedProductPageState extends State<AddedProductPage> {
                 ],
               ),
             ),
-            highlightedBorderColor: DesignTheme.mainColor,
-            borderSide: BorderSide(color: DesignTheme.mainColor),
+            highlightedBorderColor: CustomTheme.mainColor,
+            borderSide: BorderSide(color: CustomTheme.mainColor),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0))));
   }

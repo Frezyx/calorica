@@ -5,19 +5,19 @@ import 'package:calory_calc/pages/edit/choiceDiet.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
 import 'package:calory_calc/pages/edit/editUserDietParams.dart';
 import 'package:calory_calc/pages/edit/editUserParams.dart';
-import 'package:calory_calc/widgets/navigator/navigator.dart';
+import 'package:calory_calc/widgets/navigation/navigator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:calory_calc/pages/add.dart';
-import 'package:calory_calc/pages/auth/auth.dart';
-import 'package:calory_calc/pages/product.dart';
+import 'package:calory_calc/pages/product/products_list.dart';
+import 'package:calory_calc/pages/product/product.dart';
 import 'package:calory_calc/pages/stats/daydata.dart';
 import 'package:calory_calc/pages/stats/history.dart';
-import 'package:calory_calc/pages/stats/mainStats.dart';
+import 'package:calory_calc/pages/stats/main_stats.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';
 import 'pages/launch_navigator.dart';
+import 'widgets/lifie_cycle/life_cycle_watcher.dart';
 
 class CaloricaApp extends StatefulWidget {
   @override
@@ -25,6 +25,17 @@ class CaloricaApp extends StatefulWidget {
 }
 
 class _CaloricaAppState extends State<CaloricaApp> {
+  @override
+  Widget build(BuildContext context) {
+    return LifecycleWatcher(child: _App());
+  }
+}
+
+class _App extends StatelessWidget {
+  const _App({
+    Key key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -56,27 +67,31 @@ class _CaloricaAppState extends State<CaloricaApp> {
 
           if (path[1] == 'product') {
             return MaterialPageRoute(
-                builder: (context) => ProductPage(id: path[2]),
-                settings: RouteSettings);
+              builder: (context) => ProductPage(id: path[2]),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'navigator') {
             return MaterialPageRoute(
-                builder: (context) => NavigatorPage(index: int.parse(path[2])),
-                settings: RouteSettings);
+              builder: (context) => NavigatorPage(index: int.parse(path[2])),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'daydata') {
             return MaterialPageRoute(
-                builder: (context) => DayDatePage(date: path[2]),
-                settings: RouteSettings);
+              builder: (context) => DayDatePage(date: path[2]),
+              settings: RouteSettings,
+            );
           }
 
           if (path[1] == 'addedProduct') {
             return MaterialPageRoute(
-                builder: (context) =>
-                    AddedProductPage(id: path[2], from: path[3]),
-                settings: RouteSettings);
+              builder: (context) =>
+                  AddedProductPage(id: path[2], from: path[3]),
+              settings: RouteSettings,
+            );
           }
         },
       ),

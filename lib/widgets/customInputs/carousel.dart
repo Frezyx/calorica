@@ -1,4 +1,5 @@
 import 'package:calory_calc/design/theme.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/userEditRadioModel.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class RadioItem extends StatelessWidget {
         border: Border.all(
             width: 1.0,
             color:
-                _item.isSelected ? DesignTheme.mainColor : Colors.transparent),
+                _item.isSelected ? CustomTheme.mainColor : Colors.transparent),
         borderRadius: const BorderRadius.all(const Radius.circular(12.0)),
       ),
       padding: EdgeInsets.only(left: 20, right: 20, top: 7.5, bottom: 7.5),

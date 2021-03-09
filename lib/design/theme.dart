@@ -1,3 +1,4 @@
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class DesignTheme {
@@ -8,12 +9,8 @@ class DesignTheme {
   static const Color backgroundColor = Color.fromRGBO(244, 244, 244, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
-  static const Color secondColor = Color.fromRGBO(86, 211, 113, 1);
-  static const Color mainColor = Color.fromRGBO(68, 211, 177, 1);
-
-  static const Color mainColorShadow = Color.fromRGBO(68, 211, 177, 0.27);
-
-  static const Color blackColor = Color.fromRGBO(0, 0, 0, 1);
+  static const Color blackTextColor = Color(0xFF17262A);
+  static const Color blackLightTextColor = Color(0xFF092043);
   static const Color gray36Color = Color.fromRGBO(36, 36, 36, 1);
   static const Color gray50Color = Color.fromRGBO(50, 50, 50, 1);
   static const Color gray170Color = Color.fromRGBO(170, 170, 170, 1);
@@ -38,12 +35,12 @@ class DesignTheme {
     color: selectorGray3,
   );
 
-  static const TextStyle selectorBigTextAction = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
-    color: mainColor,
-  );
+  static TextStyle get selectorBigTextAction => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle selectorLabel = TextStyle(
     fontFamily: fontMain,
@@ -63,35 +60,35 @@ class DesignTheme {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText1 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 36,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText2 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 30,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText3 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigErrorText = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 18,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle lilErrorText = TextStyle(
@@ -105,43 +102,43 @@ class DesignTheme {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 44,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText24 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 24,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle bigText20 = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     fontSize: 20,
-    color: blackColor,
+    color: blackTextColor,
   );
 
-  static const TextStyle bigMainText = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 36,
-    color: mainColor,
-  );
+  static TextStyle get bigMainText => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 36,
+        color: CustomTheme.mainColor,
+      );
 
-  static const TextStyle midleMainText = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 20,
-    color: mainColor,
-  );
+  static TextStyle get midleMainText => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+        color: CustomTheme.mainColor,
+      );
 
-  static const TextStyle midleMainTextBig = TextStyle(
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.bold,
-    fontSize: 24,
-    color: mainColor,
-  );
+  static TextStyle get midleMainTextBig => TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle bigWhiteText = TextStyle(
     fontFamily: 'Montserrat',
@@ -161,7 +158,7 @@ class DesignTheme {
     fontFamily: fontMain,
     fontWeight: FontWeight.w400,
     fontSize: 20,
-    color: blackColor,
+    color: blackTextColor,
   );
 
   static const TextStyle lilWhiteText = TextStyle(
@@ -213,11 +210,11 @@ class DesignTheme {
     color: Colors.black54,
   );
 
-  static const TextStyle inputText = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 16,
-    color: DesignTheme.mainColor,
-  );
+  static TextStyle get inputText => TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        color: CustomTheme.mainColor,
+      );
 
   static const TextStyle labelSearchText = TextStyle(
     fontWeight: FontWeight.w300,
@@ -244,26 +241,26 @@ class DesignTheme {
     fontWeight: FontWeight.w300,
     fontSize: 20,
     letterSpacing: 0.2,
-    color: blackColor,
+    color: blackTextColor,
   );
 
-  static const gradient = LinearGradient(
-    colors: [DesignTheme.secondColor, DesignTheme.mainColor],
-    begin: Alignment.topRight,
-    end: Alignment.bottomLeft,
-    stops: [0.0, 1.0],
-    tileMode: TileMode.clamp,
-  );
+  static get gradient => LinearGradient(
+        colors: [CustomTheme.mainColor, CustomTheme.mainColor],
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        stops: [0.0, 1.0],
+        tileMode: TileMode.clamp,
+      );
 
-  static const BoxShadow selectorShadow = BoxShadow(
-    color: mainColorShadow,
-    blurRadius: 8.0,
-    spreadRadius: 2.0,
-    offset: Offset(
-      0.0,
-      4.0,
-    ),
-  );
+  static BoxShadow get selectorShadow => BoxShadow(
+        color: CustomTheme.mainColor.withOpacity(0.25),
+        blurRadius: 8.0,
+        spreadRadius: 2.0,
+        offset: Offset(
+          0.0,
+          4.0,
+        ),
+      );
 
   static const BoxShadow transperentShadow = BoxShadow(
     color: Colors.transparent,

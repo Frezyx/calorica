@@ -48,8 +48,8 @@ android {
         applicationId "frezycode.calory_calc"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.1.0"
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

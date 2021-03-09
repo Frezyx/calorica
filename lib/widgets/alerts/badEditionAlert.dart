@@ -1,5 +1,4 @@
-import 'package:calory_calc/design/theme.dart';
-import 'package:calory_calc/utils/adClickHelper.dart';
+import 'package:calory_calc/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 badEditAlert(context) async {
@@ -13,7 +12,7 @@ badEditAlert(context) async {
             FlatButton(
               child: Text(
                 'Ок',
-                style: TextStyle(color: DesignTheme.mainColor),
+                style: TextStyle(color: CustomTheme.mainColor),
               ),
               onPressed: () {
                 Navigator.pop(context);

@@ -6,7 +6,7 @@ import 'package:calory_calc/providers/local_providers/dateProvider.dart';
 import 'package:calory_calc/providers/local_providers/productProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 
-import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/common/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/widgets.dart';
 
 import 'package:flutter/material.dart';

@@ -3,7 +3,7 @@ import 'package:calory_calc/providers/local_providers/userProvider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/dataLoader.dart';
+import 'package:calory_calc/common/utils/dataLoader.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/forms/forms.dart';

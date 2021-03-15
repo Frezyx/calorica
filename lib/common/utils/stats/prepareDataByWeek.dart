@@ -1,6 +1,6 @@
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/common/utils/dateHelpers/dateFromInt.dart';
 
 Future<List<UserProduct>> getProductsCaloryByDateList() async {
   final now = DateTime.now();

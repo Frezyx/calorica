@@ -1,6 +1,6 @@
 import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/common/theme/theme.dart';
-import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/common/utils/doubleRounder.dart';
 import 'package:flutter/material.dart';
 
 getStartText(

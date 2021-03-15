@@ -2,7 +2,7 @@ import 'package:calory_calc/design/theme.dart';
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:calory_calc/utils/convertors/workModelFromTxt.dart';
+import 'package:calory_calc/common/utils/convertors/workModelFromTxt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

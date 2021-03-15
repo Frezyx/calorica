@@ -1,9 +1,9 @@
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
-import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/common/utils/dietSelector.dart';
 
-updateDiet(User user) async{
+updateDiet(User user) async {
   bool result = true;
   DietParams dietParams = selectDiet(user);
 
@@ -16,11 +16,10 @@ updateDiet(User user) async{
     squi: dietParams.squi,
   );
 
-  try{
+  try {
     await DBDietProvider.db.updateDiet(diet);
-  }
-  catch (error){
-      result = false;
+  } catch (error) {
+    result = false;
   }
   return result;
 }

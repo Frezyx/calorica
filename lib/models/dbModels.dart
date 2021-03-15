@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/common/utils/dateHelpers/dateFromInt.dart';
 
 class User {
   int id;

@@ -1,5 +1,5 @@
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/common/utils/doubleRounder.dart';
 
 UserProduct getProductsParamsSum(List<UserProduct> yesterdayProd) {
   var dateProducts =

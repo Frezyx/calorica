@@ -2,7 +2,7 @@ import 'package:calory_calc/models/dbModels.dart';
 import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/common/utils/dietSelector.dart';
 
 abstract class DietSelector {
   static Future<bool> slectUserDiet() async {

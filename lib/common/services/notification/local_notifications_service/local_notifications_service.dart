@@ -64,10 +64,16 @@ class LocalNotificationsService implements AbstractLocalNotificationsServie {
     if ((await notifyPlugin.pendingNotificationRequests()).isNotEmpty) {
       await notifyPlugin.cancelAll();
     }
+
+    if (!config.enabled) {
+      return;
+    }
+
+    //TODO: Replace in localization
     showPeriodically(
       title: "Не сбивайте свой режим!",
       body: "Чтоб диета была продуктивной - нужно вести ежедневный учет",
-      repeat: RepeatInterval.everyMinute,
+      repeat: RepeatInterval.daily,
     );
   }
 

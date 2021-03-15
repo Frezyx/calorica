@@ -15,6 +15,17 @@ class HomeToolBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          // TODO: create settings page button
+          // ToolBarIconButton(
+          //   icon: Icon(
+          //     Icons.settings,
+          //     color: theme.accentColor,
+          //   ),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '/editUser');
+          //   },
+          // ),
+          // SizedBox(width: 4),
           ToolBarIconButton(
             icon: Icon(
               FontAwesomeIcons.userCircle,

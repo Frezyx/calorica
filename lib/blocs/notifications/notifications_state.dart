@@ -11,6 +11,8 @@ class NotificationsState extends Equatable {
 
 class Uninitialized extends NotificationsState {}
 
+class NotificationsLoading extends NotificationsState {}
+
 class Initialized extends NotificationsState {
   final NotificationsConfig config;
 

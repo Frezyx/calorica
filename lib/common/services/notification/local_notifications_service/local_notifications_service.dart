@@ -60,7 +60,16 @@ class LocalNotificationsService implements AbstractLocalNotificationsServie {
   }
 
   @override
-  Future<void> setupNotifications(NotificationsConfig config) {}
+  Future<void> setupNotifications(NotificationsConfig config) async {
+    if ((await notifyPlugin.pendingNotificationRequests()).isNotEmpty) {
+      await notifyPlugin.cancelAll();
+    }
+    showPeriodically(
+      title: "Не сбивайте свой режим!",
+      body: "Чтоб диета была продуктивной - нужно вести ежедневный учет",
+      repeat: RepeatInterval.everyMinute,
+    );
+  }
 
   @override
   Future<void> show({

@@ -1,4 +1,3 @@
-import 'package:calory_calc/common/services/notification/service.dart';
 import 'package:calory_calc/repositories/notifications/repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

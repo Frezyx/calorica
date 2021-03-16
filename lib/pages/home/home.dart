@@ -5,13 +5,12 @@ import 'package:calory_calc/models/diet.dart';
 import 'package:calory_calc/pages/home/widgets/widgets.dart';
 import 'package:calory_calc/providers/local_providers/dietProvider.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
-import 'package:calory_calc/utils/doubleRounder.dart';
+import 'package:calory_calc/common/utils/doubleRounder.dart';
 import 'package:calory_calc/widgets/error/errorScreens.dart';
 import 'package:calory_calc/models/range.dart';
 
 import 'package:flutter/material.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Data {
   int id;

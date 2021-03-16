@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:calory_calc/blocs/auth/bloc.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:calory_calc/utils/userDietSelector.dart';
+import 'package:calory_calc/common/utils/userDietSelector.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthLoading());

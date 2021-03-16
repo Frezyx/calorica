@@ -1,5 +1,5 @@
 import 'package:calory_calc/common/theme/theme.dart';
-import 'package:calory_calc/utils/calculator_parts/percent_checker.dart';
+import 'package:calory_calc/common/utils/calculator_parts/percent_checker.dart';
 import 'package:flutter/material.dart';
 
 class RangeGraphData {

@@ -1,10 +1,13 @@
 import 'package:calory_calc/blocs/auth/bloc.dart';
+import 'package:calory_calc/blocs/notifications/bloc.dart';
+import 'package:calory_calc/common/services/hive_service/hive_service.dart';
 import 'package:calory_calc/common/theme/theme.dart';
 import 'package:calory_calc/pages/addedProduct.dart';
 import 'package:calory_calc/pages/edit/choiceDiet.dart';
 import 'package:calory_calc/pages/edit/editUser.dart';
 import 'package:calory_calc/pages/edit/editUserDietParams.dart';
 import 'package:calory_calc/pages/edit/editUserParams.dart';
+import 'package:calory_calc/repositories/notifications/repository.dart';
 import 'package:calory_calc/widgets/navigation/navigator.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +20,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/constants/constants.dart';
 import 'pages/launch_navigator.dart';
+import 'repositories/repositories_container/repositories_container.dart';
 import 'widgets/lifie_cycle/life_cycle_watcher.dart';
 
 class CaloricaApp extends StatefulWidget {
+  const CaloricaApp({
+    Key key,
+    @required RepositoriesContainer repositoriesContainer,
+  })  : _repositoriesContainer = repositoriesContainer,
+        super(key: key);
+  final RepositoriesContainer _repositoriesContainer;
   @override
   _CaloricaAppState createState() => _CaloricaAppState();
 }
@@ -27,25 +37,43 @@ class CaloricaApp extends StatefulWidget {
 class _CaloricaAppState extends State<CaloricaApp> {
   @override
   Widget build(BuildContext context) {
-    return LifecycleWatcher(child: _App());
+    return LifecycleWatcher(
+      child: _App(
+        repositoriesContainer: widget._repositoriesContainer,
+      ),
+    );
   }
 }
 
 class _App extends StatelessWidget {
-  const _App({
-    Key key,
-  }) : super(key: key);
+  const _App({Key key, @required RepositoriesContainer repositoriesContainer})
+      : _repositoriesContainer = repositoriesContainer,
+        super(key: key);
+
+  final RepositoriesContainer _repositoriesContainer;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<NotificationsBloc>(
+          lazy: false,
+          create: (context) {
+            return NotificationsBloc(
+              notificationsRepository:
+                  _repositoriesContainer.notificationsRepository,
+            )..add(Initialize());
+          },
+        ),
         BlocProvider<AuthBloc>(
           create: (context) {
             return AuthBloc()..add(LoadAuthorization());
           },
         ),
       ],
+
+      //TODO: implement autogenerate route
+
       child: MaterialApp(
         title: Constants.appName,
         theme: lightTheme,

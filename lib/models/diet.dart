@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/common/utils/dateHelpers/dateFromInt.dart';
 
 class Diet {
   int id;
@@ -22,7 +22,6 @@ class Diet {
     this.carboh,
     this.date,
   });
-  
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,7 +38,7 @@ class Diet {
 
   static Diet fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return Diet(
       id: map['id'],
       name: map['name'],

@@ -1,6 +1,6 @@
 import 'package:calory_calc/models/dbModels.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/common/utils/dietSelector.dart';
 
 void main() {
   runTests();

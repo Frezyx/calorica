@@ -5,10 +5,10 @@ import 'package:calory_calc/pages/stats/barGraph.dart';
 import 'package:calory_calc/pages/stats/lineWeekGraph.dart';
 import 'package:calory_calc/providers/local_providers/userProductsProvider.dart';
 
-import 'package:calory_calc/utils/dietSelector.dart';
+import 'package:calory_calc/common/utils/dietSelector.dart';
 import 'package:calory_calc/providers/local_providers/userProvider.dart';
-import 'package:calory_calc/utils/stats/prepareDataByDay.dart';
-import 'package:calory_calc/utils/stats/prepareDataByWeek.dart';
+import 'package:calory_calc/common/utils/stats/prepareDataByDay.dart';
+import 'package:calory_calc/common/utils/stats/prepareDataByWeek.dart';
 import 'package:calory_calc/widgets/crads/info_card.dart';
 import 'package:calory_calc/widgets/stats/paramTextColumn.dart';
 import 'package:calory_calc/widgets/textHelper.dart';

@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:calory_calc/models/dbModels.dart';
-import 'package:calory_calc/utils/dateHelpers/dateFromInt.dart';
+import 'package:calory_calc/common/utils/dateHelpers/dateFromInt.dart';
 
 class DBUserProductsProvider {
   DBUserProductsProvider._();
